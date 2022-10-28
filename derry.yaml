@@ -3,14 +3,29 @@ cook:
     - brick_oven cook all -o .
   bloc:
     - brick_oven cook bloc -o .
+  model:
+    - brick_oven cook model -o .
   screen:
     - brick_oven cook screen -o .
 
 watch:
   all:
     - brick_oven cook all -w -o .
-
   bloc:
     - brick_oven cook bloc -w -o .
+  model:
+    - brick_oven cook model -w -o .
   screen:
     - brick_oven cook screen -w -o .
+
+install:
+  bloc:
+    - mason add -g --path bloc
+  model:
+    - mason add -g --path model
+  screen:
+    - mason add -g --path screen
+  all:
+    - $install:bloc
+    - $install:model
+    - $install:screen
