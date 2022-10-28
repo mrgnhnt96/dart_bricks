@@ -15,6 +15,7 @@ abstract class _NAME_pascalState extends Equatable {
   List<Object> get props => [];
 }
 
+@autoequal
 // start_JSON_
 @JsonSerializable()
 // end_JSON_
@@ -35,6 +36,7 @@ class _Loading extends _NAME_pascalState {
   const _Loading();
 }
 
+@autoequal
 class _Error extends _NAME_pascalState {
   const _Error(this.message);
 
