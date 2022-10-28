@@ -1,0 +1,14 @@
+{
+  "configVersion": 2,
+  "packages": [
+    {
+      "name": "dart_bricks",
+      "rootUri": "../",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    }
+  ],
+  "generated": "2022-10-28T12:23:38.787136Z",
+  "generator": "pub",
+  "generatorVersion": "2.18.3"
+}
