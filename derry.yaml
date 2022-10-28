@@ -20,11 +20,11 @@ watch:
 
 install:
   bloc:
-    - mason add -g --path bloc
+    - mason add bloc -g --path bloc
   model:
-    - mason add -g --path model
+    - mason add model -g --path model
   screen:
-    - mason add -g --path screen
+    - mason add screen -g --path screen
   all:
     - $install:bloc
     - $install:model
