@@ -7,6 +7,8 @@ cook:
     - brick_oven cook model -o .
   screen:
     - brick_oven cook screen -o .
+  repo:
+    - brick_oven cook repo -o .
 
 watch:
   all:
@@ -17,15 +19,20 @@ watch:
     - brick_oven cook model -w -o .
   screen:
     - brick_oven cook screen -w -o .
+  repo:
+    - brick_oven cook repo -w -o .
 
 install:
+  all:
+    - $install:bloc
+    - $install:model
+    - $install:screen
+    - $install:repo
   bloc:
     - mason add bloc -g --path bloc
   model:
     - mason add model -g --path model
   screen:
     - mason add screen -g --path screen
-  all:
-    - $install:bloc
-    - $install:model
-    - $install:screen
+  repo:
+    - mason add repo -g --path repo
