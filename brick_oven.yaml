@@ -27,3 +27,46 @@ bricks:
         vars:
           name: _NAME_
           json: _JSON_
+  screen:
+    source: screen/oven
+    dirs:
+      path:
+      path/example:
+        name:
+          value: name
+          format: snake
+    files:
+      path/example/example_screen.dart:
+        name:
+          value: name
+          format: snake
+          suffix: _screen
+        vars:
+          name: _NAME_
+      path/example/components/__description.dart:
+        vars:
+          name: _NAME_
+      path/example/example_view.dart:
+        name:
+          value: name
+          format: snake
+          suffix: _view
+        vars:
+          name: _NAME_
+      path/example/example.dart:
+        name:
+          value: name
+          format: snake
+        vars:
+          name: _NAME_
+
+  model:
+    source: model/oven
+    files:
+      path/example.dart:
+        name:
+          value: name
+          format: snake
+        vars:
+          name: _NAME_
+          copyWith: _COPY_WITH_
