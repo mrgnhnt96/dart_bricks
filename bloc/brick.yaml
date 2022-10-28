@@ -22,12 +22,12 @@ vars:
   name:
     type: string
     description: Bloc's name
-    default: Counter
+    default: Awesome
     prompt: What is the name of the bloc?
   path:
     type: string
     description: Bloc's Path
-    default: Counter
+    default: lib/blocs
     prompt: What is the path?
   json:
     type: boolean
