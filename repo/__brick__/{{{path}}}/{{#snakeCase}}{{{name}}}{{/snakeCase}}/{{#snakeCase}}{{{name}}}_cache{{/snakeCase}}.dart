@@ -2,8 +2,14 @@ import '../../util/util.dart';
 import 'package:domain/domain.dart';
 import '{{#snakeCase}}{{{name}}}{{/snakeCase}}_repos.dart';
 
+class _Keys {
+  const _Keys._();
+
+  static const {{#camelCase}}{{{name}}}{{/camelCase}} = '{{#snakeCase}}{{{name}}}{{/snakeCase}}';
+}
+
 class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}Cache {
-  const {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache() : super('{{#snakeCase}}{{{name}}}{{/snakeCase}}', byUser: {{byUser}});
+  const {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache() : super(_Keys.{{#camelCase}}{{{name}}}{{/camelCase}}, byUser: {{byUser}});
 
   @override
   Future<RequestResult<List<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>> all() async {

@@ -2,8 +2,14 @@ import '../../util/util.dart';
 import 'package:domain/domain.dart';
 import '_NAME_snake_repos.dart';
 
+class _Keys {
+  const _Keys._();
+
+  static const _NAME_camel = '_NAME_snake';
+}
+
 class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
-  const _NAME_pascalCache() : super('_NAME_snake', byUser: _BY_USER_);
+  const _NAME_pascalCache() : super(_Keys._NAME_camel, byUser: _BY_USER_);
 
   @override
   Future<RequestResult<List<_MODEL_pascal>>> all() async {
