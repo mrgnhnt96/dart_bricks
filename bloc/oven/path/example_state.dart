@@ -12,13 +12,13 @@ abstract class _NAME_pascalState extends Equatable {
   _Error get asError => this as _Error;
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
-@autoequal
 // start_JSON_
 @JsonSerializable()
 // end_JSON_
+@autoequal
 class _Ready extends _NAME_pascalState {
   const _Ready();
 
@@ -29,7 +29,7 @@ class _Ready extends _NAME_pascalState {
   // end_JSON_
 
   @override
-  List<Object> get props => _$props;
+  List<Object?> get props => _$props;
 }
 
 class _Loading extends _NAME_pascalState {
@@ -43,5 +43,5 @@ class _Error extends _NAME_pascalState {
   final String message;
 
   @override
-  List<Object> get props => _$props;
+  List<Object?> get props => _$props;
 }

@@ -4,20 +4,21 @@ abstract class {{#pascalCase}}{{{name}}}{{/pascalCase}}Event extends Equatable {
   const {{#pascalCase}}{{{name}}}{{/pascalCase}}Event();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class _Init extends {{#pascalCase}}{{{name}}}{{/pascalCase}}Event {
   const _Init();
 }
 
+@autoequal
 class _Fetch extends {{#pascalCase}}{{{name}}}{{/pascalCase}}Event {
   const _Fetch([this.id]);
 
   final String? id;
 
   @override
-  List<Object> get props => _$props;
+  List<Object?> get props => _$props;
 }
 
 extension {{#pascalCase}}{{{name}}}{{/pascalCase}}BlocX on {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc {

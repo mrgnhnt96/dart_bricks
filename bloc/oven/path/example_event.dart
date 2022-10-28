@@ -4,20 +4,21 @@ abstract class _NAME_pascalEvent extends Equatable {
   const _NAME_pascalEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class _Init extends _NAME_pascalEvent {
   const _Init();
 }
 
+@autoequal
 class _Fetch extends _NAME_pascalEvent {
   const _Fetch([this.id]);
 
   final String? id;
 
   @override
-  List<Object> get props => _$props;
+  List<Object?> get props => _$props;
 }
 
 extension _NAME_pascalBlocX on _NAME_pascalBloc {

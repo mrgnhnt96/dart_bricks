@@ -12,13 +12,12 @@ abstract class {{#pascalCase}}{{{name}}}{{/pascalCase}}State extends Equatable {
   _Error get asError => this as _Error;
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
-
-@autoequal
 {{#json}}
 @JsonSerializable()
 {{/json}}
+@autoequal
 class _Ready extends {{#pascalCase}}{{{name}}}{{/pascalCase}}State {
   const _Ready();
 {{#json}}
@@ -27,7 +26,7 @@ class _Ready extends {{#pascalCase}}{{{name}}}{{/pascalCase}}State {
   Map<String, dynamic> toJson() => _$ReadyToJson(this);
 {{/json}}
   @override
-  List<Object> get props => _$props;
+  List<Object?> get props => _$props;
 }
 
 class _Loading extends {{#pascalCase}}{{{name}}}{{/pascalCase}}State {
@@ -41,5 +40,5 @@ class _Error extends {{#pascalCase}}{{{name}}}{{/pascalCase}}State {
   final String message;
 
   @override
-  List<Object> get props => _$props;
+  List<Object?> get props => _$props;
 }
