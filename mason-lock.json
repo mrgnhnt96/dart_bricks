@@ -1,1 +1,13 @@
-{"bricks":{"hello":{"version":"0.1.0+1"},"bloc":{"path":"bloc"}}}
+{
+  "bricks": {
+    "bloc": {
+      "path": "/Users/morganhunt/Documents/Developer.nosync/Dart_Projects/brick_oven/dart_bricks/bloc"
+    },
+    "model": {
+      "path": "/Users/morganhunt/Documents/Developer.nosync/Dart_Projects/brick_oven/dart_bricks/model"
+    },
+    "screen": {
+      "path": "/Users/morganhunt/Documents/Developer.nosync/Dart_Projects/brick_oven/dart_bricks/screen"
+    }
+  }
+}
