@@ -1,3 +1,16 @@
 cook:
   all:
-    - brick_oven cook all
+    - brick_oven cook all -o .
+  bloc:
+    - brick_oven cook bloc -o .
+  screen:
+    - brick_oven cook screen -o .
+
+watch:
+  all:
+    - brick_oven cook all -w -o .
+
+  bloc:
+    - brick_oven cook bloc -w -o .
+  screen:
+    - brick_oven cook screen -w -o .
