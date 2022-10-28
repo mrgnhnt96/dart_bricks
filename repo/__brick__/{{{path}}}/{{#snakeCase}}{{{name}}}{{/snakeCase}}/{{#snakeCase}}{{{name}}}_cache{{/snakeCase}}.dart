@@ -9,35 +9,85 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> imple
   Future<RequestResult<List<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>> all() async {
     await cacheInit();
 
-    throw UnimplementedError('all() has not been implemented.');
+    final {{#camelCase}}{{{model}}}{{/camelCase}}s = <{{#pascalCase}}{{{model}}}{{/pascalCase}}>[];
+
+    for (var i = 0; i < cache.length; i++) {
+      try {
+        final value = cache.values.elementAt(i);
+
+        {{#camelCase}}{{{model}}}{{/camelCase}}s.add(
+          {{#pascalCase}}{{{model}}}{{/pascalCase}}.fromJson(
+            Map<String, dynamic>.from(value),
+          ),
+        );
+      } catch (_) {
+        await cache.deleteAt(i);
+      }
+    }
+
+    return {{#camelCase}}{{{model}}}{{/camelCase}}s;
   }
 
   @override
   Future<RequestResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>> byId(String id) async {
     await cacheInit();
 
-    throw UnimplementedError('byId() has not been implemented.');
+    final value = cache.get(id);
+
+    if (value == null) {
+      return RequestResult.failure('{{#pascalCase}}{{{model}}}{{/pascalCase}} not found');
+    }
+
+    try {
+      return RequestResult.success(
+        {{#pascalCase}}{{{model}}}{{/pascalCase}}.fromJson(
+          Map<String, dynamic>.from(value),
+        ),
+      );
+    } catch (_) {
+      await cache.delete(id);
+
+      return RequestResult.failure('{{#pascalCase}}{{{model}}}{{/pascalCase}} not found');
+    }
   }
 
   @override
   Future<RequestResult<void>> delete(String id) async {
     await cacheInit();
 
-    throw UnimplementedError('delete() has not been implemented.');
+    try {
+      await cache.delete(id);
+    } catch (e) {
+      return RequestResult.failure(e.toString());
+    }
+
+    return const RequestResult.success(null);
   }
 
   @override
   Future<RequestResult<void>> deleteAll() async {
     await cacheInit();
 
-    throw UnimplementedError('deleteAll() has not been implemented.');
+    try {
+      await cache.clear();
+    } catch (e) {
+      return RequestResult.failure(e.toString());
+    }
+
+    return const RequestResult.success(null);
   }
 
   @override
   Future<RequestResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>> save({{#pascalCase}}{{{model}}}{{/pascalCase}} {{#camelCase}}{{{model}}}{{/camelCase}}) async {
     await cacheInit();
 
-    throw UnimplementedError('save() has not been implemented.');
+    try {
+      await cache.put({{#camelCase}}{{{model}}}{{/camelCase}}.id, {{#camelCase}}{{{model}}}{{/camelCase}}.toJson());
+    } catch (e) {
+      return RequestResult.failure(e.toString());
+    }
+
+    return const RequestResult.success(null);
   }
 
   @override
@@ -45,6 +95,19 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> imple
       List<{{#pascalCase}}{{{model}}}{{/pascalCase}}> {{#camelCase}}{{{model}}}{{/camelCase}}s) async {
     await cacheInit();
 
-    throw UnimplementedError('saveAll() has not been implemented.');
+    try {
+      final entries = {{#camelCase}}{{{model}}}{{/camelCase}}s.asMap().map(
+        (index, {{#camelCase}}{{{model}}}{{/camelCase}}) => MapEntry(
+          {{#camelCase}}{{{model}}}{{/camelCase}}.id,
+          {{#camelCase}}{{{model}}}{{/camelCase}}.toJson(),
+        ),
+      );
+
+      await cache.putAll(entries);
+    } catch (e) {
+      return RequestResult.failure(e.toString());
+    }
+
+    return const RequestResult.success(null);
   }
 }

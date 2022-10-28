@@ -1,28 +1,90 @@
-import '../../util/request_result.dart';
+import '../../util/util.dart';
 import 'package:domain/domain.dart';
 import '_NAME_snake_repos.dart';
+import 'package:flutter/material.dart';
 
 class _NAME_pascalSource implements I_NAME_pascalSource {
   const _NAME_pascalSource();
 
   @override
   Future<RequestResult<List<_MODEL_pascal>>> all() async {
-    throw UnimplementedError('all() has not been implemented.');
+    try {
+      final _MODEL_camels = <_MODEL_pascal>[];
+
+      final result = await dio.get<Map>('${dio.url}/NOT_IMPLEMENTED');
+
+      final data = result.data;
+
+      if (data == null) {
+        return RequestResult.failure('No data');
+      }
+
+      final _MODEL_camelsJson = List<Map>.from(data as List);
+
+      for (final _MODEL_camelJson in _MODEL_camelsJson) {
+        try {
+          _MODEL_camels.add(
+            _MODEL_pascal.fromJson(
+              Map<String, dynamic>.from(_MODEL_camelJson),
+            ),
+          );
+        } catch (e) {
+          debugPrint('Error parsing _MODEL_camel, $e | $_MODEL_camelJson');
+        }
+      }
+
+      return RequestResult.success(_MODEL_camels);
+    } catch (e) {
+      return RequestResult.failure(e.toString());
+    }
   }
 
   @override
   Future<RequestResult<_MODEL_pascal>> byId(String id) async {
-    throw UnimplementedError('byId() has not been implemented.');
+    try {
+      final result = await dio.get<Map>('${dio.url}/NOT_IMPLEMENTED/$id');
+
+      final data = result.data;
+
+      if (data == null) {
+        return RequestResult.failure('No data');
+      }
+
+      final _MODEL_camelJson = Map<String, dynamic>.from(data);
+
+      return RequestResult.success(
+        _MODEL_pascal.fromJson(_MODEL_camelJson),
+      );
+    } catch (e) {
+      return RequestResult.failure(e.toString());
+    }
   }
 
   @override
   Future<RequestResult<void>> delete(String id) async {
-    throw UnimplementedError('delete() has not been implemented.');
+    try {
+      await dio.delete<Map>(
+        '${dio.url}/NOT_IMPLEMENTED/$id',
+      );
+
+      return const RequestResult.success(null);
+    } catch (e) {
+      return RequestResult.failure(e.toString());
+    }
   }
 
   @override
   Future<RequestResult<_MODEL_pascal>> update(
       _MODEL_pascal _MODEL_camel) async {
-    throw UnimplementedError('update() has not been implemented.');
+    try {
+      await dio.put<Map>(
+        '${dio.url}/NOT_IMPLEMENTED/${_MODEL_camel.id}',
+        data: _MODEL_camel.toJson(),
+      );
+
+      return const RequestResult.success(null);
+    } catch (e) {
+      return RequestResult.failure(e.toString());
+    }
   }
 }
