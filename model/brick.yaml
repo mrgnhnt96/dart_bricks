@@ -29,3 +29,8 @@ vars:
     description: Model's Path
     default: lib/models
     prompt: What is the path?
+  copyWith:
+    type: boolean
+    description: use copyWith
+    default: false
+    prompt: Use copyWith?
