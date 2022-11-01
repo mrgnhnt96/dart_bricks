@@ -62,6 +62,8 @@ bricks:
 
   model:
     source: model/oven
+    dirs:
+      path:
     files:
       path/example.dart:
         name:
