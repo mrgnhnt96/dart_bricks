@@ -21,5 +21,5 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}} extends Equatable {
   Map<String, dynamic> toJson() => _${{#pascalCase}}{{{name}}}{{/pascalCase}}ToJson(this);
 
   @override
-  List<Object> get props => _$props;
+  List<Object?> get props => _$props;
 }

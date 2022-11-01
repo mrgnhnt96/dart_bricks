@@ -21,5 +21,5 @@ class _NAME_pascal extends Equatable {
   Map<String, dynamic> toJson() => _$_NAME_pascalToJson(this);
 
   @override
-  List<Object> get props => _$props;
+  List<Object?> get props => _$props;
 }
