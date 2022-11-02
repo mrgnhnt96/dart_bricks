@@ -1,0 +1,33 @@
+source: repo/oven
+dirs:
+  path:
+  path/example:
+    name:
+      value: name
+      format: snake
+files:
+  path/example/example_cache.dart:
+    name:
+      value: name
+      format: snake
+      suffix: _cache
+    vars:
+      name: _NAME_
+      byUser: _BY_USER_
+      model: _MODEL_
+  path/example/example_repos.dart:
+    name:
+      value: name
+      format: snake
+      suffix: _repos
+    vars:
+      name: _NAME_
+      model: _MODEL_
+  path/example/example_source.dart:
+    name:
+      value: name
+      format: snake
+      suffix: _source
+    vars:
+      name: _NAME_
+      model: _MODEL_

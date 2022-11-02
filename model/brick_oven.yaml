@@ -1,0 +1,11 @@
+source: model/oven
+dirs:
+  path:
+files:
+  path/example.dart:
+    name:
+      value: name
+      format: snake
+    vars:
+      name: _NAME_
+      copyWith: _COPY_WITH_

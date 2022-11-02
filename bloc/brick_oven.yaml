@@ -1,0 +1,27 @@
+source: bloc/oven
+dirs:
+  path:
+files:
+  path/example_bloc.dart:
+    name:
+      value: name
+      format: snake
+      suffix: _bloc
+    vars:
+      name: _NAME_
+      json: _JSON_
+  path/example_event.dart:
+    name:
+      value: name
+      format: snake
+      suffix: _event
+    vars:
+      name: _NAME_
+  path/example_state.dart:
+    name:
+      value: name
+      format: snake
+      suffix: _state
+    vars:
+      name: _NAME_
+      json: _JSON_
