@@ -1,4 +1,4 @@
-import '../../util/util.dart';
+import 'package:data/util/util.dart';
 import 'package:domain/domain.dart';
 import '_NAME_snake_repos.dart';
 
@@ -9,7 +9,7 @@ class _Keys {
 }
 
 class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
-  const _NAME_pascalCache() : super(_Keys._NAME_camel, byUser: _BY_USER_);
+  _NAME_pascalCache() : super(_Keys._NAME_camel, byUser: _BY_USER_);
 
   @override
   Future<RequestResult<List<_MODEL_pascal>>> all() async {
@@ -31,7 +31,7 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
       }
     }
 
-    return _MODEL_camels;
+    return RequestResult.success(_MODEL_camels);
   }
 
   @override
@@ -64,7 +64,7 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
     try {
       await cache.delete(id);
     } catch (e) {
-      return RequestResult.failure(e.toString());
+      return RequestResult.failure('$e');
     }
 
     return const RequestResult.success(null);
@@ -77,28 +77,27 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
     try {
       await cache.clear();
     } catch (e) {
-      return RequestResult.failure(e.toString());
+      return RequestResult.failure('$e');
     }
 
     return const RequestResult.success(null);
   }
 
   @override
-  Future<RequestResult<_MODEL_pascal>> save(_MODEL_pascal _MODEL_camel) async {
+  Future<RequestResult<void>> save(_MODEL_pascal _MODEL_camel) async {
     await cacheInit();
 
     try {
       await cache.put(_MODEL_camel.id, _MODEL_camel.toJson());
     } catch (e) {
-      return RequestResult.failure(e.toString());
+      return RequestResult.failure('$e');
     }
 
     return const RequestResult.success(null);
   }
 
   @override
-  Future<RequestResult<_MODEL_pascal>> saveAll(
-      List<_MODEL_pascal> _MODEL_camels) async {
+  Future<RequestResult<void>> saveAll(List<_MODEL_pascal> _MODEL_camels) async {
     await cacheInit();
 
     try {
@@ -111,7 +110,7 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
 
       await cache.putAll(entries);
     } catch (e) {
-      return RequestResult.failure(e.toString());
+      return RequestResult.failure('$e');
     }
 
     return const RequestResult.success(null);
