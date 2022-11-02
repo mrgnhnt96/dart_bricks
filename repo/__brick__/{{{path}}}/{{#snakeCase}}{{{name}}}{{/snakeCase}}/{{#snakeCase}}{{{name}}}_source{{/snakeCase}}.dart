@@ -1,4 +1,4 @@
-import '../../util/util.dart';
+import 'package:data/util/util.dart';
 import 'package:domain/domain.dart';
 import '{{#snakeCase}}{{{name}}}{{/snakeCase}}_repos.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +29,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Source implements I{{#pascalCase}}
             ),
           );
         } catch (e) {
-          debugPrint('Error parsing {{#camelCase}}{{{model}}}{{/camelCase}}, $e | ${{#camelCase}}{{{model}}}{{/camelCase}}Json');
+          debugPrint('Error parsing {{#camelCase}}{{{model}}}{{/camelCase}}, $e | {{#camelCase}}{{{model}}}{{/camelCase}}Json');
         }
       }
 
@@ -74,17 +74,18 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Source implements I{{#pascalCase}}
   }
 
   @override
-  Future<RequestResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>> update(
-      {{#pascalCase}}{{{model}}}{{/pascalCase}} {{#camelCase}}{{{model}}}{{/camelCase}}) async {
+  Future<RequestResult<void>> update({{#pascalCase}}{{{model}}}{{/pascalCase}} {{#camelCase}}{{{model}}}{{/camelCase}}) async {
     try {
+      final id = {{#camelCase}}{{{model}}}{{/camelCase}}.id;
+
       await dio.put<Map>(
-        '${dio.url}/NOT_IMPLEMENTED/${{{#camelCase}}{{{model}}}{{/camelCase}}.id}',
+        '${dio.url}/NOT_IMPLEMENTED/$id',
         data: {{#camelCase}}{{{model}}}{{/camelCase}}.toJson(),
       );
-
-      return const RequestResult.success(null);
     } catch (e) {
       return RequestResult.failure(e.toString());
     }
+
+    return const RequestResult.success(null);
   }
 }

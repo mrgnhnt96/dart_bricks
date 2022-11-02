@@ -1,4 +1,4 @@
-import '../../util/util.dart';
+import 'package:data/util/util.dart';
 import 'package:domain/domain.dart';
 import '_NAME_snake_repos.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +29,7 @@ class _NAME_pascalSource implements I_NAME_pascalSource {
             ),
           );
         } catch (e) {
-          debugPrint('Error parsing _MODEL_camel, $e | $_MODEL_camelJson');
+          debugPrint('Error parsing _MODEL_camel, $e | _MODEL_camelJson');
         }
       }
 
@@ -74,17 +74,18 @@ class _NAME_pascalSource implements I_NAME_pascalSource {
   }
 
   @override
-  Future<RequestResult<_MODEL_pascal>> update(
-      _MODEL_pascal _MODEL_camel) async {
+  Future<RequestResult<void>> update(_MODEL_pascal _MODEL_camel) async {
     try {
+      final id = _MODEL_camel.id;
+
       await dio.put<Map>(
-        '${dio.url}/NOT_IMPLEMENTED/${_MODEL_camel.id}',
+        '${dio.url}/NOT_IMPLEMENTED/$id',
         data: _MODEL_camel.toJson(),
       );
-
-      return const RequestResult.success(null);
     } catch (e) {
       return RequestResult.failure(e.toString());
     }
+
+    return const RequestResult.success(null);
   }
 }
