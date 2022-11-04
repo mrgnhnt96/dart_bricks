@@ -32,3 +32,9 @@ files:
     vars:
       name: _NAME_
       model: _MODEL_
+  path/example/example.dart:
+    name:
+      value: name
+      format: snake
+    vars:
+      name: _NAME_
