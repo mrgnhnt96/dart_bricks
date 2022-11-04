@@ -1,4 +1,5 @@
 source: oven
+brick_config: brick.yaml
 dirs:
   path:
   path/example:
