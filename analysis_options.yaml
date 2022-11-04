@@ -1,0 +1,17 @@
+analyzer:
+  exclude:
+    - "**/__brick__/**/*.dart"
+    - "**/*.dart"
+  # errors:
+  #  uri_does_not_exist: ignore
+  #  undefined_identifier: ignore
+  #  non_type_as_type_argument: ignore
+  #  creation_with_non_type: ignore
+  #  extends_non_class: ignore
+  #  undefined_named_parameter: ignore
+  #  implements_non_class: ignore
+  #  extra_positional_arguments: ignore
+  #  undefined_method: ignore
+  #  undefined_class: ignore
+  #  unused_element: ignore
+  #  override_on_non_overriding_member: ignore
