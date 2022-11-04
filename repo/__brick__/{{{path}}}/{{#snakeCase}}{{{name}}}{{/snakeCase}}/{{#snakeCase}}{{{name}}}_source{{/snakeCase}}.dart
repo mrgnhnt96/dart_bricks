@@ -29,7 +29,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Source implements I{{#pascalCase}}
             ),
           );
         } catch (e) {
-          debugPrint('Error parsing {{#camelCase}}{{{model}}}{{/camelCase}}, $e | {{#camelCase}}{{{model}}}{{/camelCase}}Json');
+          debugPrint('Error parsing {{#camelCase}}{{{model}}}{{/camelCase}}, $e | ${{#camelCase}}{{{model}}}{{/camelCase}}Json');
         }
       }
 

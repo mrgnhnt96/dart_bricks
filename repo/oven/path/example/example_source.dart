@@ -29,7 +29,7 @@ class _NAME_pascalSource implements I_NAME_pascalSource {
             ),
           );
         } catch (e) {
-          debugPrint('Error parsing _MODEL_camel, $e | _MODEL_camelJson');
+          debugPrint('Error parsing _MODEL_camel, $e | $_MODEL_camelJson');
         }
       }
 
