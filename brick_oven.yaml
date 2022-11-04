@@ -1,5 +1,5 @@
 bricks:
   bloc: bloc/brick_oven.yaml
-  screen: screen/brick_oven.yaml
   model: model/brick_oven.yaml
   repo: repo/brick_oven.yaml
+  screen: screen/brick_oven.yaml
