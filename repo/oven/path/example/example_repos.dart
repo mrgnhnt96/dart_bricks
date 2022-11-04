@@ -13,6 +13,10 @@ abstract class I_NAME_pascalCache {
   Future<RequestResult<void>> save(_MODEL_pascal _MODEL_camel);
 
   Future<RequestResult<void>> saveAll(List<_MODEL_pascal> _MODEL_camels);
+
+  Future<Stream<StreamResult<_MODEL_pascal>>> watchAll();
+
+  Future<Stream<StreamResult<_MODEL_pascal>>> watchById(String id);
 }
 
 abstract class I_NAME_pascalSource {

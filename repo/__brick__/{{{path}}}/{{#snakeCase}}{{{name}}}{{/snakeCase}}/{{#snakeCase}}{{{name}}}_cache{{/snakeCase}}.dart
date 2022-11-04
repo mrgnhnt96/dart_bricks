@@ -115,4 +115,69 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> imple
 
     return const RequestResult.success(null);
   }
+
+  @override
+  Future<Stream<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>> watchAll() async {
+    await cacheInit();
+
+    final stream = cache.watch();
+
+    return stream.asyncMap<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>(
+      (event) {
+        final key = event.key as String;
+        if (event.deleted) {
+          return StreamResult.deleted(key);
+        }
+
+        final data = event.value as Map?;
+
+        if (data == null) {
+          return StreamResult.deleted(key);
+        }
+
+        try {
+          return StreamResult(
+            {{#pascalCase}}{{{model}}}{{/pascalCase}}.fromJson(
+              Map<String, dynamic>.from(data),
+            ),
+            key: key,
+          );
+        } catch (e) {
+          return StreamResult.failure('$e');
+        }
+      },
+    );
+  }
+
+  @override
+  Future<Stream<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>> watchById(String id) async {
+    await cacheInit();
+
+    final stream = cache.watch(key: id);
+
+    return stream.asyncMap<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>(
+      (event) {
+        if (event.deleted) {
+          return StreamResult.deleted(id);
+        }
+
+        final data = event.value as Map?;
+
+        if (data == null) {
+          return StreamResult.deleted(id);
+        }
+
+        try {
+          return StreamResult(
+            {{#pascalCase}}{{{model}}}{{/pascalCase}}.fromJson(
+              Map<String, dynamic>.from(data),
+            ),
+            key: id,
+          );
+        } catch (e) {
+          return StreamResult.failure('$e');
+        }
+      },
+    );
+  }
 }

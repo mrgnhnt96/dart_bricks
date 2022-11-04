@@ -115,4 +115,69 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
 
     return const RequestResult.success(null);
   }
+
+  @override
+  Future<Stream<StreamResult<_MODEL_pascal>>> watchAll() async {
+    await cacheInit();
+
+    final stream = cache.watch();
+
+    return stream.asyncMap<StreamResult<_MODEL_pascal>>(
+      (event) {
+        final key = event.key as String;
+        if (event.deleted) {
+          return StreamResult.deleted(key);
+        }
+
+        final data = event.value as Map?;
+
+        if (data == null) {
+          return StreamResult.deleted(key);
+        }
+
+        try {
+          return StreamResult(
+            _MODEL_pascal.fromJson(
+              Map<String, dynamic>.from(data),
+            ),
+            key: key,
+          );
+        } catch (e) {
+          return StreamResult.failure('$e');
+        }
+      },
+    );
+  }
+
+  @override
+  Future<Stream<StreamResult<_MODEL_pascal>>> watchById(String id) async {
+    await cacheInit();
+
+    final stream = cache.watch(key: id);
+
+    return stream.asyncMap<StreamResult<_MODEL_pascal>>(
+      (event) {
+        if (event.deleted) {
+          return StreamResult.deleted(id);
+        }
+
+        final data = event.value as Map?;
+
+        if (data == null) {
+          return StreamResult.deleted(id);
+        }
+
+        try {
+          return StreamResult(
+            _MODEL_pascal.fromJson(
+              Map<String, dynamic>.from(data),
+            ),
+            key: id,
+          );
+        } catch (e) {
+          return StreamResult.failure('$e');
+        }
+      },
+    );
+  }
 }

@@ -13,6 +13,10 @@ abstract class I{{#pascalCase}}{{{name}}}{{/pascalCase}}Cache {
   Future<RequestResult<void>> save({{#pascalCase}}{{{model}}}{{/pascalCase}} {{#camelCase}}{{{model}}}{{/camelCase}});
 
   Future<RequestResult<void>> saveAll(List<{{#pascalCase}}{{{model}}}{{/pascalCase}}> {{#camelCase}}{{{model}}}{{/camelCase}}s);
+
+  Future<Stream<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>> watchAll();
+
+  Future<Stream<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>> watchById(String id);
 }
 
 abstract class I{{#pascalCase}}{{{name}}}{{/pascalCase}}Source {
