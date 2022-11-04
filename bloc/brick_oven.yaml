@@ -2,6 +2,7 @@ source: oven
 brick_config: brick.yaml
 dirs:
   path:
+    name:
 files:
   path/example_bloc.dart:
     name:
