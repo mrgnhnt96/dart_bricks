@@ -13,10 +13,14 @@ part '{{#snakeCase}}{{{name}}}{{/snakeCase}}.g.dart';
 {{/copyWith}}
 @JsonSerializable()
 class {{#pascalCase}}{{{name}}}{{/pascalCase}} extends Equatable {
-  const {{#pascalCase}}{{{name}}}{{/pascalCase}}();
+  const {{#pascalCase}}{{{name}}}{{/pascalCase}}({
+    required this.id,
+  });
 
   factory {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(Map<String, dynamic> json) =>
       _${{#pascalCase}}{{{name}}}{{/pascalCase}}FromJson(json);
+
+  final String id;
 
   Map<String, dynamic> toJson() => _${{#pascalCase}}{{{name}}}{{/pascalCase}}ToJson(this);
 
