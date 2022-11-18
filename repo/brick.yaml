@@ -34,8 +34,3 @@ vars:
     description: Repo's Path
     default: lib/repos
     prompt: What is the path?
-  byUser:
-    type: boolean
-    description: The cache repo will be by user id
-    default: false
-    prompt: Is the cache repo by user?

@@ -1,17 +1,12 @@
+import 'package:data/repos/all_cache/all_cache_repo.dart';
 import 'package:data/repos/all_cache/database.dart';
 import 'package:data/util/util.dart';
 import 'package:domain/domain.dart';
 import '{{#snakeCase}}{{{name}}}{{/snakeCase}}_repos.dart';
 
-class _Keys {
-  const _Keys._();
-
-  static const {{#camelCase}}{{{name}}}{{/camelCase}} = '{{#snakeCase}}{{{name}}}{{/snakeCase}}';
-}
-
 class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map>
     implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}Cache, ICache {
-  {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache() : super(_Keys.{{#camelCase}}{{{name}}}{{/camelCase}}, byUser: {{byUser}});
+  {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache() : super(Database.{{#camelCase}}{{{name}}}{{/camelCase}});
 
   @override
   Future<RequestResult<List<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>> all() async {

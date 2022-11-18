@@ -15,7 +15,6 @@ files:
       suffix: _cache
     vars:
       name: _NAME_
-      byUser: _BY_USER_
       model: _MODEL_
   path/example/example_repos.dart:
     name:
