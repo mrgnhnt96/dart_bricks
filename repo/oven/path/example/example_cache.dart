@@ -1,3 +1,4 @@
+import 'package:data/repos/all_cache/database.dart';
 import 'package:data/util/util.dart';
 import 'package:domain/domain.dart';
 import '_NAME_snake_repos.dart';
@@ -8,18 +9,19 @@ class _Keys {
   static const _NAME_camel = '_NAME_snake';
 }
 
-class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
+class _NAME_pascalCache extends HiveCache<Map>
+    implements I_NAME_pascalCache, ICache {
   _NAME_pascalCache() : super(_Keys._NAME_camel, byUser: _BY_USER_);
 
   @override
   Future<RequestResult<List<_MODEL_pascal>>> all() async {
-    await cacheInit();
-
     final _MODEL_camels = <_MODEL_pascal>[];
 
-    for (var i = 0; i < cache.length; i++) {
+    final db = await cache();
+
+    for (var i = 0; i < db.length; i++) {
       try {
-        final value = cache.values.elementAt(i);
+        final value = db.values.elementAt(i);
 
         _MODEL_camels.add(
           _MODEL_pascal.fromJson(
@@ -27,7 +29,7 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
           ),
         );
       } catch (_) {
-        await cache.deleteAt(i);
+        await db.deleteAt(i);
       }
     }
 
@@ -36,9 +38,9 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
 
   @override
   Future<RequestResult<_MODEL_pascal>> byId(String id) async {
-    await cacheInit();
+    final db = await cache();
 
-    final value = cache.get(id);
+    final value = db.get(id);
 
     if (value == null) {
       return RequestResult.failure('_MODEL_pascal not found');
@@ -51,7 +53,7 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
         ),
       );
     } catch (_) {
-      await cache.delete(id);
+      await db.delete(id);
 
       return RequestResult.failure('_MODEL_pascal not found');
     }
@@ -59,10 +61,10 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
 
   @override
   Future<RequestResult<void>> delete(String id) async {
-    await cacheInit();
-
     try {
-      await cache.delete(id);
+      final db = await cache();
+
+      await db.delete(id);
     } catch (e) {
       return RequestResult.failure('$e');
     }
@@ -72,10 +74,10 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
 
   @override
   Future<RequestResult<void>> deleteAll() async {
-    await cacheInit();
-
     try {
-      await cache.clear();
+      final db = await cache();
+
+      await db.clear();
     } catch (e) {
       return RequestResult.failure('$e');
     }
@@ -85,10 +87,10 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
 
   @override
   Future<RequestResult<void>> save(_MODEL_pascal _MODEL_camel) async {
-    await cacheInit();
-
     try {
-      await cache.put(_MODEL_camel.id, _MODEL_camel.toJson());
+      final db = await cache();
+
+      await db.put(_MODEL_camel.id, _MODEL_camel.toJson());
     } catch (e) {
       return RequestResult.failure('$e');
     }
@@ -98,8 +100,6 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
 
   @override
   Future<RequestResult<void>> saveAll(List<_MODEL_pascal> _MODEL_camels) async {
-    await cacheInit();
-
     try {
       final entries = _MODEL_camels.asMap().map(
         (index, _MODEL_camel) => MapEntry(
@@ -108,7 +108,9 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
         ),
       );
 
-      await cache.putAll(entries);
+      final db = await cache();
+
+      await db.putAll(entries);
     } catch (e) {
       return RequestResult.failure('$e');
     }
@@ -118,9 +120,9 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
 
   @override
   Future<Stream<StreamResult<_MODEL_pascal>>> watchAll() async {
-    await cacheInit();
+    final db = await cache();
 
-    final stream = cache.watch();
+    final stream = db.watch();
 
     return stream.asyncMap<StreamResult<_MODEL_pascal>>(
       (event) {
@@ -151,9 +153,9 @@ class _NAME_pascalCache extends HiveCache<Map> implements I_NAME_pascalCache {
 
   @override
   Future<Stream<StreamResult<_MODEL_pascal>>> watchById(String id) async {
-    await cacheInit();
+    final db = await cache();
 
-    final stream = cache.watch(key: id);
+    final stream = db.watch(key: id);
 
     return stream.asyncMap<StreamResult<_MODEL_pascal>>(
       (event) {

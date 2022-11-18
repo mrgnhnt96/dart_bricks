@@ -1,3 +1,4 @@
+import 'package:data/repos/all_cache/database.dart';
 import 'package:data/util/util.dart';
 import 'package:domain/domain.dart';
 import '{{#snakeCase}}{{{name}}}{{/snakeCase}}_repos.dart';
@@ -8,18 +9,19 @@ class _Keys {
   static const {{#camelCase}}{{{name}}}{{/camelCase}} = '{{#snakeCase}}{{{name}}}{{/snakeCase}}';
 }
 
-class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}Cache {
+class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map>
+    implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}Cache, ICache {
   {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache() : super(_Keys.{{#camelCase}}{{{name}}}{{/camelCase}}, byUser: {{byUser}});
 
   @override
   Future<RequestResult<List<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>> all() async {
-    await cacheInit();
-
     final {{#camelCase}}{{{model}}}{{/camelCase}}s = <{{#pascalCase}}{{{model}}}{{/pascalCase}}>[];
 
-    for (var i = 0; i < cache.length; i++) {
+    final db = await cache();
+
+    for (var i = 0; i < db.length; i++) {
       try {
-        final value = cache.values.elementAt(i);
+        final value = db.values.elementAt(i);
 
         {{#camelCase}}{{{model}}}{{/camelCase}}s.add(
           {{#pascalCase}}{{{model}}}{{/pascalCase}}.fromJson(
@@ -27,7 +29,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> imple
           ),
         );
       } catch (_) {
-        await cache.deleteAt(i);
+        await db.deleteAt(i);
       }
     }
 
@@ -36,9 +38,9 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> imple
 
   @override
   Future<RequestResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>> byId(String id) async {
-    await cacheInit();
+    final db = await cache();
 
-    final value = cache.get(id);
+    final value = db.get(id);
 
     if (value == null) {
       return RequestResult.failure('{{#pascalCase}}{{{model}}}{{/pascalCase}} not found');
@@ -51,7 +53,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> imple
         ),
       );
     } catch (_) {
-      await cache.delete(id);
+      await db.delete(id);
 
       return RequestResult.failure('{{#pascalCase}}{{{model}}}{{/pascalCase}} not found');
     }
@@ -59,10 +61,10 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> imple
 
   @override
   Future<RequestResult<void>> delete(String id) async {
-    await cacheInit();
-
     try {
-      await cache.delete(id);
+      final db = await cache();
+
+      await db.delete(id);
     } catch (e) {
       return RequestResult.failure('$e');
     }
@@ -72,10 +74,10 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> imple
 
   @override
   Future<RequestResult<void>> deleteAll() async {
-    await cacheInit();
-
     try {
-      await cache.clear();
+      final db = await cache();
+
+      await db.clear();
     } catch (e) {
       return RequestResult.failure('$e');
     }
@@ -85,10 +87,10 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> imple
 
   @override
   Future<RequestResult<void>> save({{#pascalCase}}{{{model}}}{{/pascalCase}} {{#camelCase}}{{{model}}}{{/camelCase}}) async {
-    await cacheInit();
-
     try {
-      await cache.put({{#camelCase}}{{{model}}}{{/camelCase}}.id, {{#camelCase}}{{{model}}}{{/camelCase}}.toJson());
+      final db = await cache();
+
+      await db.put({{#camelCase}}{{{model}}}{{/camelCase}}.id, {{#camelCase}}{{{model}}}{{/camelCase}}.toJson());
     } catch (e) {
       return RequestResult.failure('$e');
     }
@@ -98,8 +100,6 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> imple
 
   @override
   Future<RequestResult<void>> saveAll(List<{{#pascalCase}}{{{model}}}{{/pascalCase}}> {{#camelCase}}{{{model}}}{{/camelCase}}s) async {
-    await cacheInit();
-
     try {
       final entries = {{#camelCase}}{{{model}}}{{/camelCase}}s.asMap().map(
         (index, {{#camelCase}}{{{model}}}{{/camelCase}}) => MapEntry(
@@ -108,7 +108,9 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> imple
         ),
       );
 
-      await cache.putAll(entries);
+      final db = await cache();
+
+      await db.putAll(entries);
     } catch (e) {
       return RequestResult.failure('$e');
     }
@@ -118,9 +120,9 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> imple
 
   @override
   Future<Stream<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>> watchAll() async {
-    await cacheInit();
+    final db = await cache();
 
-    final stream = cache.watch();
+    final stream = db.watch();
 
     return stream.asyncMap<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>(
       (event) {
@@ -151,9 +153,9 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map> imple
 
   @override
   Future<Stream<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>> watchById(String id) async {
-    await cacheInit();
+    final db = await cache();
 
-    final stream = cache.watch(key: id);
+    final stream = db.watch(key: id);
 
     return stream.asyncMap<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>(
       (event) {
