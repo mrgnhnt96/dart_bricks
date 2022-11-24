@@ -2,9 +2,9 @@ import 'package:autoequal/autoequal.dart';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as con;
 import 'package:equatable/equatable.dart';
-// start{{json}}
+{{#json}}
 import 'package:json_annotation/json_annotation.dart';
-// end{{json}}
+{{/json}}
 
 part '{{#snakeCase}}{{{name}}}{{/snakeCase}}_bloc.g.dart';
 part '{{#snakeCase}}{{{name}}}{{/snakeCase}}_event.dart';
@@ -30,7 +30,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc extends Bloc<{{#pascalCase}}{
     throw UnimplementedError('_fetch() has not been implemented.');
   }
 
-// start{{json}}
+{{#json}}
   {{#pascalCase}}{{{name}}}{{/pascalCase}}State? fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       return _Ready.fromJson(json);
@@ -46,5 +46,5 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc extends Bloc<{{#pascalCase}}{
 
     return null;
   }
-  // end{{json}}
+{{/json}}
 }

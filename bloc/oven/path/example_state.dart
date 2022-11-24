@@ -15,18 +15,18 @@ abstract class _NAME_pascalState extends Equatable {
   List<Object?> get props => [];
 }
 
-// start_JSON_
+// section_JSON_
 @JsonSerializable()
-// end_JSON_
+// endSection_JSON_
 @autoequal
 class _Ready extends _NAME_pascalState {
   const _Ready();
 
-  // start_JSON_
+  // section_JSON_
   factory _Ready.fromJson(Map<String, dynamic> json) => _$ReadyFromJson(json);
 
   Map<String, dynamic> toJson() => _$ReadyToJson(this);
-  // end_JSON_
+  // endSection_JSON_
 
   @override
   List<Object?> get props => _$props;

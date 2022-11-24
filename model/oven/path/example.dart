@@ -1,16 +1,16 @@
 import 'package:autoequal/autoequal.dart';
-// if_COPY_WITH_
+// section_COPY_WITH_
 import 'package:copy_with_extension/copy_with_extension.dart';
-// endIf_COPY_WITH_
+// endSection_COPY_WITH_
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part '_NAME_snake.g.dart';
 
 @autoequal
-// if_COPY_WITH_
+// section_COPY_WITH_
 @CopyWith()
-// endIf_COPY_WITH_
+// endSection_COPY_WITH_
 @JsonSerializable()
 class _NAME_pascal extends Equatable {
   const _NAME_pascal({
