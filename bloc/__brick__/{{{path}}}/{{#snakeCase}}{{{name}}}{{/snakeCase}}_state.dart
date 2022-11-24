@@ -14,17 +14,20 @@ abstract class {{#pascalCase}}{{{name}}}{{/pascalCase}}State extends Equatable {
   @override
   List<Object?> get props => [];
 }
-{{#json}}
+
+// start{{json}}
 @JsonSerializable()
-{{/json}}
+// end{{json}}
 @autoequal
 class _Ready extends {{#pascalCase}}{{{name}}}{{/pascalCase}}State {
   const _Ready();
-{{#json}}
+
+  // start{{json}}
   factory _Ready.fromJson(Map<String, dynamic> json) => _$ReadyFromJson(json);
 
   Map<String, dynamic> toJson() => _$ReadyToJson(this);
-{{/json}}
+  // end{{json}}
+
   @override
   List<Object?> get props => _$props;
 }
