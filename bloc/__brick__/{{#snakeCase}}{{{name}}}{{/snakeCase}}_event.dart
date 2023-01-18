@@ -22,6 +22,7 @@ class _Fetch extends {{#pascalCase}}{{{name}}}{{/pascalCase}}Event {
 }
 
 extension {{#pascalCase}}{{{name}}}{{/pascalCase}}BlocX on {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc {
+  // ignore: library_private_types_in_public_api
   _Events get events => _Events(this);
 }
 

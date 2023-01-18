@@ -22,6 +22,7 @@ class _Fetch extends _NAME_pascalEvent {
 }
 
 extension _NAME_pascalBlocX on _NAME_pascalBloc {
+  // ignore: library_private_types_in_public_api
   _Events get events => _Events(this);
 }
 
