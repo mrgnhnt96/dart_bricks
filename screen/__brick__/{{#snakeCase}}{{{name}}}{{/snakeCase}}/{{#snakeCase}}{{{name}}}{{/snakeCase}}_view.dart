@@ -7,6 +7,14 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}View extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _Description();
+    return Column(
+      children: <Widget>[
+          const _Description();
+          ElevatedButton(
+            onPressed: () {}
+            child: const Text('Do something'),
+          ),
+      ],
+    ),
   }
 }

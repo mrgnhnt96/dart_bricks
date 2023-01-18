@@ -1,7 +1,7 @@
 part of '../{{#snakeCase}}{{{name}}}{{/snakeCase}}_view.dart';
 
 class _Description extends StatelessWidget {
-  const _Description({super.key});
+  const _Description();
 
   @override
   Widget build(BuildContext context) {
