@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 part of '_NAME_snake_bloc.dart';
 
 abstract class _NAME_pascalState extends Equatable {
