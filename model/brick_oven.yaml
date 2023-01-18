@@ -1,10 +1,7 @@
 source: oven
 brick_config: brick.yaml
-dirs:
-  path:
-    name:
 files:
-  path/example.dart:
+  example.dart:
     name:
       value: name
       format: snake

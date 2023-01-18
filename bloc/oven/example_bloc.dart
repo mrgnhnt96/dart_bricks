@@ -2,9 +2,6 @@ import 'package:autoequal/autoequal.dart';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as con;
 import 'package:equatable/equatable.dart';
-// section_JSON_
-import 'package:json_annotation/json_annotation.dart';
-// endSection_JSON_
 
 part '_NAME_snake_bloc.g.dart';
 part '_NAME_snake_event.dart';
@@ -29,22 +26,4 @@ class _NAME_pascalBloc extends Bloc<_NAME_pascalEvent, _NAME_pascalState> {
     // TODO: implement _fetch
     throw UnimplementedError('_fetch() has not been implemented.');
   }
-
-// section_JSON_
-  _NAME_pascalState? fromJson(Map<String, dynamic>? json) {
-    if (json != null) {
-      return _Ready.fromJson(json);
-    }
-
-    return null;
-  }
-
-  Map<String, dynamic>? toJson(_NAME_pascalState state) {
-    if (state.isReady) {
-      return state.asReady.toJson();
-    }
-
-    return null;
-  }
-  // endSection_JSON_
 }

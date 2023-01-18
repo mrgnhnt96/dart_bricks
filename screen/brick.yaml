@@ -24,8 +24,3 @@ vars:
     description: Screen's name
     default: Awesome
     prompt: What is the name of the screen?
-  path:
-    type: string
-    description: Screen's Path
-    default: lib/screens
-    prompt: What is the path?

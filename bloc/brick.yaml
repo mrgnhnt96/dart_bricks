@@ -24,13 +24,3 @@ vars:
     description: Bloc's name
     default: Awesome
     prompt: What is the name of the bloc?
-  path:
-    type: string
-    description: Bloc's Path
-    default: lib/blocs
-    prompt: What is the path?
-  json:
-    type: boolean
-    description: use json serializable
-    default: false
-    prompt: Use json serializable?

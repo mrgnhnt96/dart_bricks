@@ -29,10 +29,25 @@ install:
     - $install:screen
     - $install:repo
   bloc:
+    - $uninstall:bloc
     - mason add bloc -g --path bloc
   model:
+    - $uninstall:model
     - mason add model -g --path model
   screen:
+    - $uninstall:screen
     - mason add screen -g --path screen
   repo:
+    - $uninstall:repo
     - mason add repo -g --path repo
+
+uninstall:
+  all:
+    - $uninstall:bloc
+    - $uninstall:model
+    - $uninstall:screen
+    - $uninstall:repo
+  bloc: mason remove -g bloc
+  model: mason remove -g model
+  screen: mason remove -g screen
+  repo: mason remove -g repo

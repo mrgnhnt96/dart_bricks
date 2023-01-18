@@ -1,14 +1,12 @@
 source: oven
 brick_config: brick.yaml
 dirs:
-  path:
-    name:
-  path/example:
+  example:
     name:
       value: name
       format: snake
 files:
-  path/example/example_cache.dart:
+  example/example_cache.dart:
     name:
       value: name
       format: snake
@@ -16,7 +14,7 @@ files:
     vars:
       name: _NAME_
       model: _MODEL_
-  path/example/example_repos.dart:
+  example/example_repos.dart:
     name:
       value: name
       format: snake
@@ -24,7 +22,7 @@ files:
     vars:
       name: _NAME_
       model: _MODEL_
-  path/example/example_source.dart:
+  example/example_source.dart:
     name:
       value: name
       format: snake
@@ -32,7 +30,7 @@ files:
     vars:
       name: _NAME_
       model: _MODEL_
-  path/example/example.dart:
+  example/example.dart:
     name:
       value: name
       format: snake

@@ -7,7 +7,7 @@ class _Description extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Text(
-        'this is the Home view.',
+        'this is the _NAME_title view.',
       ),
     );
   }

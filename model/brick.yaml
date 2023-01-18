@@ -24,11 +24,6 @@ vars:
     description: Model's name
     default: Awesome
     prompt: What is the name of the model?
-  path:
-    type: string
-    description: Model's Path
-    default: lib/models
-    prompt: What is the path?
   copyWith:
     type: boolean
     description: use copyWith

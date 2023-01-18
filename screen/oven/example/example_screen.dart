@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:ui/_PATH_escape/_NAME_snake_view.dart';
+import '_NAME_snake_view.dart';
 
 class _NAME_pascalScreen extends StatelessWidget {
   const _NAME_pascalScreen({super.key});

@@ -29,8 +29,3 @@ vars:
     description: Models's name
     default: AwesomeModel
     prompt: What is the name of the Model?
-  path:
-    type: string
-    description: Repo's Path
-    default: lib/repos
-    prompt: What is the path?

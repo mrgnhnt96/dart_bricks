@@ -7,6 +7,6 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}View extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Description();
+    return const _Description();
   }
 }

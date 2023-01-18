@@ -7,6 +7,6 @@ class _NAME_pascalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Description();
+    return const _Description();
   }
 }

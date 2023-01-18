@@ -12,7 +12,7 @@ part '_NAME_snake.g.dart';
 @CopyWith()
 // endSection_COPY_WITH_
 @JsonSerializable()
-class _NAME_pascal extends Equatable {
+class _NAME_pascalCase extends Equatable {
   const _NAME_pascal({
     required this.id,
   });
