@@ -7,6 +7,7 @@ part '{{#snakeCase}}{{{name}}}{{/snakeCase}}_bloc.g.dart';
 part '{{#snakeCase}}{{{name}}}{{/snakeCase}}_event.dart';
 part '{{#snakeCase}}{{{name}}}{{/snakeCase}}_state.dart';
 
+// ignore: avoid_private_typedef_functions
 typedef _Emitter = Emitter<{{#pascalCase}}{{{name}}}{{/pascalCase}}State>;
 
 class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc extends Bloc<{{#pascalCase}}{{{name}}}{{/pascalCase}}Event, {{#pascalCase}}{{{name}}}{{/pascalCase}}State> {

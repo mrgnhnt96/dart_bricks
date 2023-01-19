@@ -7,6 +7,7 @@ part '_NAME_snake_bloc.g.dart';
 part '_NAME_snake_event.dart';
 part '_NAME_snake_state.dart';
 
+// ignore: avoid_private_typedef_functions
 typedef _Emitter = Emitter<_NAME_pascalState>;
 
 class _NAME_pascalBloc extends Bloc<_NAME_pascalEvent, _NAME_pascalState> {
