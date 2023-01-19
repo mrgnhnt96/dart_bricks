@@ -11,7 +11,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}View extends StatelessWidget {
       children: <Widget>[
           const _Description(),
           ElevatedButton(
-            onPressed: () {}
+            onPressed: () {},
             child: const Text('Do something'),
           ),
       ],

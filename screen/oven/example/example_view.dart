@@ -11,7 +11,7 @@ class _NAME_pascalView extends StatelessWidget {
       children: <Widget>[
           const _Description(),
           ElevatedButton(
-            onPressed: () {}
+            onPressed: () {},
             child: const Text('Do something'),
           ),
       ],
