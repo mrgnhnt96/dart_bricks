@@ -9,7 +9,7 @@ class _NAME_pascalView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-          const _Description();
+          const _Description(),
           ElevatedButton(
             onPressed: () {}
             child: const Text('Do something'),
