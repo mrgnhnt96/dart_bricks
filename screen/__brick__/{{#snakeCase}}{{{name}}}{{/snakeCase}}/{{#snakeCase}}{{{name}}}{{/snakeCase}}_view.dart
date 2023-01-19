@@ -9,12 +9,12 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}View extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-          const _Description(),
-          ElevatedButton(
-            onPressed: () {},
-            child: const Text('Do something'),
-          ),
+        const _Description(),
+        ElevatedButton(
+          onPressed: () {},
+          child: const Text('Do something'),
+        ),
       ],
-    ),
+    );
   }
 }
