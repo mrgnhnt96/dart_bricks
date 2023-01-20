@@ -7,7 +7,7 @@ class _Description extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Text(
-        'this is the {{#titleCase}}{{{name}}}{{/titleCase}} view.',
+        '{{#titleCase}}{{{name}}}{{/titleCase}} is currently under construction.',
       ),
     );
   }
