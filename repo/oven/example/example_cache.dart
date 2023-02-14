@@ -68,11 +68,15 @@ class _NAME_pascalCache extends HiveCache<Map>
   }
 
   @override
-  Future<RequestResult<void>> deleteAll() async {
+  Future<RequestResult<void>> deleteAll([Set<String>? ids]) async {
     try {
       final db = await cache();
 
-      await db.clear();
+      if (ids == null) {
+        await db.clear();
+      } else {
+        await db.deleteAll(ids);
+      }
     } catch (e) {
       return RequestResult.failure('$e');
     }

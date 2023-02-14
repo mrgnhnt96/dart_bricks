@@ -8,7 +8,7 @@ abstract class I{{#pascalCase}}{{{name}}}{{/pascalCase}}Cache {
 
   Future<RequestResult<void>> delete(String id);
 
-  Future<RequestResult<void>> deleteAll();
+  Future<RequestResult<void>> deleteAll([Set<String>? ids]);
 
   Future<RequestResult<void>> save({{#pascalCase}}{{{model}}}{{/pascalCase}} {{#camelCase}}{{{model}}}{{/camelCase}});
 
