@@ -5,10 +5,10 @@
       "name": "dart_bricks",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "2.19"
     }
   ],
-  "generated": "2022-10-28T12:23:38.787136Z",
+  "generated": "2023-02-14T19:01:26.938242Z",
   "generator": "pub",
-  "generatorVersion": "2.18.3"
+  "generatorVersion": "3.0.0-edge.d5bd015cac5c620f46209c9db0b9ce2c4d9510d0"
 }
