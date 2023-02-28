@@ -47,50 +47,6 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
     await super.close();
   }
 
-  Future<void> _fetch(_Fetch event, _Emitter emit) async {
-    _{{#camelCase}}{{{name}}}{{/camelCase}}Id = event.id;
-
-    await hydrate(emit);
-
-    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.byId(_{{#camelCase}}{{{name}}}{{/camelCase}}Id);
-
-    if (result.isError) {
-      emitError(emit, _Error(result.error.message));
-      return;
-    }
-
-    emit(_Ready(result.value));
-
-    final stream = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.watchById(_{{#camelCase}}{{{name}}}{{/camelCase}}Id);
-
-    await _listener?.cancel();
-
-    _listener = stream.listen((event) {
-      if (event.wasDeleted) {
-        add(const _SourceChanged(_Error('{{#sentenceCase}}{{{name}}}{{/sentenceCase}} was deleted')));
-        return;
-      }
-
-      final {{#camelCase}}{{{name}}}{{/camelCase}} = event.value;
-
-      if ({{#camelCase}}{{{name}}}{{/camelCase}} == null) {
-        return;
-      }
-
-      final newState = _Ready({{#camelCase}}{{{name}}}{{/camelCase}});
-
-      if (newState == state) {
-        return;
-      }
-
-      add(_SourceChanged(newState));
-    });
-  }
-
-  FutureOr<void> _cacheChanged(_CacheChanged event, _Emitter emit) async {
-    emitNoCache(emit, event.state);
-  }
-
   @override
   Future<Stream<{{#pascalCase}}{{{name}}}{{/pascalCase}}State?>> listenForStorageChanges() async {
     final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sCache.watchAll();
@@ -151,15 +107,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
     return _Ready(result.value);
   }
 
-  FutureOr<void> _save(_Save event, _Emitter emit) async {
-    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.update(event.{{#camelCase}}{{{name}}}{{/camelCase}});
-
-    if (result.isError) {
-      emitError(emit, _Error(result.error.message));
-      return;
-    }
-
-    emit(_Ready(event.{{#camelCase}}{{{name}}}{{/camelCase}}));
+  FutureOr<void> _cacheChanged(_CacheChanged event, _Emitter emit) async {
+    emitNoCache(emit, event.state);
   }
 
   FutureOr<void> _create(_Create event, _Emitter emit) async {
@@ -173,12 +122,6 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
     emit(_Ready(result.value));
   }
 
-  FutureOr<void> _sourceChanged(_SourceChanged event, _Emitter emit) async {
-    await stopListeningToChanges();
-
-    emit(event.state);
-  }
-
   FutureOr<void> _delete(_Delete event, _Emitter emit) async {
     await _{{#camelCase}}{{{name}}}{{/camelCase}}sCache.delete(event.id);
 
@@ -190,5 +133,62 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
     }
 
     emit(const _Deleted());
+  }
+
+  Future<void> _fetch(_Fetch event, _Emitter emit) async {
+    _{{#camelCase}}{{{name}}}{{/camelCase}}Id = event.id;
+
+    await hydrate(emit);
+
+    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.byId(_{{#camelCase}}{{{name}}}{{/camelCase}}Id);
+
+    if (result.isError) {
+      emitError(emit, _Error(result.error.message));
+      return;
+    }
+
+    emit(_Ready(result.value));
+
+    final stream = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.watchById(_{{#camelCase}}{{{name}}}{{/camelCase}}Id);
+
+    await _listener?.cancel();
+
+    _listener = stream.listen((event) {
+      if (event.wasDeleted) {
+        add(const _SourceChanged(_Error('{{#sentenceCase}}{{{name}}}{{/sentenceCase}} was deleted')));
+        return;
+      }
+
+      final {{#camelCase}}{{{name}}}{{/camelCase}} = event.value;
+
+      if ({{#camelCase}}{{{name}}}{{/camelCase}} == null) {
+        return;
+      }
+
+      final newState = _Ready({{#camelCase}}{{{name}}}{{/camelCase}});
+
+      if (newState == state) {
+        return;
+      }
+
+      add(_SourceChanged(newState));
+    });
+  }
+
+  FutureOr<void> _save(_Save event, _Emitter emit) async {
+    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.update(event.{{#camelCase}}{{{name}}}{{/camelCase}});
+
+    if (result.isError) {
+      emitError(emit, _Error(result.error.message));
+      return;
+    }
+
+    emit(_Ready(event.{{#camelCase}}{{{name}}}{{/camelCase}}));
+  }
+
+  FutureOr<void> _sourceChanged(_SourceChanged event, _Emitter emit) async {
+    await stopListeningToChanges();
+
+    emit(event.state);
   }
 }
