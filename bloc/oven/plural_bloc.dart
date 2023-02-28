@@ -10,9 +10,9 @@ import 'package:internal_domain/domain.dart';
 
 import 'package:internal_application/utils/persist_bloc.dart';
 
-part '_NAME_snake_bloc.g.dart';
-part '_NAME_snake_event.dart';
-part '_NAME_snake_state.dart';
+part '_NAME_snakes_bloc.g.dart';
+part '_NAME_snakes_event.dart';
+part '_NAME_snakes_state.dart';
 
 // ignore: avoid_private_typedef_functions
 typedef _Emitter = Emitter<_NAME_PASCALsState>;
@@ -20,10 +20,10 @@ typedef _Emitter = Emitter<_NAME_PASCALsState>;
 class _NAME_PASCALsBloc
     extends PersistBloc<_NAME_PASCALsEvent, _NAME_PASCALsState> {
   _NAME_PASCALsBloc({
-    required I_NAME_PASCALCache _NAME_CAMELCache,
-    required I_NAME_PASCALSource _NAME_CAMELSource,
-  })  : __NAME_CAMELCache = _NAME_CAMELCache,
-        __NAME_CAMELSource = _NAME_CAMELSource,
+    required I_NAME_PASCALsCache _NAME_CAMELsCache,
+    required I_NAME_PASCALsSource _NAME_CAMELsSource,
+  })  : __NAME_CAMELsCache = _NAME_CAMELsCache,
+        __NAME_CAMELsSource = _NAME_CAMELsSource,
         super(const _Loading()) {
     on<_Init>(_init);
     on<_Fetch>(_fetch, transformer: con.droppable());
@@ -32,12 +32,12 @@ class _NAME_PASCALsBloc
     add(const _Init());
   }
 
-  final I_NAME_PASCALCache __NAME_CAMELCache;
-  final I_NAME_PASCALSource __NAME_CAMELSource;
+  final I_NAME_PASCALsCache __NAME_CAMELsCache;
+  final I_NAME_PASCALsSource __NAME_CAMELsSource;
 
   @override
   Future<Stream<_NAME_PASCALsState?>> listenForStorageChanges() async {
-    final result = await __NAME_CAMELCache.watchAll();
+    final result = await __NAME_CAMELsCache.watchAll();
 
     return result.asyncMap((event) {
       if (!state.isReady) {
@@ -85,7 +85,7 @@ class _NAME_PASCALsBloc
       return;
     }
 
-    final result = await __NAME_CAMELCache.all();
+    final result = await __NAME_CAMELsCache.all();
 
     if (result.isError) {
       return;
@@ -104,7 +104,7 @@ class _NAME_PASCALsBloc
     });
 
     if (toDelete.isNotEmpty) {
-      await __NAME_CAMELCache.deleteAll(toDelete);
+      await __NAME_CAMELsCache.deleteAll(toDelete);
     }
 
     final toUpdate = <_NAME_PASCAL>[];
@@ -117,13 +117,13 @@ class _NAME_PASCALsBloc
     }
 
     if (toUpdate.isNotEmpty) {
-      await __NAME_CAMELCache.saveAll(toUpdate);
+      await __NAME_CAMELsCache.saveAll(toUpdate);
     }
   }
 
   @override
   Future<_NAME_PASCALsState?> retrieve() async {
-    final result = await __NAME_CAMELCache.all();
+    final result = await __NAME_CAMELsCache.all();
 
     if (result.isError) {
       return null;
@@ -145,7 +145,7 @@ class _NAME_PASCALsBloc
   }
 
   Future<void> _get_NAME_PASCALs(_Emitter emit) async {
-    final result = await __NAME_CAMELSource.all();
+    final result = await __NAME_CAMELsSource.all();
 
     if (result.isError) {
       emitError(emit, _Error(result.error.message));

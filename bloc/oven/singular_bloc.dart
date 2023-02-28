@@ -10,9 +10,9 @@ import 'package:internal_domain/domain.dart';
 
 import 'package:internal_application/utils/persist_bloc.dart';
 
-part 'bevy_bracket_bloc.g.dart';
-part 'bevy_bracket_event.dart';
-part 'bevy_bracket_state.dart';
+part '_NAME_snake_bloc.g.dart';
+part '_NAME_snake_event.dart';
+part '_NAME_snake_state.dart';
 
 // ignore: avoid_private_typedef_functions
 typedef _Emitter = Emitter<_NAME_PASCALState>;
@@ -20,10 +20,10 @@ typedef _Emitter = Emitter<_NAME_PASCALState>;
 class _NAME_PASCALBloc
     extends PersistBloc<_NAME_PASCALEvent, _NAME_PASCALState> {
   _NAME_PASCALBloc({
-    required I_NAME_PASCALCache _NAME_CAMELCache,
-    required I_NAME_PASCALSource _NAME_CAMELSource,
-  })  : __NAME_CAMELCache = _NAME_CAMELCache,
-        __NAME_CAMELSource = _NAME_CAMELSource,
+    required I_NAME_PASCALsCache _NAME_CAMELsCache,
+    required I_NAME_PASCALsSource _NAME_CAMELsSource,
+  })  : __NAME_CAMELsCache = _NAME_CAMELsCache,
+        __NAME_CAMELsSource = _NAME_CAMELsSource,
         super(const _Loading()) {
     on<_Init>(_init, transformer: con.droppable());
     on<_Save>(_save, transformer: con.droppable());
@@ -31,8 +31,8 @@ class _NAME_PASCALBloc
     on<_SourceChanged>(_sourceChanged);
   }
 
-  final I_NAME_PASCALCache __NAME_CAMELCache;
-  final I_NAME_PASCALSource __NAME_CAMELSource;
+  final I_NAME_PASCALsCache __NAME_CAMELsCache;
+  final I_NAME_PASCALsSource __NAME_CAMELsSource;
 
   late String __NAME_CAMELId;
 
@@ -50,7 +50,7 @@ class _NAME_PASCALBloc
 
     await hydrate(emit);
 
-    final result = await __NAME_CAMELSource.byId(__NAME_CAMELId);
+    final result = await __NAME_CAMELsSource.byId(__NAME_CAMELId);
 
     if (result.isError) {
       emitError(emit, _Error(result.error.message));
@@ -59,7 +59,7 @@ class _NAME_PASCALBloc
 
     emit(_Ready(result.value));
 
-    final stream = await __NAME_CAMELSource.watchById(__NAME_CAMELId);
+    final stream = await __NAME_CAMELsSource.watchById(__NAME_CAMELId);
 
     await _listener?.cancel();
 
@@ -91,7 +91,7 @@ class _NAME_PASCALBloc
 
   @override
   Future<Stream<_NAME_PASCALState?>> listenForStorageChanges() async {
-    final result = await __NAME_CAMELCache.watchById(__NAME_CAMELId);
+    final result = await __NAME_CAMELsCache.watchById(__NAME_CAMELId);
 
     return result.asyncMap((event) {
       if (!state.isReady) {
@@ -130,19 +130,19 @@ class _NAME_PASCALBloc
     }
 
     final _NAME_CAMEL =
-        await __NAME_CAMELCache.byId(state.asReady._NAME_CAMEL.id);
+        await __NAME_CAMELsCache.byId(state.asReady._NAME_CAMEL.id);
 
     if (_NAME_CAMEL.isSuccess &&
         _NAME_CAMEL.value == state.asReady._NAME_CAMEL) {
       return;
     }
 
-    await __NAME_CAMELCache.save(state.asReady._NAME_CAMEL);
+    await __NAME_CAMELsCache.save(state.asReady._NAME_CAMEL);
   }
 
   @override
   Future<_NAME_PASCALState?> retrieve() async {
-    final result = await __NAME_CAMELCache.byId(__NAME_CAMELId);
+    final result = await __NAME_CAMELsCache.byId(__NAME_CAMELId);
 
     if (result.isError) {
       return null;
@@ -156,7 +156,7 @@ class _NAME_PASCALBloc
       return;
     }
 
-    final result = await __NAME_CAMELSource.update(event._NAME_CAMEL);
+    final result = await __NAME_CAMELsSource.update(event._NAME_CAMEL);
 
     if (result.isError) {
       emitError(emit, _Error(result.error.message));

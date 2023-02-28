@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
-part of 'bevy_bracket_bloc.dart';
+part of '_NAME_snake_bloc.dart';
 
 abstract class _NAME_PASCALState extends Equatable {
   const _NAME_PASCALState();

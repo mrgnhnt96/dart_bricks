@@ -1,4 +1,4 @@
-part of '_NAME_snake_bloc.dart';
+part of '_NAME_snakes_bloc.dart';
 
 abstract class _NAME_PASCALsEvent extends Equatable {
   const _NAME_PASCALsEvent();

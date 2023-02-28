@@ -20,10 +20,10 @@ typedef _Emitter = Emitter<{{#pascalCase}}{{{name}}}{{/pascalCase}}sState>;
 class {{#pascalCase}}{{{name}}}{{/pascalCase}}sBloc
     extends PersistBloc<{{#pascalCase}}{{{name}}}{{/pascalCase}}sEvent, {{#pascalCase}}{{{name}}}{{/pascalCase}}sState> {
   {{#pascalCase}}{{{name}}}{{/pascalCase}}sBloc({
-    required I{{#pascalCase}}{{{name}}}{{/pascalCase}}Cache {{#camelCase}}{{{name}}}{{/camelCase}}Cache,
-    required I{{#pascalCase}}{{{name}}}{{/pascalCase}}Source {{#camelCase}}{{{name}}}{{/camelCase}}Source,
-  })  : _{{#camelCase}}{{{name}}}{{/camelCase}}Cache = {{#camelCase}}{{{name}}}{{/camelCase}}Cache,
-        _{{#camelCase}}{{{name}}}{{/camelCase}}Source = {{#camelCase}}{{{name}}}{{/camelCase}}Source,
+    required I{{#pascalCase}}{{{name}}}{{/pascalCase}}sCache {{#camelCase}}{{{name}}}{{/camelCase}}sCache,
+    required I{{#pascalCase}}{{{name}}}{{/pascalCase}}sSource {{#camelCase}}{{{name}}}{{/camelCase}}sSource,
+  })  : _{{#camelCase}}{{{name}}}{{/camelCase}}sCache = {{#camelCase}}{{{name}}}{{/camelCase}}sCache,
+        _{{#camelCase}}{{{name}}}{{/camelCase}}sSource = {{#camelCase}}{{{name}}}{{/camelCase}}sSource,
         super(const _Loading()) {
     on<_Init>(_init);
     on<_Fetch>(_fetch, transformer: con.droppable());
@@ -32,12 +32,12 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sBloc
     add(const _Init());
   }
 
-  final I{{#pascalCase}}{{{name}}}{{/pascalCase}}Cache _{{#camelCase}}{{{name}}}{{/camelCase}}Cache;
-  final I{{#pascalCase}}{{{name}}}{{/pascalCase}}Source _{{#camelCase}}{{{name}}}{{/camelCase}}Source;
+  final I{{#pascalCase}}{{{name}}}{{/pascalCase}}sCache _{{#camelCase}}{{{name}}}{{/camelCase}}sCache;
+  final I{{#pascalCase}}{{{name}}}{{/pascalCase}}sSource _{{#camelCase}}{{{name}}}{{/camelCase}}sSource;
 
   @override
   Future<Stream<{{#pascalCase}}{{{name}}}{{/pascalCase}}sState?>> listenForStorageChanges() async {
-    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}Cache.watchAll();
+    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sCache.watchAll();
 
     return result.asyncMap((event) {
       if (!state.isReady) {
@@ -85,7 +85,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sBloc
       return;
     }
 
-    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}Cache.all();
+    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sCache.all();
 
     if (result.isError) {
       return;
@@ -104,7 +104,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sBloc
     });
 
     if (toDelete.isNotEmpty) {
-      await _{{#camelCase}}{{{name}}}{{/camelCase}}Cache.deleteAll(toDelete);
+      await _{{#camelCase}}{{{name}}}{{/camelCase}}sCache.deleteAll(toDelete);
     }
 
     final toUpdate = <{{#pascalCase}}{{{name}}}{{/pascalCase}}>[];
@@ -117,13 +117,13 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sBloc
     }
 
     if (toUpdate.isNotEmpty) {
-      await _{{#camelCase}}{{{name}}}{{/camelCase}}Cache.saveAll(toUpdate);
+      await _{{#camelCase}}{{{name}}}{{/camelCase}}sCache.saveAll(toUpdate);
     }
   }
 
   @override
   Future<{{#pascalCase}}{{{name}}}{{/pascalCase}}sState?> retrieve() async {
-    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}Cache.all();
+    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sCache.all();
 
     if (result.isError) {
       return null;
@@ -145,7 +145,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sBloc
   }
 
   Future<void> _get{{#pascalCase}}{{{name}}}{{/pascalCase}}s(_Emitter emit) async {
-    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}Source.all();
+    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.all();
 
     if (result.isError) {
       emitError(emit, _Error(result.error.message));
