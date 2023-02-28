@@ -21,6 +21,18 @@ environment:
 vars:
   name:
     type: string
-    description: Bloc's name
-    default: Awesome
-    prompt: What is the name of the bloc?
+    description: Bloc's name/model
+    default: Model
+    prompt: What is the name/model of the bloc?
+  type:
+    type: enum
+    values:
+      - plural
+      - singular
+      - basic
+    description: |
+      Plural Bloc: A bloc that handles multiple items of the same type.
+      Singular Bloc: A bloc that handles a single item of the same type.
+      Basic Bloc: A bloc with the base functionality.
+    default: plural
+    prompt: What type of bloc is this?

@@ -1,7 +1,7 @@
 analyzer:
   exclude:
-    - "**/__brick__/**/*.dart"
-    - "**/*.dart"
+    - "**/__brick__"
+    - "**/oven"
   # errors:
   #  uri_does_not_exist: ignore
   #  undefined_identifier: ignore

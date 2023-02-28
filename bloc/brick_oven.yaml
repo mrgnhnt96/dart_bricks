@@ -1,24 +1,90 @@
 source: oven
 brick_config: brick.yaml
 files:
-  example_bloc.dart:
+  # BASIC
+  basic_bloc.dart:
+    include_if: is_basic
     name:
+      braces: 2
       value: name
       format: snake
       suffix: _bloc
     vars:
       name: _NAME_
-  example_event.dart:
+  basic_event.dart:
+    include_if: is_basic
     name:
+      braces: 2
       value: name
       format: snake
       suffix: _event
     vars:
       name: _NAME_
-  example_state.dart:
+  basic_state.dart:
+    include_if: is_basic
     name:
+      braces: 2
       value: name
       format: snake
       suffix: _state
+    vars:
+      name: _NAME_
+
+  # SINGULAR
+  singular_bloc.dart:
+    include_if: is_singular
+    name:
+      braces: 2
+      value: name
+      format: snake
+      suffix: _bloc
+    vars:
+      name: _NAME_
+      model: _MODEL_
+  singular_event.dart:
+    include_if: is_singular
+    name:
+      braces: 2
+      value: name
+      format: snake
+      suffix: _event
+    vars:
+      name: _NAME_
+  singular_state.dart:
+    include_if: is_singular
+    name:
+      braces: 2
+      value: name
+      format: snake
+      suffix: _state
+    vars:
+      name: _NAME_
+
+  # PLURAL
+  plural_bloc.dart:
+    include_if: is_plural
+    name:
+      braces: 2
+      value: name
+      format: snake
+      suffix: s_bloc
+    vars:
+      name: _NAME_
+  plural_event.dart:
+    include_if: is_plural
+    name:
+      braces: 2
+      value: name
+      format: snake
+      suffix: s_event
+    vars:
+      name: _NAME_
+  plural_state.dart:
+    include_if: is_plural
+    name:
+      braces: 2
+      value: name
+      format: snake
+      suffix: s_state
     vars:
       name: _NAME_
