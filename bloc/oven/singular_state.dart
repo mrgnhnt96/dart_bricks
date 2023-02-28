@@ -5,13 +5,14 @@ part of '_NAME_snake_bloc.dart';
 abstract class _NAME_PASCALState extends Equatable {
   const _NAME_PASCALState();
 
-  bool get isReady => this is _Ready;
-  bool get isLoading => this is _Loading;
-  bool get isError => this is _Error;
-
-  _Ready get asReady => this as _Ready;
-  _Loading get asLoading => this as _Loading;
   _Error get asError => this as _Error;
+  _Loading get asLoading => this as _Loading;
+  _Ready get asReady => this as _Ready;
+
+  bool get isDeleted => this is _Deleted;
+  bool get isError => this is _Error;
+  bool get isLoading => this is _Loading;
+  bool get isReady => this is _Ready;
 
   @override
   List<Object?> get props => [];
@@ -29,6 +30,10 @@ class _Ready extends _NAME_PASCALState {
 
 class _Loading extends _NAME_PASCALState {
   const _Loading();
+}
+
+class _Deleted extends _NAME_PASCALState {
+  const _Deleted();
 }
 
 @autoequal

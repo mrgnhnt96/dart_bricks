@@ -5,13 +5,14 @@ part of '{{#snakeCase}}{{{name}}}{{/snakeCase}}_bloc.dart';
 abstract class {{#pascalCase}}{{{name}}}{{/pascalCase}}State extends Equatable {
   const {{#pascalCase}}{{{name}}}{{/pascalCase}}State();
 
-  bool get isReady => this is _Ready;
-  bool get isLoading => this is _Loading;
-  bool get isError => this is _Error;
-
-  _Ready get asReady => this as _Ready;
-  _Loading get asLoading => this as _Loading;
   _Error get asError => this as _Error;
+  _Loading get asLoading => this as _Loading;
+  _Ready get asReady => this as _Ready;
+
+  bool get isDeleted => this is _Deleted;
+  bool get isError => this is _Error;
+  bool get isLoading => this is _Loading;
+  bool get isReady => this is _Ready;
 
   @override
   List<Object?> get props => [];
@@ -29,6 +30,10 @@ class _Ready extends {{#pascalCase}}{{{name}}}{{/pascalCase}}State {
 
 class _Loading extends {{#pascalCase}}{{{name}}}{{/pascalCase}}State {
   const _Loading();
+}
+
+class _Deleted extends {{#pascalCase}}{{{name}}}{{/pascalCase}}State {
+  const _Deleted();
 }
 
 @autoequal

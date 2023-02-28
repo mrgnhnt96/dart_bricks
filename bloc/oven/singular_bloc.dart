@@ -25,8 +25,10 @@ class _NAME_PASCALBloc
   })  : __NAME_CAMELsCache = _NAME_CAMELsCache,
         __NAME_CAMELsSource = _NAME_CAMELsSource,
         super(const _Loading()) {
-    on<_Init>(_init, transformer: con.droppable());
+    on<_Fetch>(_fetch, transformer: con.droppable());
+    on<_Create>(_create, transformer: con.droppable());
     on<_Save>(_save, transformer: con.droppable());
+    on<_Delete>(_delete, transformer: con.droppable());
     on<_CacheChanged>(_cacheChanged);
     on<_SourceChanged>(_sourceChanged);
   }
@@ -45,7 +47,7 @@ class _NAME_PASCALBloc
     await super.close();
   }
 
-  Future<void> _init(_Init event, _Emitter emit) async {
+  Future<void> _fetch(_Fetch event, _Emitter emit) async {
     __NAME_CAMELId = event.id;
 
     await hydrate(emit);
@@ -65,7 +67,7 @@ class _NAME_PASCALBloc
 
     _listener = stream.listen((event) {
       if (event.wasDeleted) {
-        add(const _SourceChanged(_Error('_NAME_PASCAL was deleted')));
+        add(const _SourceChanged(_Error('_NAME_SENTENCE was deleted')));
         return;
       }
 
@@ -91,7 +93,7 @@ class _NAME_PASCALBloc
 
   @override
   Future<Stream<_NAME_PASCALState?>> listenForStorageChanges() async {
-    final result = await __NAME_CAMELsCache.watchById(__NAME_CAMELId);
+    final result = await __NAME_CAMELsCache.watchAll();
 
     return result.asyncMap((event) {
       if (!state.isReady) {
@@ -129,11 +131,9 @@ class _NAME_PASCALBloc
       return;
     }
 
-    final _NAME_CAMEL =
-        await __NAME_CAMELsCache.byId(state.asReady._NAME_CAMEL.id);
+    final result = await __NAME_CAMELsCache.byId(state.asReady._NAME_CAMEL.id);
 
-    if (_NAME_CAMEL.isSuccess &&
-        _NAME_CAMEL.value == state.asReady._NAME_CAMEL) {
+    if (result.isSuccess && result.value == state.asReady._NAME_CAMEL) {
       return;
     }
 
@@ -152,10 +152,6 @@ class _NAME_PASCALBloc
   }
 
   FutureOr<void> _save(_Save event, _Emitter emit) async {
-    if (!state.isReady) {
-      return;
-    }
-
     final result = await __NAME_CAMELsSource.update(event._NAME_CAMEL);
 
     if (result.isError) {
@@ -166,9 +162,33 @@ class _NAME_PASCALBloc
     emit(_Ready(event._NAME_CAMEL));
   }
 
+  FutureOr<void> _create(_Create event, _Emitter emit) async {
+    final result = await __NAME_CAMELsSource.create();
+
+    if (result.isError) {
+      emitError(emit, _Error(result.error.message));
+      return;
+    }
+
+    emit(_Ready(result.value));
+  }
+
   FutureOr<void> _sourceChanged(_SourceChanged event, _Emitter emit) async {
     await stopListeningToChanges();
 
     emit(event.state);
+  }
+
+  FutureOr<void> _delete(_Delete event, _Emitter emit) async {
+    await __NAME_CAMELsCache.delete(event.id);
+
+    final result = await __NAME_CAMELsSource.delete(event.id);
+
+    if (result.isError) {
+      emitError(emit, _Error(result.error.message));
+      return;
+    }
+
+    emit(const _Deleted());
   }
 }
