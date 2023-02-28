@@ -1,7 +1,11 @@
 analyzer:
   exclude:
     - "**/__brick__"
+    - "**/__brick__/**"
     - "**/oven"
+    - "**/oven/**"
+    - "**/for_later/**"
+    - "**/for_later"
   # errors:
   #  uri_does_not_exist: ignore
   #  undefined_identifier: ignore

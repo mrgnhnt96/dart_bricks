@@ -3,13 +3,13 @@ import 'package:domain/domain.dart';
 import '_NAME_snake_repos.dart';
 import 'package:flutter/material.dart';
 
-class _NAME_pascalSource implements I_NAME_pascalSource {
-  const _NAME_pascalSource();
+class _NAME_pascalsSource implements I_NAME_pascalsSource {
+  const _NAME_pascalsSource();
 
   @override
-  Future<RequestResult<List<_MODEL_pascal>>> all() async {
+  Future<RequestResult<List<_NAME_pascal>>> all() async {
     try {
-      final _MODEL_camels = <_MODEL_pascal>[];
+      final _NAME_camels = <_NAME_pascal>[];
 
       final result = await dio.get<Map>('${dio.url}/NOT_IMPLEMENTED');
 
@@ -19,28 +19,28 @@ class _NAME_pascalSource implements I_NAME_pascalSource {
         return RequestResult.failure('No data');
       }
 
-      final _MODEL_camelsJson = List<Map>.from(data as List);
+      final _NAME_camelsJson = List<Map>.from(data as List);
 
-      for (final _MODEL_camelJson in _MODEL_camelsJson) {
+      for (final _NAME_camelJson in _NAME_camelsJson) {
         try {
-          _MODEL_camels.add(
-            _MODEL_pascal.fromJson(
-              Map<String, dynamic>.from(_MODEL_camelJson),
+          _NAME_camels.add(
+            _NAME_pascal.fromJson(
+              Map<String, dynamic>.from(_NAME_camelJson),
             ),
           );
         } catch (e) {
-          debugPrint('Error parsing _MODEL_camel, $e | $_MODEL_camelJson');
+          debugPrint('Error parsing _NAME_camel, $e | $_NAME_camelJson');
         }
       }
 
-      return RequestResult.success(_MODEL_camels);
+      return RequestResult.success(_NAME_camels);
     } catch (e) {
       return RequestResult.failure(e.toString());
     }
   }
 
   @override
-  Future<RequestResult<_MODEL_pascal>> byId(String id) async {
+  Future<RequestResult<_NAME_pascal>> byId(String id) async {
     try {
       final result = await dio.get<Map>('${dio.url}/NOT_IMPLEMENTED/$id');
 
@@ -50,10 +50,10 @@ class _NAME_pascalSource implements I_NAME_pascalSource {
         return RequestResult.failure('No data');
       }
 
-      final _MODEL_camelJson = Map<String, dynamic>.from(data);
+      final _NAME_camelJson = Map<String, dynamic>.from(data);
 
       return RequestResult.success(
-        _MODEL_pascal.fromJson(_MODEL_camelJson),
+        _NAME_pascal.fromJson(_NAME_camelJson),
       );
     } catch (e) {
       return RequestResult.failure(e.toString());
@@ -74,13 +74,13 @@ class _NAME_pascalSource implements I_NAME_pascalSource {
   }
 
   @override
-  Future<RequestResult<void>> update(_MODEL_pascal _MODEL_camel) async {
+  Future<RequestResult<void>> update(_NAME_pascal _NAME_camel) async {
     try {
-      final id = _MODEL_camel.id;
+      final id = _NAME_camel.id;
 
       await dio.put<Map>(
         '${dio.url}/NOT_IMPLEMENTED/$id',
-        data: _MODEL_camel.toJson(),
+        data: _NAME_camel.toJson(),
       );
     } catch (e) {
       return RequestResult.failure(e.toString());

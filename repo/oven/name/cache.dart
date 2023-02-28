@@ -1,16 +1,19 @@
-import 'package:data/repos/all_cache/all_cache_repo.dart';
-import 'package:data/repos/all_cache/database.dart';
-import 'package:data/util/util.dart';
-import 'package:domain/domain.dart';
-import '_NAME_snake_repos.dart';
+import 'package:internal_domain/domain.dart';
 
-class _NAME_pascalCache extends HiveCache<Map>
-    implements I_NAME_pascalCache, ICache {
-  _NAME_pascalCache() : super(Database._NAME_camel);
+import 'package:internal_data/repos/all_cache/all_cache_repos.dart';
+import 'package:internal_data/repos/all_cache/database.dart';
+import 'package:internal_data/repos/_NAME_SNAKEs/_NAME_SNAKEs_repos.dart';
+import 'package:internal_data/utils/hive_cache.dart';
+import 'package:internal_data/utils/request_result.dart';
+
+// ignore: strict_raw_type
+class _NAME_PASCALsCache extends HiveCache<Map>
+    implements I_NAME_PASCALsCache, ICache {
+  _NAME_PASCALsCache() : super(Database._NAME_CAMELs);
 
   @override
-  Future<RequestResult<List<_MODEL_pascal>>> all() async {
-    final _MODEL_camels = <_MODEL_pascal>[];
+  Future<RequestResult<List<_NAME_PASCAL>>> all() async {
+    final _NAME_CAMELs = <_NAME_PASCAL>[];
 
     final db = await cache();
 
@@ -18,8 +21,8 @@ class _NAME_pascalCache extends HiveCache<Map>
       try {
         final value = db.values.elementAt(i);
 
-        _MODEL_camels.add(
-          _MODEL_pascal.fromJson(
+        _NAME_CAMELs.add(
+          _NAME_PASCAL.fromJson(
             Map<String, dynamic>.from(value),
           ),
         );
@@ -28,29 +31,29 @@ class _NAME_pascalCache extends HiveCache<Map>
       }
     }
 
-    return RequestResult.success(_MODEL_camels);
+    return RequestResult.success(_NAME_CAMELs);
   }
 
   @override
-  Future<RequestResult<_MODEL_pascal>> byId(String id) async {
+  Future<RequestResult<_NAME_PASCAL>> byId(String id) async {
     final db = await cache();
 
     final value = db.get(id);
 
     if (value == null) {
-      return RequestResult.failure('_MODEL_pascal not found');
+      return const RequestResult.failure('_NAME_PASCAL not found');
     }
 
     try {
       return RequestResult.success(
-        _MODEL_pascal.fromJson(
+        _NAME_PASCAL.fromJson(
           Map<String, dynamic>.from(value),
         ),
       );
     } catch (_) {
       await db.delete(id);
 
-      return RequestResult.failure('_MODEL_pascal not found');
+      return const RequestResult.failure('_NAME_PASCAL not found');
     }
   }
 
@@ -85,11 +88,11 @@ class _NAME_pascalCache extends HiveCache<Map>
   }
 
   @override
-  Future<RequestResult<void>> save(_MODEL_pascal _MODEL_camel) async {
+  Future<RequestResult<void>> save(_NAME_PASCAL _NAME_CAMEL) async {
     try {
       final db = await cache();
 
-      await db.put(_MODEL_camel.id, _MODEL_camel.toJson());
+      await db.put(_NAME_CAMEL.id, _NAME_CAMEL.toJson());
     } catch (e) {
       return RequestResult.failure('$e');
     }
@@ -98,12 +101,14 @@ class _NAME_pascalCache extends HiveCache<Map>
   }
 
   @override
-  Future<RequestResult<void>> saveAll(List<_MODEL_pascal> _MODEL_camels) async {
+  Future<RequestResult<void>> saveAll(
+    List<_NAME_PASCAL> _NAME_CAMELs,
+  ) async {
     try {
-      final entries = _MODEL_camels.asMap().map(
-        (index, _MODEL_camel) => MapEntry(
-          _MODEL_camel.id,
-          _MODEL_camel.toJson(),
+      final entries = _NAME_CAMELs.asMap().map(
+        (index, _NAME_CAMEL) => MapEntry(
+          _NAME_CAMEL.id,
+          _NAME_CAMEL.toJson(),
         ),
       );
 
@@ -118,12 +123,12 @@ class _NAME_pascalCache extends HiveCache<Map>
   }
 
   @override
-  Future<Stream<StreamResult<_MODEL_pascal>>> watchAll() async {
+  Future<Stream<StreamResult<_NAME_PASCAL>>> watchAll() async {
     final db = await cache();
 
     final stream = db.watch();
 
-    return stream.asyncMap<StreamResult<_MODEL_pascal>>(
+    return stream.asyncMap<StreamResult<_NAME_PASCAL>>(
       (event) {
         final key = event.key as String;
         if (event.deleted) {
@@ -138,7 +143,7 @@ class _NAME_pascalCache extends HiveCache<Map>
 
         try {
           return StreamResult(
-            _MODEL_pascal.fromJson(
+            _NAME_PASCAL.fromJson(
               Map<String, dynamic>.from(data),
             ),
             key: key,
@@ -151,12 +156,12 @@ class _NAME_pascalCache extends HiveCache<Map>
   }
 
   @override
-  Future<Stream<StreamResult<_MODEL_pascal>>> watchById(String id) async {
+  Future<Stream<StreamResult<_NAME_PASCAL>>> watchById(String id) async {
     final db = await cache();
 
     final stream = db.watch(key: id);
 
-    return stream.asyncMap<StreamResult<_MODEL_pascal>>(
+    return stream.asyncMap<StreamResult<_NAME_PASCAL>>(
       (event) {
         if (event.deleted) {
           return StreamResult.deleted(id);
@@ -170,7 +175,7 @@ class _NAME_pascalCache extends HiveCache<Map>
 
         try {
           return StreamResult(
-            _MODEL_pascal.fromJson(
+            _NAME_PASCAL.fromJson(
               Map<String, dynamic>.from(data),
             ),
             key: id,

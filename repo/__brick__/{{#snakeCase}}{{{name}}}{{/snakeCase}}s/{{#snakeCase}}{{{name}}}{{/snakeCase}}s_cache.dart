@@ -1,16 +1,19 @@
-import 'package:data/repos/all_cache/all_cache_repo.dart';
-import 'package:data/repos/all_cache/database.dart';
-import 'package:data/util/util.dart';
-import 'package:domain/domain.dart';
-import '{{#snakeCase}}{{{name}}}{{/snakeCase}}_repos.dart';
+import 'package:internal_domain/domain.dart';
 
-class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map>
-    implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}Cache, ICache {
-  {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache() : super(Database.{{#camelCase}}{{{name}}}{{/camelCase}});
+import 'package:internal_data/repos/all_cache/all_cache_repos.dart';
+import 'package:internal_data/repos/all_cache/database.dart';
+import 'package:internal_data/repos/{{#snakeCase}}{{{name}}}{{/snakeCase}}s/{{#snakeCase}}{{{name}}}{{/snakeCase}}s_repos.dart';
+import 'package:internal_data/utils/hive_cache.dart';
+import 'package:internal_data/utils/request_result.dart';
+
+// ignore: strict_raw_type
+class {{#pascalCase}}{{{name}}}{{/pascalCase}}sCache extends HiveCache<Map>
+    implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}sCache, ICache {
+  {{#pascalCase}}{{{name}}}{{/pascalCase}}sCache() : super(Database.{{#camelCase}}{{{name}}}{{/camelCase}}s);
 
   @override
-  Future<RequestResult<List<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>> all() async {
-    final {{#camelCase}}{{{model}}}{{/camelCase}}s = <{{#pascalCase}}{{{model}}}{{/pascalCase}}>[];
+  Future<RequestResult<List<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> all() async {
+    final {{#camelCase}}{{{name}}}{{/camelCase}}s = <{{#pascalCase}}{{{name}}}{{/pascalCase}}>[];
 
     final db = await cache();
 
@@ -18,8 +21,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map>
       try {
         final value = db.values.elementAt(i);
 
-        {{#camelCase}}{{{model}}}{{/camelCase}}s.add(
-          {{#pascalCase}}{{{model}}}{{/pascalCase}}.fromJson(
+        {{#camelCase}}{{{name}}}{{/camelCase}}s.add(
+          {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(
             Map<String, dynamic>.from(value),
           ),
         );
@@ -28,29 +31,29 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map>
       }
     }
 
-    return RequestResult.success({{#camelCase}}{{{model}}}{{/camelCase}}s);
+    return RequestResult.success({{#camelCase}}{{{name}}}{{/camelCase}}s);
   }
 
   @override
-  Future<RequestResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>> byId(String id) async {
+  Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> byId(String id) async {
     final db = await cache();
 
     final value = db.get(id);
 
     if (value == null) {
-      return RequestResult.failure('{{#pascalCase}}{{{model}}}{{/pascalCase}} not found');
+      return const RequestResult.failure('{{#pascalCase}}{{{name}}}{{/pascalCase}} not found');
     }
 
     try {
       return RequestResult.success(
-        {{#pascalCase}}{{{model}}}{{/pascalCase}}.fromJson(
+        {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(
           Map<String, dynamic>.from(value),
         ),
       );
     } catch (_) {
       await db.delete(id);
 
-      return RequestResult.failure('{{#pascalCase}}{{{model}}}{{/pascalCase}} not found');
+      return const RequestResult.failure('{{#pascalCase}}{{{name}}}{{/pascalCase}} not found');
     }
   }
 
@@ -85,11 +88,11 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map>
   }
 
   @override
-  Future<RequestResult<void>> save({{#pascalCase}}{{{model}}}{{/pascalCase}} {{#camelCase}}{{{model}}}{{/camelCase}}) async {
+  Future<RequestResult<void>> save({{#pascalCase}}{{{name}}}{{/pascalCase}} {{#camelCase}}{{{name}}}{{/camelCase}}) async {
     try {
       final db = await cache();
 
-      await db.put({{#camelCase}}{{{model}}}{{/camelCase}}.id, {{#camelCase}}{{{model}}}{{/camelCase}}.toJson());
+      await db.put({{#camelCase}}{{{name}}}{{/camelCase}}.id, {{#camelCase}}{{{name}}}{{/camelCase}}.toJson());
     } catch (e) {
       return RequestResult.failure('$e');
     }
@@ -98,12 +101,14 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map>
   }
 
   @override
-  Future<RequestResult<void>> saveAll(List<{{#pascalCase}}{{{model}}}{{/pascalCase}}> {{#camelCase}}{{{model}}}{{/camelCase}}s) async {
+  Future<RequestResult<void>> saveAll(
+    List<{{#pascalCase}}{{{name}}}{{/pascalCase}}> {{#camelCase}}{{{name}}}{{/camelCase}}s,
+  ) async {
     try {
-      final entries = {{#camelCase}}{{{model}}}{{/camelCase}}s.asMap().map(
-        (index, {{#camelCase}}{{{model}}}{{/camelCase}}) => MapEntry(
-          {{#camelCase}}{{{model}}}{{/camelCase}}.id,
-          {{#camelCase}}{{{model}}}{{/camelCase}}.toJson(),
+      final entries = {{#camelCase}}{{{name}}}{{/camelCase}}s.asMap().map(
+        (index, {{#camelCase}}{{{name}}}{{/camelCase}}) => MapEntry(
+          {{#camelCase}}{{{name}}}{{/camelCase}}.id,
+          {{#camelCase}}{{{name}}}{{/camelCase}}.toJson(),
         ),
       );
 
@@ -118,12 +123,12 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map>
   }
 
   @override
-  Future<Stream<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>> watchAll() async {
+  Future<Stream<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> watchAll() async {
     final db = await cache();
 
     final stream = db.watch();
 
-    return stream.asyncMap<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>(
+    return stream.asyncMap<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>(
       (event) {
         final key = event.key as String;
         if (event.deleted) {
@@ -138,7 +143,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map>
 
         try {
           return StreamResult(
-            {{#pascalCase}}{{{model}}}{{/pascalCase}}.fromJson(
+            {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(
               Map<String, dynamic>.from(data),
             ),
             key: key,
@@ -151,12 +156,12 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map>
   }
 
   @override
-  Future<Stream<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>> watchById(String id) async {
+  Future<Stream<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> watchById(String id) async {
     final db = await cache();
 
     final stream = db.watch(key: id);
 
-    return stream.asyncMap<StreamResult<{{#pascalCase}}{{{model}}}{{/pascalCase}}>>(
+    return stream.asyncMap<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>(
       (event) {
         if (event.deleted) {
           return StreamResult.deleted(id);
@@ -170,7 +175,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Cache extends HiveCache<Map>
 
         try {
           return StreamResult(
-            {{#pascalCase}}{{{model}}}{{/pascalCase}}.fromJson(
+            {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(
               Map<String, dynamic>.from(data),
             ),
             key: id,

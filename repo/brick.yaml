@@ -21,11 +21,14 @@ environment:
 vars:
   name:
     type: string
-    description: Repo's name
-    default: Awesome
-    prompt: What is the name of the repo?
-  model:
-    type: string
-    description: Models's name
-    default: AwesomeModel
+    description: The model to be used within the repo
+    default: Model
     prompt: What is the name of the Model?
+  type:
+    type: enum
+    values:
+      - Dio
+      - Firebase
+    description: The type of source repo to be created
+    default: Firebase
+    prompt: What type of source repo do you want to create?

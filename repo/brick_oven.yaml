@@ -1,38 +1,63 @@
 source: oven
 brick_config: brick.yaml
 dirs:
-  example:
+  name:
     name:
-      value: name
       format: snake
+      suffix: s
 files:
-  example/example_cache.dart:
+  name/cache.dart:
     name:
       value: name
       format: snake
-      suffix: _cache
+      suffix: s_cache
     vars:
       name: _NAME_
-      model: _MODEL_
-  example/example_repos.dart:
+  name/source.dart:
     name:
       value: name
       format: snake
-      suffix: _repos
+      suffix: s_source
     vars:
       name: _NAME_
-      model: _MODEL_
-  example/example_source.dart:
+      is_firebase: _IS_FIREBASE_
+      is_dio: _IS_DIO_
+  name/repos.dart:
     name:
       value: name
       format: snake
-      suffix: _source
+      suffix: s_repos
     vars:
       name: _NAME_
-      model: _MODEL_
-  example/example.dart:
+      is_firebase: _IS_FIREBASE_
+      is_dio: _IS_DIO_
+
+  name/name.dart:
     name:
-      value: name
       format: snake
+      suffix: s
     vars:
-      name: _NAME_
+      name:
+        _NAME_
+
+  # # DIO
+  # name/dio_source.dart:
+  #   # include_if: is_dio
+  #   name:
+  #     value: name
+  #     format: snake
+  #     suffix: s_source
+  #     braces: 2
+  #   vars:
+  #     name: _NAME_
+
+  # # FIREBASE
+  # name/firebase_source.dart:
+  #   # include_if: is_firebase
+  #   name:
+  #     value: name
+  #     format: snake
+  #     suffix: s_source
+  #     braces: 2
+  #   vars:
+  #     name: _NAME_
