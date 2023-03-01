@@ -27,12 +27,12 @@ vars:
   type:
     type: enum
     values:
-      - plural
-      - singular
-      - basic
+      - Plural
+      - Singular
+      - Basic
     description: |
       Plural Bloc: A bloc that handles multiple items of the same type.
       Singular Bloc: A bloc that handles a single item of the same type.
       Basic Bloc: A bloc with the base functionality.
-    default: plural
+    default: Plural
     prompt: What type of bloc is this?

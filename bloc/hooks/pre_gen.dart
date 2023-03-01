@@ -1,9 +1,9 @@
 import 'package:mason/mason.dart';
 
 void run(HookContext context) {
-  final isPlural = context.vars['type'] == 'plural';
-  final isSingular = context.vars['type'] == 'singular';
-  final isBasic = context.vars['type'] == 'basic';
+  final isPlural = context.vars['type'] == 'Plural';
+  final isSingular = context.vars['type'] == 'Singular';
+  final isBasic = context.vars['type'] == 'Basic';
 
   context.vars = {
     ...context.vars,
