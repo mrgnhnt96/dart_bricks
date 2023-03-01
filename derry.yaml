@@ -9,6 +9,8 @@ cook:
     - brick_oven cook screen -o .
   repo:
     - brick_oven cook repo -o .
+  failure:
+    - brick_oven cook failure -o .
 
 watch:
   all:
@@ -21,6 +23,8 @@ watch:
     - brick_oven cook screen -w -o .
   repo:
     - brick_oven cook repo -w -o .
+  failure:
+    - brick_oven cook failure -w -o .
 
 install:
   all:
@@ -40,6 +44,9 @@ install:
   repo:
     - $uninstall:repo
     - mason add repo -g --path repo
+  failure:
+    - $uninstall:failure
+    - mason add failure -g --path failure
 
 uninstall:
   all:
@@ -51,3 +58,4 @@ uninstall:
   model: mason remove -g model
   screen: mason remove -g screen
   repo: mason remove -g repo
+  failure: mason remove -g failure

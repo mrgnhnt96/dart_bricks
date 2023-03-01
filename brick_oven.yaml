@@ -3,3 +3,4 @@ bricks:
   model: model/brick_oven.yaml
   repo: repo/brick_oven.yaml
   screen: screen/brick_oven.yaml
+  failure: failure/brick_oven.yaml

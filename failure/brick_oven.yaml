@@ -1,0 +1,55 @@
+source: oven
+brick_config: brick.yaml
+dirs:
+  name:
+    name:
+      format: snake
+      suffix: s
+files:
+  name/cache.dart:
+    name:
+      value: name
+      format: snake
+      suffix: s_cache
+    vars:
+      name: _NAME_
+ 
+  name/repos.dart:
+    name:
+      value: name
+      format: snake
+      suffix: s_repos
+    vars:
+      name: _NAME_
+      is_firebase: _IS_FIREBASE_
+      is_dio: _IS_DIO_
+
+  name/name.dart:
+    name:
+      format: snake
+      suffix: s
+    vars:
+      name:
+        _NAME_
+
+  # DIO
+  name/dio_source.dart:
+    include_if: is_dio
+    name:
+      value: name
+      format: snake
+      suffix: s_source
+      braces: 2
+    vars:
+      name: _NAME_
+
+  # FIREBASE
+  name/firebase_source.dart:
+    include_if: is_firebase
+    name:
+      value: name
+      format: snake
+      suffix: s_source
+      braces: 2
+    vars:
+      name: _NAME_
