@@ -49,7 +49,7 @@ class _NAME_PASCALBloc
 
   @override
   Future<Stream<_NAME_PASCALState?>> listenForStorageChanges() async {
-    final result = await __NAME_CAMELsCache.watchAll();
+    final result = await __NAME_CAMELsCache.watchById(__NAME_CAMELId);
 
     return result.asyncMap((event) {
       if (!state.isReady) {

@@ -49,7 +49,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
 
   @override
   Future<Stream<{{#pascalCase}}{{{name}}}{{/pascalCase}}State?>> listenForStorageChanges() async {
-    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sCache.watchAll();
+    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sCache.watchById(_{{#camelCase}}{{{name}}}{{/camelCase}}Id);
 
     return result.asyncMap((event) {
       if (!state.isReady) {
