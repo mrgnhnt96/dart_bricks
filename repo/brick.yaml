@@ -30,5 +30,5 @@ vars:
       - Dio
       - Firebase
     description: The type of source repo to be created
-    default: Firebase
+    default: Dio
     prompt: What type of source repo do you want to create?

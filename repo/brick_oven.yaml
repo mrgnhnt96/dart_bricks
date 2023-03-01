@@ -13,15 +13,6 @@ files:
       suffix: s_cache
     vars:
       name: _NAME_
-  name/source.dart:
-    name:
-      value: name
-      format: snake
-      suffix: s_source
-    vars:
-      name: _NAME_
-      is_firebase: _IS_FIREBASE_
-      is_dio: _IS_DIO_
   name/repos.dart:
     name:
       value: name
@@ -40,24 +31,22 @@ files:
       name:
         _NAME_
 
-  # # DIO
-  # name/dio_source.dart:
-  #   # include_if: is_dio
-  #   name:
-  #     value: name
-  #     format: snake
-  #     suffix: s_source
-  #     braces: 2
-  #   vars:
-  #     name: _NAME_
+  # DIO
+  name/dio_source.dart:
+    include_if: is_dio
+    name:
+      value: name
+      format: snake
+      suffix: s_source
+    vars:
+      name: _NAME_
 
-  # # FIREBASE
-  # name/firebase_source.dart:
-  #   # include_if: is_firebase
-  #   name:
-  #     value: name
-  #     format: snake
-  #     suffix: s_source
-  #     braces: 2
-  #   vars:
-  #     name: _NAME_
+  # FIREBASE
+  name/firebase_source.dart:
+    include_if: is_firebase
+    name:
+      value: name
+      format: snake
+      suffix: s_source
+    vars:
+      name: _NAME_
