@@ -17,8 +17,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}} extends Equatable {
     required this.id,
   });
 
-  factory {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(Map<String, dynamic> json) =>
-      _${{#pascalCase}}{{{name}}}{{/pascalCase}}FromJson(json);
+  factory {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(Map json) => _${{#pascalCase}}{{{name}}}{{/pascalCase}}FromJson(json);
 
   final String id;
 

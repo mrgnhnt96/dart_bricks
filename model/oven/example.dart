@@ -17,8 +17,7 @@ class _NAME_pascalCase extends Equatable {
     required this.id,
   });
 
-  factory _NAME_pascal.fromJson(Map<String, dynamic> json) =>
-      _$_NAME_pascalFromJson(json);
+  factory _NAME_pascal.fromJson(Map json) => _$_NAME_pascalFromJson(json);
 
   final String id;
 
