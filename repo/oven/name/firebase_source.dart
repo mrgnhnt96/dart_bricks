@@ -9,9 +9,6 @@ import 'package:internal_data/utils/request_result.dart';
 class _NAME_PASCALsSource implements I_NAME_PASCALsSource {
   const _NAME_PASCALsSource();
 
-  CollectionReference get collection =>
-      FirebaseFirestore.instance.collection('_NAME_SNAKEs');
-
   @override
   Future<RequestResult<List<_NAME_PASCAL>>> all() async {
     final _NAME_CAMELs = <_NAME_PASCAL>[];
@@ -65,47 +62,6 @@ class _NAME_PASCALsSource implements I_NAME_PASCALsSource {
   }
 
   @override
-  Future<RequestResult<void>> update(_NAME_PASCAL _NAME_CAMEL) async {
-    try {
-      await collection.doc(_NAME_CAMEL.id).set(_NAME_CAMEL.toJson());
-    } catch (e) {
-      return RequestResult.failure(e.toString());
-    }
-
-    return const RequestResult.success(null);
-  }
-
-  @override
-  Future<Stream<StreamResult<_NAME_PASCAL>>> watchById(String id) async {
-    try {
-      final stream = collection.doc(id).snapshots();
-
-      return stream.map((snapshot) {
-        final json = snapshot.data() as Map?;
-
-        if (json == null) {
-          return StreamResult.failure('_NAME_SENTENCE not found');
-        }
-
-        json['id'] = snapshot.id;
-
-        try {
-          final _NAME_CAMEL =
-              _NAME_PASCAL.fromJson(Map<String, dynamic>.from(json));
-
-          return StreamResult(_NAME_CAMEL, key: _NAME_CAMEL.id);
-        } catch (e) {
-          debugPrint('$e');
-
-          return StreamResult.failure('_NAME_SENTENCE not found');
-        }
-      });
-    } catch (e) {
-      return Stream.value(StreamResult.failure(e.toString()));
-    }
-  }
-
-  @override
   Future<RequestResult<_NAME_PASCAL>> create() async {
     final new_NAME_PASCAL = _NAME_PASCAL.create();
 
@@ -122,6 +78,28 @@ class _NAME_PASCALsSource implements I_NAME_PASCALsSource {
     } catch (e) {
       return RequestResult.failure(e.toString());
     }
+  }
+
+  @override
+  Future<RequestResult<void>> delete(String id) async {
+    try {
+      await collection.doc(id).delete();
+    } catch (e) {
+      return RequestResult.failure(e.toString());
+    }
+
+    return const RequestResult.success(null);
+  }
+
+  @override
+  Future<RequestResult<void>> update(_NAME_PASCAL _NAME_CAMEL) async {
+    try {
+      await collection.doc(_NAME_CAMEL.id).set(_NAME_CAMEL.toJson());
+    } catch (e) {
+      return RequestResult.failure(e.toString());
+    }
+
+    return const RequestResult.success(null);
   }
 
   @override
@@ -155,13 +133,75 @@ class _NAME_PASCALsSource implements I_NAME_PASCALsSource {
   }
 
   @override
-  Future<RequestResult<void>> delete(String id) async {
+  Future<Stream<List<StreamResult<_NAME_PASCAL>>>> watchAll() async {
     try {
-      await collection.doc(id).delete();
-    } catch (e) {
-      return RequestResult.failure(e.toString());
-    }
+      final stream = collection.snapshots();
 
-    return const RequestResult.success(null);
+      return stream.map((snapshot) {
+        final changes = <StreamResult<_NAME_PASCAL>>[];
+
+        for (final change in snapshot.docChanges) {
+          if (change.type == DocumentChangeType.removed) {
+            changes.add(StreamResult.deleted(change.doc.id));
+            continue;
+          }
+
+          final doc = change.doc;
+          final json = doc.data() as Map?;
+
+          if (json == null) {
+            continue;
+          }
+
+          json['id'] = doc.id;
+
+          try {
+            final _NAME_CAMEL =
+                _NAME_PASCAL.fromJson(Map<String, dynamic>.from(json));
+
+            changes.add(StreamResult(_NAME_CAMEL, key: _NAME_CAMEL.id));
+          } catch (e) {
+            debugPrint('$e');
+          }
+        }
+
+        return changes;
+      });
+    } catch (e) {
+      return Stream.value([StreamResult.failure(e.toString())]);
+    }
   }
+
+  @override
+  Future<Stream<StreamResult<_NAME_PASCAL>>> watchById(String id) async {
+    try {
+      final stream = collection.doc(id).snapshots();
+
+      return stream.map((snapshot) {
+        final json = snapshot.data() as Map?;
+
+        if (json == null) {
+          return StreamResult.failure('_NAME_SENTENCE not found');
+        }
+
+        json['id'] = snapshot.id;
+
+        try {
+          final _NAME_CAMEL =
+              _NAME_PASCAL.fromJson(Map<String, dynamic>.from(json));
+
+          return StreamResult(_NAME_CAMEL, key: _NAME_CAMEL.id);
+        } catch (e) {
+          debugPrint('$e');
+
+          return StreamResult.failure('_NAME_SENTENCE not found');
+        }
+      });
+    } catch (e) {
+      return Stream.value(StreamResult.failure(e.toString()));
+    }
+  }
+
+  CollectionReference get collection =>
+      FirebaseFirestore.instance.collection('_NAME_SNAKEs');
 }

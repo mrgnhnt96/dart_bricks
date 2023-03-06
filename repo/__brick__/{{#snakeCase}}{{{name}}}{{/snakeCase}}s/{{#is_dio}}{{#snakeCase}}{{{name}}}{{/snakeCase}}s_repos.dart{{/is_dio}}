@@ -20,25 +20,6 @@ abstract class I{{#pascalCase}}{{{name}}}{{/pascalCase}}sCache {
   Future<Stream<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> watchById(String id);
 }
 
-{{#is_firebase}}
-abstract class I{{#pascalCase}}{{{name}}}{{/pascalCase}}sSource {
-  Future<RequestResult<List<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> all();
-
-  Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> byId(String id);
-
-  Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> create();
-
-  Future<RequestResult<void>> delete(String id);
-
-  Future<RequestResult<void>> update({{#pascalCase}}{{{name}}}{{/pascalCase}} {{#camelCase}}{{{name}}}{{/camelCase}});
-
-  Future<RequestResult<void>> updateMany(List<{{#pascalCase}}{{{name}}}{{/pascalCase}}> {{#camelCase}}{{{name}}}{{/camelCase}}s);
-
-  Future<Stream<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> watchById(String id);
-}
-
-{{/is_firebase}}
-{{#is_dio}}
 abstract class I{{#pascalCase}}{{{name}}}{{/pascalCase}}Source {
   Future<RequestResult<List<_MODEL_PASCAL>>> all();
 
@@ -48,4 +29,3 @@ abstract class I{{#pascalCase}}{{{name}}}{{/pascalCase}}Source {
 
   Future<RequestResult<void>> update(_MODEL_PASCAL _MODEL_CAMEL);
 }
-{{/is_dio}}
