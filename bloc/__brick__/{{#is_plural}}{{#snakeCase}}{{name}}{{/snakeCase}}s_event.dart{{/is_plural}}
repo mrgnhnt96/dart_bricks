@@ -29,6 +29,16 @@ class _CacheChanged extends {{#pascalCase}}{{{name}}}{{/pascalCase}}sEvent {
   List<Object?> get props => _$props;
 }
 
+@autoequal
+class _SourceChanged extends {{#pascalCase}}{{{name}}}{{/pascalCase}}sEvent {
+  const _SourceChanged(this.state);
+
+  final _Ready state;
+
+  @override
+  List<Object?> get props => _$props;
+}
+
 extension {{#pascalCase}}{{{name}}}{{/pascalCase}}sBlocX on {{#pascalCase}}{{{name}}}{{/pascalCase}}sBloc {
   // ignore: library_private_types_in_public_api
   _Events get events => _Events(this);

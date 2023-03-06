@@ -40,7 +40,6 @@ files:
       suffix: _bloc
     vars:
       name: _NAME_
-      model: _MODEL_
   singular_event.dart:
     include_if: is_singular
     name:

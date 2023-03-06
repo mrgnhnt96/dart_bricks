@@ -28,12 +28,21 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sBloc
     on<_Init>(_init);
     on<_Fetch>(_fetch, transformer: con.droppable());
     on<_CacheChanged>(_cacheChanged);
+    on<_SourceChanged>(_sourceChanged);
 
     add(const _Init());
   }
 
   final I{{#pascalCase}}{{{name}}}{{/pascalCase}}sCache _{{#camelCase}}{{{name}}}{{/camelCase}}sCache;
   final I{{#pascalCase}}{{{name}}}{{/pascalCase}}sSource _{{#camelCase}}{{{name}}}{{/camelCase}}sSource;
+
+  StreamSubscription<List<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>>? _sourceListener;
+
+  @override
+  Future<void> close() {
+    _sourceListener?.cancel();
+    return super.close();
+  }
 
   @override
   Future<Stream<{{#pascalCase}}{{{name}}}{{/pascalCase}}sState?>> listenForStorageChanges() async {
@@ -132,10 +141,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sBloc
     return _Ready(result.value);
   }
 
-  Future<void> _init(_Init event, _Emitter emit) async {
-    await hydrate(emit);
-
-    await _get{{#pascalCase}}{{{name}}}{{/pascalCase}}s(emit);
+  FutureOr<void> _cacheChanged(_CacheChanged event, _Emitter emit) async {
+    emitNoCache(emit, event.state);
   }
 
   Future<void> _fetch(_Fetch event, _Emitter emit) async {
@@ -155,7 +162,41 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sBloc
     emit(_Ready(result.value));
   }
 
-  FutureOr<void> _cacheChanged(_CacheChanged event, _Emitter emit) async {
-    emitNoCache(emit, event.state);
+  Future<void> _init(_Init event, _Emitter emit) async {
+    await hydrate(emit);
+
+    await _get{{#pascalCase}}{{{name}}}{{/pascalCase}}s(emit);
+
+    final stream = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.watchAll();
+
+    _sourceListener = stream.listen((changes) {
+      if (!state.isReady) {
+        return;
+      }
+
+      if (isClosed) {
+        return;
+      }
+
+      final {{#camelCase}}{{{name}}}{{/camelCase}}sById = state.asReady.{{#camelCase}}{{{name}}}{{/camelCase}}s
+          .asMap()
+          .map((_, value) => MapEntry(value.id, value));
+
+      for (final change in changes) {
+        if (change.wasDeleted) {
+          {{#camelCase}}{{{name}}}{{/camelCase}}sById.remove(change.key);
+        } else {
+          {{#camelCase}}{{{name}}}{{/camelCase}}sById[change.key] = change.value!;
+        }
+      }
+
+      final newState = _Ready({{#camelCase}}{{{name}}}{{/camelCase}}sById.values.toList());
+
+      if (state == newState) {
+        return;
+      }
+
+      add(_SourceChanged(newState));
+    });
   }
 }

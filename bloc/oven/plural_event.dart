@@ -29,6 +29,16 @@ class _CacheChanged extends _NAME_PASCALsEvent {
   List<Object?> get props => _$props;
 }
 
+@autoequal
+class _SourceChanged extends _NAME_PASCALsEvent {
+  const _SourceChanged(this.state);
+
+  final _Ready state;
+
+  @override
+  List<Object?> get props => _$props;
+}
+
 extension _NAME_PASCALsBlocX on _NAME_PASCALsBloc {
   // ignore: library_private_types_in_public_api
   _Events get events => _Events(this);

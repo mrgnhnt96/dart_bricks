@@ -28,12 +28,21 @@ class _NAME_PASCALsBloc
     on<_Init>(_init);
     on<_Fetch>(_fetch, transformer: con.droppable());
     on<_CacheChanged>(_cacheChanged);
+    on<_SourceChanged>(_sourceChanged);
 
     add(const _Init());
   }
 
   final I_NAME_PASCALsCache __NAME_CAMELsCache;
   final I_NAME_PASCALsSource __NAME_CAMELsSource;
+
+  StreamSubscription<List<StreamResult<_NAME_PASCAL>>>? _sourceListener;
+
+  @override
+  Future<void> close() {
+    _sourceListener?.cancel();
+    return super.close();
+  }
 
   @override
   Future<Stream<_NAME_PASCALsState?>> listenForStorageChanges() async {
@@ -132,10 +141,8 @@ class _NAME_PASCALsBloc
     return _Ready(result.value);
   }
 
-  Future<void> _init(_Init event, _Emitter emit) async {
-    await hydrate(emit);
-
-    await _get_NAME_PASCALs(emit);
+  FutureOr<void> _cacheChanged(_CacheChanged event, _Emitter emit) async {
+    emitNoCache(emit, event.state);
   }
 
   Future<void> _fetch(_Fetch event, _Emitter emit) async {
@@ -155,7 +162,41 @@ class _NAME_PASCALsBloc
     emit(_Ready(result.value));
   }
 
-  FutureOr<void> _cacheChanged(_CacheChanged event, _Emitter emit) async {
-    emitNoCache(emit, event.state);
+  Future<void> _init(_Init event, _Emitter emit) async {
+    await hydrate(emit);
+
+    await _get_NAME_PASCALs(emit);
+
+    final stream = await __NAME_CAMELsSource.watchAll();
+
+    _sourceListener = stream.listen((changes) {
+      if (!state.isReady) {
+        return;
+      }
+
+      if (isClosed) {
+        return;
+      }
+
+      final _NAME_CAMELsById = state.asReady._NAME_CAMELs
+          .asMap()
+          .map((_, value) => MapEntry(value.id, value));
+
+      for (final change in changes) {
+        if (change.wasDeleted) {
+          _NAME_CAMELsById.remove(change.key);
+        } else {
+          _NAME_CAMELsById[change.key] = change.value!;
+        }
+      }
+
+      final newState = _Ready(_NAME_CAMELsById.values.toList());
+
+      if (state == newState) {
+        return;
+      }
+
+      add(_SourceChanged(newState));
+    });
   }
 }
