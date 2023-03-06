@@ -199,4 +199,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sBloc
       add(_SourceChanged(newState));
     });
   }
+
+  FutureOr<void> _sourceChanged(_SourceChanged event, _Emitter emit) async {
+    emit(event.state);
+  }
 }

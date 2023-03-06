@@ -199,4 +199,8 @@ class _NAME_PASCALsBloc
       add(_SourceChanged(newState));
     });
   }
+
+  FutureOr<void> _sourceChanged(_SourceChanged event, _Emitter emit) async {
+    emit(event.state);
+  }
 }
