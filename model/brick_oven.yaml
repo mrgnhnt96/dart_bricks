@@ -6,6 +6,7 @@ dirs:
     name:
       value: name
       format: snake
+      suffix: s
 files:
   object.dart:
     include_if: is_object
@@ -20,13 +21,14 @@ files:
     name:
       value: name
       format: snake
+      suffix: s
     vars:
       name: _NAME_
   repo/cache.dart:
     name:
       value: name
       prefix: i_
-      suffix: _cache
+      suffix: s_cache
       format: snake
     vars:
       name: _NAME_
@@ -36,7 +38,7 @@ files:
     name:
       value: name
       prefix: i_
-      suffix: _source
+      suffix: s_source
       format: snake
     vars:
       name: _NAME_
@@ -46,7 +48,7 @@ files:
     name:
       value: name
       prefix: i_
-      suffix: _source
+      suffix: s_source
       format: snake
     vars:
       name: _NAME_
