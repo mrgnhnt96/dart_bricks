@@ -9,6 +9,15 @@ files:
     vars:
       name: _NAME_
       copy_with: _COPY_WITH_
+  cache.dart:
+    name:
+      value: name
+      prefix: i_
+      suffix: _cache
+      format: snake
+    vars:
+      name: _NAME_
+
   dio_source.dart:
     include_if: is_dio
     name:
@@ -18,6 +27,7 @@ files:
       format: snake
     vars:
       name: _NAME_
+
   firebase_source.dart:
     include_if: is_firebase
     name:
