@@ -179,7 +179,7 @@ class _NAME_PASCALsSource with FirebaseMixin implements I_NAME_PASCALsSource {
         final json = snapshot.data() as Map?;
 
         if (json == null) {
-          return StreamResult.failure('_NAME_SENTENCE not found');
+          return const StreamResult.failure('_NAME_SENTENCE not found');
         }
 
         json['id'] = snapshot.id;
@@ -192,7 +192,7 @@ class _NAME_PASCALsSource with FirebaseMixin implements I_NAME_PASCALsSource {
         } catch (e) {
           debugPrint('$e');
 
-          return StreamResult.failure('_NAME_SENTENCE not found');
+          return const StreamResult.failure('_NAME_SENTENCE not found');
         }
       });
     } catch (e) {

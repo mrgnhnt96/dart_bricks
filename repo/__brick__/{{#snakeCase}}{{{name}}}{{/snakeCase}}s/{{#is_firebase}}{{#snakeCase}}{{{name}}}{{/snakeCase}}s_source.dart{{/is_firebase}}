@@ -179,7 +179,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource with FirebaseMixin impleme
         final json = snapshot.data() as Map?;
 
         if (json == null) {
-          return StreamResult.failure('{{#sentenceCase}}{{{name}}}{{/sentenceCase}} not found');
+          return const StreamResult.failure('{{#sentenceCase}}{{{name}}}{{/sentenceCase}} not found');
         }
 
         json['id'] = snapshot.id;
@@ -192,7 +192,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource with FirebaseMixin impleme
         } catch (e) {
           debugPrint('$e');
 
-          return StreamResult.failure('{{#sentenceCase}}{{{name}}}{{/sentenceCase}} not found');
+          return const StreamResult.failure('{{#sentenceCase}}{{{name}}}{{/sentenceCase}} not found');
         }
       });
     } catch (e) {
