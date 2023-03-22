@@ -16,7 +16,7 @@ void run(HookContext context) {
     return;
   }
 
-  // prompt for whether to use dio or firebase
+  // prompt for whether to use Dio or Firebase
   if (isRepository) {
     _handleDioOrFirebase(context);
     return;
@@ -34,13 +34,13 @@ void _handleCpWith(HookContext context) {
 
 void _handleDioOrFirebase(HookContext context) {
   final dioOrFirebase = context.logger.chooseOne(
-    'Use dio or firebase?',
-    choices: ['dio', 'firebase'],
-    defaultValue: 'dio',
+    'Use Dio or Firebase?',
+    choices: ['Dio', 'Firebase'],
+    defaultValue: 'Dio',
   );
 
-  final isDio = dioOrFirebase == 'dio';
-  final isFirebase = dioOrFirebase == 'firebase';
+  final isDio = dioOrFirebase == 'Dio';
+  final isFirebase = dioOrFirebase == 'Firebase';
 
   context.vars = {
     ...context.vars,
