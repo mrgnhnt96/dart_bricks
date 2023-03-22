@@ -1,16 +1,16 @@
 import 'package:autoequal/autoequal.dart';
-{{#copyWith}}
+{{#copy_with}}
 import 'package:copy_with_extension/copy_with_extension.dart';
-{{/copyWith}}
+{{/copy_with}}
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part '{{#snakeCase}}{{{name}}}{{/snakeCase}}.g.dart';
 
 @autoequal
-{{#copyWith}}
+{{#copy_with}}
 @CopyWith()
-{{/copyWith}}
+{{/copy_with}}
 @JsonSerializable()
 class {{#pascalCase}}{{{name}}}{{/pascalCase}} extends Equatable {
   const {{#pascalCase}}{{{name}}}{{/pascalCase}}({

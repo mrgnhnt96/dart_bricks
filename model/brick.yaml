@@ -24,8 +24,11 @@ vars:
     description: Model's name
     default: Awesome
     prompt: What is the name of the model?
-  copyWith:
-    type: boolean
-    description: use copyWith
-    default: false
-    prompt: Use copyWith?
+  type:
+    type: enum
+    description: Whether the object is for a repository or an object
+    default: Object
+    prompt: What is the type of the model?
+    values:
+      - Object
+      - Repository

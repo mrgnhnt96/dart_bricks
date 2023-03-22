@@ -1,10 +1,27 @@
 source: oven
 brick_config: brick.yaml
 files:
-  example.dart:
+  object.dart:
+    include_if: is_object
     name:
       value: name
       format: snake
     vars:
       name: _NAME_
-      copyWith: _COPY_WITH_
+      copy_with: _COPY_WITH_
+  dio_source.dart:
+    include_if: is_dio
+    name:
+      value: name
+      prefix: i_
+      suffix: _source
+    vars:
+      name: _NAME_
+  firebase_source.dart:
+    include_if: is_firebase
+    name:
+      value: name
+      prefix: i_
+      suffix: _source
+    vars:
+      name: _NAME_

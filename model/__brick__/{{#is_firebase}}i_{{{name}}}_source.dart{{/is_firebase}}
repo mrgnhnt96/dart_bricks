@@ -1,0 +1,20 @@
+import 'package:domain/models/{{#snakeCase}}{{{name}}}{{/snakeCase}}.dart';
+import 'package:domain/models/request_result.dart';
+
+abstract class I{{#pascalCase}}{{{name}}}{{/pascalCase}}sSource {
+  Future<RequestResult<List<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> all();
+
+  Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> byId(String id);
+
+  Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> create();
+
+  Future<RequestResult<void>> delete(String id);
+
+  Future<RequestResult<void>> update({{#pascalCase}}{{{name}}}{{/pascalCase}} {{#camelCase}}{{{name}}}{{/camelCase}});
+
+  Future<RequestResult<void>> updateMany(List<{{#pascalCase}}{{{name}}}{{/pascalCase}}> {{#camelCase}}{{{name}}}{{/camelCase}}s);
+
+  Future<Stream<List<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>>> watchAll();
+
+  Future<Stream<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> watchById(String id);
+}

@@ -1,0 +1,12 @@
+import 'package:domain/models/{{#snakeCase}}{{{name}}}{{/snakeCase}}.dart';
+import 'package:domain/models/request_result.dart';
+
+abstract class I{{#pascalCase}}{{{name}}}{{/pascalCase}}Source {
+  Future<RequestResult<List<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> all();
+
+  Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> byId(String id);
+
+  Future<RequestResult<void>> delete(String id);
+
+  Future<RequestResult<void>> update({{#pascalCase}}{{{name}}}{{/pascalCase}} {{#camelCase}}{{{name}}}{{/camelCase}});
+}
