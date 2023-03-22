@@ -1,5 +1,5 @@
-import 'package:domain/models/_NAME_SNAKE.dart';
-import 'package:domain/models/request_result.dart';
+import 'package:internal_domain/models/_NAME_SNAKE.dart';
+import 'package:internal_domain/models/request_result.dart';
 
 abstract class I_NAME_PASCALsCache {
   Future<RequestResult<List<_NAME_PASCAL>>> all();
