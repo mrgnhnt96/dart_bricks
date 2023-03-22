@@ -2,6 +2,8 @@ import 'package:internal_domain/models/{{#snakeCase}}{{{name}}}{{/snakeCase}}.da
 import 'package:internal_domain/models/request_result.dart';
 
 abstract class I{{#pascalCase}}{{{name}}}{{/pascalCase}}sCache {
+  const I{{#pascalCase}}{{{name}}}{{/pascalCase}}sCache();
+
   Future<RequestResult<List<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> all();
 
   Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> byId(String id);
