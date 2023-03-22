@@ -1,5 +1,11 @@
 source: oven
 brick_config: brick.yaml
+dirs:
+  repo:
+    include_if: is_repository
+    name:
+      value: name
+      format: snake
 files:
   object.dart:
     include_if: is_object
@@ -9,7 +15,14 @@ files:
     vars:
       name: _NAME_
       copy_with: _COPY_WITH_
-  cache.dart:
+
+  repo/repo.dart:
+    name:
+      value: name
+      format: snake
+    vars:
+      name: _NAME_
+  repo/cache.dart:
     name:
       value: name
       prefix: i_
@@ -18,7 +31,7 @@ files:
     vars:
       name: _NAME_
 
-  dio_source.dart:
+  repo/dio_source.dart:
     include_if: is_dio
     name:
       value: name
@@ -28,7 +41,7 @@ files:
     vars:
       name: _NAME_
 
-  firebase_source.dart:
+  repo/firebase_source.dart:
     include_if: is_firebase
     name:
       value: name
