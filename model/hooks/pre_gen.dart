@@ -35,8 +35,11 @@ void _handleCpWith(HookContext context) {
 void _handleDioOrFirebase(HookContext context) {
   final dioOrFirebase = context.logger.chooseOne(
     'Use Dio or Firebase?',
-    choices: ['Dio', 'Firebase'],
-    defaultValue: 'Dio',
+    choices: [
+      'Firebase',
+      'Dio',
+    ],
+    defaultValue: 'Firebase',
   );
 
   final isDio = dioOrFirebase == 'Dio';
