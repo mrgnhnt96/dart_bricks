@@ -1,7 +1,6 @@
+import 'package:internal_domain/domain.dart';
+
 import 'package:data/util/util.dart';
-import 'package:domain/domain.dart';
-import '_NAME_snake_repos.dart';
-import 'package:flutter/material.dart';
 
 class _NAME_pascalsSource implements I_NAME_pascalsSource {
   const _NAME_pascalsSource();

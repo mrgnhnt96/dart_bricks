@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:internal_domain/domain.dart';
 
-import 'package:internal_data/repos/_NAME_SNAKEs/_NAME_SNAKEs_repos.dart';
-import 'package:internal_data/utils/request_result.dart';
+import 'package:internal_data/utils/firebase_mixin.dart';
 
-class _NAME_PASCALsSource implements I_NAME_PASCALsSource {
+class _NAME_PASCALsSource with FirebaseMixin implements I_NAME_PASCALsSource {
   const _NAME_PASCALsSource();
+
+  CollectionReference get collection => firestore.collection('_NAME_SNAKEs');
 
   @override
   Future<RequestResult<List<_NAME_PASCAL>>> all() async {
@@ -201,7 +199,4 @@ class _NAME_PASCALsSource implements I_NAME_PASCALsSource {
       return Stream.value(StreamResult.failure(e.toString()));
     }
   }
-
-  CollectionReference get collection =>
-      FirebaseFirestore.instance.collection('_NAME_SNAKEs');
 }

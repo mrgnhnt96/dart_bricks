@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:internal_domain/domain.dart';
 
-import 'package:internal_data/repos/{{#snakeCase}}{{{name}}}{{/snakeCase}}s/{{#snakeCase}}{{{name}}}{{/snakeCase}}s_repos.dart';
-import 'package:internal_data/utils/request_result.dart';
+import 'package:internal_data/utils/firebase_mixin.dart';
 
-class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}sSource {
+class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource with FirebaseMixin implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}sSource {
   const {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource();
+
+  CollectionReference get collection => firestore.collection('{{#snakeCase}}{{{name}}}{{/snakeCase}}s');
 
   @override
   Future<RequestResult<List<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> all() async {
@@ -201,7 +199,4 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource implements I{{#pascalCase}
       return Stream.value(StreamResult.failure(e.toString()));
     }
   }
-
-  CollectionReference get collection =>
-      FirebaseFirestore.instance.collection('{{#snakeCase}}{{{name}}}{{/snakeCase}}s');
 }

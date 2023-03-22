@@ -1,14 +1,10 @@
 import 'package:internal_domain/domain.dart';
 
-import 'package:internal_data/repos/all_cache/all_cache_repos.dart';
-import 'package:internal_data/repos/all_cache/database.dart';
-import 'package:internal_data/repos/_NAME_SNAKEs/_NAME_SNAKEs_repos.dart';
+import 'package:internal_data/utils/database.dart';
 import 'package:internal_data/utils/hive_cache.dart';
-import 'package:internal_data/utils/request_result.dart';
 
 // ignore: strict_raw_type
-class _NAME_PASCALsCache extends HiveCache<Map>
-    implements I_NAME_PASCALsCache, ICache {
+class _NAME_PASCALsCache extends HiveCache implements I_NAME_PASCALsCache {
   _NAME_PASCALsCache() : super(Database._NAME_CAMELs);
 
   @override

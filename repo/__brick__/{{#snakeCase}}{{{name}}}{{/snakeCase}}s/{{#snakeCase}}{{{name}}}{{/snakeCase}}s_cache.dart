@@ -1,14 +1,10 @@
 import 'package:internal_domain/domain.dart';
 
-import 'package:internal_data/repos/all_cache/all_cache_repos.dart';
-import 'package:internal_data/repos/all_cache/database.dart';
-import 'package:internal_data/repos/{{#snakeCase}}{{{name}}}{{/snakeCase}}s/{{#snakeCase}}{{{name}}}{{/snakeCase}}s_repos.dart';
+import 'package:internal_data/utils/database.dart';
 import 'package:internal_data/utils/hive_cache.dart';
-import 'package:internal_data/utils/request_result.dart';
 
 // ignore: strict_raw_type
-class {{#pascalCase}}{{{name}}}{{/pascalCase}}sCache extends HiveCache<Map>
-    implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}sCache, ICache {
+class {{#pascalCase}}{{{name}}}{{/pascalCase}}sCache extends HiveCache implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}sCache {
   {{#pascalCase}}{{{name}}}{{/pascalCase}}sCache() : super(Database.{{#camelCase}}{{{name}}}{{/camelCase}}s);
 
   @override

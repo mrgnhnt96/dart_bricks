@@ -30,14 +30,6 @@ files:
       suffix: s_source
     vars:
       name: _NAME_
-  name/dio_repos.dart:
-    include_if: is_dio
-    name:
-      value: name
-      format: snake
-      suffix: s_repos
-    vars:
-      name: _NAME_
 
   # FIREBASE
   name/firebase_source.dart:
@@ -46,13 +38,5 @@ files:
       value: name
       format: snake
       suffix: s_source
-    vars:
-      name: _NAME_
-  name/firebase_repos.dart:
-    include_if: is_firebase
-    name:
-      value: name
-      format: snake
-      suffix: s_repos
     vars:
       name: _NAME_
