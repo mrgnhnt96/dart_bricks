@@ -4,6 +4,17 @@ void run(HookContext context) {
   final isObject = context.vars['type'] == 'Object';
   final isRepository = context.vars['type'] == 'Repository';
 
+  // replace the `name` variable with the singular form of the `name` variable
+  // e.g. `users` -> `user`
+
+  final name = context.vars['name'] as String?;
+
+  assert(name != null, 'name is null');
+  context.vars = {
+    ...context.vars,
+    'name': name!.replaceAll(RegExp(r's$'), ''),
+  };
+
   context.vars = {
     ...context.vars,
     if (isObject) 'is_object': true,
