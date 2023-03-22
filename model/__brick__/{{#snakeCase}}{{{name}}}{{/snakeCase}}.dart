@@ -17,6 +17,9 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}} extends Equatable {
     required this.id,
   });
 
+  const {{#pascalCase}}{{{name}}}{{/pascalCase}}.create() : id = 'NEW';
+
+  // ignore: strict_raw_type
   factory {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(Map json) => _${{#pascalCase}}{{{name}}}{{/pascalCase}}FromJson(json);
 
   final String id;

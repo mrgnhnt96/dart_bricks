@@ -17,6 +17,9 @@ class _NAME_pascalCase extends Equatable {
     required this.id,
   });
 
+  const _NAME_pascal.create() : id = 'NEW';
+
+  // ignore: strict_raw_type
   factory _NAME_pascal.fromJson(Map json) => _$_NAME_pascalFromJson(json);
 
   final String id;
