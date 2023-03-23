@@ -118,6 +118,8 @@ class _NAME_PASCALBloc
       return;
     }
 
+    __NAME_CAMELId = result.value.id;
+
     emit(_Ready(result.value));
   }
 

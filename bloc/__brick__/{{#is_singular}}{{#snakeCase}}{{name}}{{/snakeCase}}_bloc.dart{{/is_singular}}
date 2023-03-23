@@ -118,6 +118,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
       return;
     }
 
+    _{{#camelCase}}{{{name}}}{{/camelCase}}Id = result.value.id;
+
     emit(_Ready(result.value));
   }
 
