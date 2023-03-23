@@ -1,11 +1,11 @@
+import 'dart:developer';
+
 import 'package:internal_domain/domain.dart';
 
-import 'package:internal_data/utils/firebase_mixin.dart';
+import 'package:internal_data/utils/firestore.dart';
 
-class _NAME_PASCALsSource with FirebaseMixin implements I_NAME_PASCALsSource {
-  const _NAME_PASCALsSource();
-
-  CollectionReference get collection => firestore.collection('_NAME_SNAKEs');
+class _NAME_PASCALsSource extends Firestore implements I_NAME_PASCALsSource {
+  const _NAME_PASCALsSource() : super('_NAME_SNAKEs');
 
   @override
   Future<RequestResult<List<_NAME_PASCAL>>> all() async {
@@ -28,7 +28,7 @@ class _NAME_PASCALsSource with FirebaseMixin implements I_NAME_PASCALsSource {
 
         _NAME_CAMELs.add(_NAME_CAMEL);
       } catch (e) {
-        debugPrint('$e');
+        log('$e');
       }
     }
 
@@ -53,7 +53,7 @@ class _NAME_PASCALsSource with FirebaseMixin implements I_NAME_PASCALsSource {
 
       return RequestResult.success(_NAME_CAMEL);
     } catch (e) {
-      debugPrint('$e');
+      log('$e');
 
       return const RequestResult.failure('_NAME_SENTENCE not found');
     }
@@ -105,7 +105,7 @@ class _NAME_PASCALsSource with FirebaseMixin implements I_NAME_PASCALsSource {
     List<_NAME_PASCAL> _NAME_CAMELs,
   ) async {
     try {
-      var batch = FirebaseFirestore.instance.batch();
+      var batch = newBatch();
 
       var count = 0;
       for (final _NAME_CAMEL in _NAME_CAMELs) {
@@ -116,7 +116,7 @@ class _NAME_PASCALsSource with FirebaseMixin implements I_NAME_PASCALsSource {
         if (count == 500) {
           await batch.commit();
 
-          batch = FirebaseFirestore.instance.batch();
+          batch = newBatch();
 
           count = 0;
         }
@@ -139,7 +139,7 @@ class _NAME_PASCALsSource with FirebaseMixin implements I_NAME_PASCALsSource {
         final changes = <StreamResult<_NAME_PASCAL>>[];
 
         for (final change in snapshot.docChanges) {
-          if (change.type == DocumentChangeType.removed) {
+          if (change.type.isRemoved) {
             changes.add(StreamResult.deleted(change.doc.id));
             continue;
           }
@@ -159,7 +159,7 @@ class _NAME_PASCALsSource with FirebaseMixin implements I_NAME_PASCALsSource {
 
             changes.add(StreamResult(_NAME_CAMEL, key: _NAME_CAMEL.id));
           } catch (e) {
-            debugPrint('$e');
+            log('$e');
           }
         }
 
@@ -190,7 +190,7 @@ class _NAME_PASCALsSource with FirebaseMixin implements I_NAME_PASCALsSource {
 
           return StreamResult(_NAME_CAMEL, key: _NAME_CAMEL.id);
         } catch (e) {
-          debugPrint('$e');
+          log('$e');
 
           return const StreamResult.failure('_NAME_SENTENCE not found');
         }

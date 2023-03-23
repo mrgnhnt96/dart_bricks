@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:internal_domain/domain.dart';
 
 import 'package:data/util/util.dart';
@@ -28,7 +30,7 @@ class _NAME_pascalsSource implements I_NAME_pascalsSource {
             ),
           );
         } catch (e) {
-          debugPrint('Error parsing _NAME_camel, $e | $_NAME_camelJson');
+          log('Error parsing _NAME_camel, $e | $_NAME_camelJson');
         }
       }
 

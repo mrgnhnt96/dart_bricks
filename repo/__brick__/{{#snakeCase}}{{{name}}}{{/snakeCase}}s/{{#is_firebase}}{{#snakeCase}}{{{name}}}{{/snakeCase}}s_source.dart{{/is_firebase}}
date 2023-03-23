@@ -1,11 +1,11 @@
+import 'dart:developer';
+
 import 'package:internal_domain/domain.dart';
 
-import 'package:internal_data/utils/firebase_mixin.dart';
+import 'package:internal_data/utils/firestore.dart';
 
-class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource with FirebaseMixin implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}sSource {
-  const {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource();
-
-  CollectionReference get collection => firestore.collection('{{#snakeCase}}{{{name}}}{{/snakeCase}}s');
+class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource extends Firestore implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}sSource {
+  const {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource() : super('{{#snakeCase}}{{{name}}}{{/snakeCase}}s');
 
   @override
   Future<RequestResult<List<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> all() async {
@@ -28,7 +28,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource with FirebaseMixin impleme
 
         {{#camelCase}}{{{name}}}{{/camelCase}}s.add({{#camelCase}}{{{name}}}{{/camelCase}});
       } catch (e) {
-        debugPrint('$e');
+        log('$e');
       }
     }
 
@@ -53,7 +53,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource with FirebaseMixin impleme
 
       return RequestResult.success({{#camelCase}}{{{name}}}{{/camelCase}});
     } catch (e) {
-      debugPrint('$e');
+      log('$e');
 
       return const RequestResult.failure('{{#sentenceCase}}{{{name}}}{{/sentenceCase}} not found');
     }
@@ -105,7 +105,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource with FirebaseMixin impleme
     List<{{#pascalCase}}{{{name}}}{{/pascalCase}}> {{#camelCase}}{{{name}}}{{/camelCase}}s,
   ) async {
     try {
-      var batch = FirebaseFirestore.instance.batch();
+      var batch = newBatch();
 
       var count = 0;
       for (final {{#camelCase}}{{{name}}}{{/camelCase}} in {{#camelCase}}{{{name}}}{{/camelCase}}s) {
@@ -116,7 +116,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource with FirebaseMixin impleme
         if (count == 500) {
           await batch.commit();
 
-          batch = FirebaseFirestore.instance.batch();
+          batch = newBatch();
 
           count = 0;
         }
@@ -139,7 +139,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource with FirebaseMixin impleme
         final changes = <StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>[];
 
         for (final change in snapshot.docChanges) {
-          if (change.type == DocumentChangeType.removed) {
+          if (change.type.isRemoved) {
             changes.add(StreamResult.deleted(change.doc.id));
             continue;
           }
@@ -159,7 +159,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource with FirebaseMixin impleme
 
             changes.add(StreamResult({{#camelCase}}{{{name}}}{{/camelCase}}, key: {{#camelCase}}{{{name}}}{{/camelCase}}.id));
           } catch (e) {
-            debugPrint('$e');
+            log('$e');
           }
         }
 
@@ -190,7 +190,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource with FirebaseMixin impleme
 
           return StreamResult({{#camelCase}}{{{name}}}{{/camelCase}}, key: {{#camelCase}}{{{name}}}{{/camelCase}}.id);
         } catch (e) {
-          debugPrint('$e');
+          log('$e');
 
           return const StreamResult.failure('{{#sentenceCase}}{{{name}}}{{/sentenceCase}} not found');
         }
