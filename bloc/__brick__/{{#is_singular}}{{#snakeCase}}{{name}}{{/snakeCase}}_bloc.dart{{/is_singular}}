@@ -24,6 +24,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
   })  : _{{#camelCase}}{{{name}}}{{/camelCase}}sCache = {{#camelCase}}{{{name}}}{{/camelCase}}sCache,
         _{{#camelCase}}{{{name}}}{{/camelCase}}sSource = {{#camelCase}}{{{name}}}{{/camelCase}}sSource,
         super(const _Loading()) {
+    on<_Init>(_init, transformer: con.droppable());
     on<_Fetch>(_fetch, transformer: con.droppable());
     on<_Create>(_create, transformer: con.droppable());
     on<_Save>(_save, transformer: con.droppable());
@@ -137,10 +138,10 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
   }
 
   Future<void> _fetch(_Fetch event, _Emitter emit) async {
-    _{{#camelCase}}{{{name}}}{{/camelCase}}Id = event.id;
+    await _getData(emit);
+  }
 
-    await hydrate(emit);
-
+  Future<void> _getData(_Emitter emit) async {
     final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.byId(_{{#camelCase}}{{{name}}}{{/camelCase}}Id);
 
     if (result.isError) {
@@ -150,6 +151,18 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
 
     emit(_Ready(result.value));
 
+    await _listenToSourceChanges();
+  }
+
+  Future<void> _init(_Fetch event, _Emitter emit) async {
+    _{{#camelCase}}{{{name}}}{{/camelCase}}Id = event.id;
+
+    await hydrate(emit);
+
+    await _getData(emit);
+  }
+
+  Future<void> _listenToSourceChanges() async {
     final stream = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.watchById(_{{#camelCase}}{{{name}}}{{/camelCase}}Id);
 
     await _listener?.cancel();

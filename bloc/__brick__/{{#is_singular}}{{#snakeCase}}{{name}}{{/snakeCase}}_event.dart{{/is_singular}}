@@ -8,13 +8,17 @@ abstract class {{#pascalCase}}{{{name}}}{{/pascalCase}}Event extends Equatable {
 }
 
 @autoequal
-class _Fetch extends {{#pascalCase}}{{{name}}}{{/pascalCase}}Event {
-  const _Fetch(this.id);
+class _Init extends {{#pascalCase}}{{{name}}}{{/pascalCase}}Event {
+  const _Init(this.id);
 
   final String id;
 
   @override
   List<Object?> get props => _$props;
+}
+
+class _Fetch extends {{#pascalCase}}{{{name}}}{{/pascalCase}}Event {
+  const _Fetch();
 }
 
 class _Create extends {{#pascalCase}}{{{name}}}{{/pascalCase}}Event {
@@ -31,14 +35,8 @@ class _Save extends {{#pascalCase}}{{{name}}}{{/pascalCase}}Event {
   List<Object?> get props => _$props;
 }
 
-@autoequal
 class _Delete extends {{#pascalCase}}{{{name}}}{{/pascalCase}}Event {
-  const _Delete(this.id);
-
-  final String id;
-
-  @override
-  List<Object?> get props => _$props;
+  const _Delete();
 }
 
 @autoequal
@@ -79,8 +77,12 @@ class _Events {
     _bloc.add(_Delete(id));
   }
 
-  void fetch(String id) {
-    _bloc.add(_Fetch(id));
+  void fetch() {
+    _bloc.add(const _Fetch());
+  }
+
+  void init(String id) {
+    _bloc.add(_Init(id));
   }
 
   void save({{#pascalCase}}{{{name}}}{{/pascalCase}} {{#camelCase}}{{{name}}}{{/camelCase}}) {

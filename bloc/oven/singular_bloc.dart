@@ -24,6 +24,7 @@ class _NAME_PASCALBloc
   })  : __NAME_CAMELsCache = _NAME_CAMELsCache,
         __NAME_CAMELsSource = _NAME_CAMELsSource,
         super(const _Loading()) {
+    on<_Init>(_init, transformer: con.droppable());
     on<_Fetch>(_fetch, transformer: con.droppable());
     on<_Create>(_create, transformer: con.droppable());
     on<_Save>(_save, transformer: con.droppable());
@@ -137,10 +138,10 @@ class _NAME_PASCALBloc
   }
 
   Future<void> _fetch(_Fetch event, _Emitter emit) async {
-    __NAME_CAMELId = event.id;
+    await _getData(emit);
+  }
 
-    await hydrate(emit);
-
+  Future<void> _getData(_Emitter emit) async {
     final result = await __NAME_CAMELsSource.byId(__NAME_CAMELId);
 
     if (result.isError) {
@@ -150,6 +151,18 @@ class _NAME_PASCALBloc
 
     emit(_Ready(result.value));
 
+    await _listenToSourceChanges();
+  }
+
+  Future<void> _init(_Fetch event, _Emitter emit) async {
+    __NAME_CAMELId = event.id;
+
+    await hydrate(emit);
+
+    await _getData(emit);
+  }
+
+  Future<void> _listenToSourceChanges() async {
     final stream = await __NAME_CAMELsSource.watchById(__NAME_CAMELId);
 
     await _listener?.cancel();
