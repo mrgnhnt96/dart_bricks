@@ -154,7 +154,7 @@ class _NAME_PASCALsBloc
     final result = await __NAME_CAMELsSource.all();
 
     if (result.isError) {
-      emitError(emit, _Error(result.error.message));
+      emitError(emit, _Error(result.error));
       return;
     }
 

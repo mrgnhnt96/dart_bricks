@@ -114,7 +114,7 @@ class _NAME_PASCALBloc
     final result = await __NAME_CAMELsSource.create();
 
     if (result.isError) {
-      emitError(emit, _Error(result.error.message));
+      emitError(emit, _Error(result.error));
       return;
     }
 
@@ -127,7 +127,7 @@ class _NAME_PASCALBloc
     final result = await __NAME_CAMELsSource.delete(event.id);
 
     if (result.isError) {
-      emitError(emit, _Error(result.error.message));
+      emitError(emit, _Error(result.error));
       return;
     }
 
@@ -142,7 +142,7 @@ class _NAME_PASCALBloc
     final result = await __NAME_CAMELsSource.byId(__NAME_CAMELId);
 
     if (result.isError) {
-      emitError(emit, _Error(result.error.message));
+      emitError(emit, _Error(result.error));
       return;
     }
 
@@ -178,7 +178,7 @@ class _NAME_PASCALBloc
     final result = await __NAME_CAMELsSource.update(event._NAME_CAMEL);
 
     if (result.isError) {
-      emitError(emit, _Error(result.error.message));
+      emitError(emit, _Error(result.error));
       return;
     }
 

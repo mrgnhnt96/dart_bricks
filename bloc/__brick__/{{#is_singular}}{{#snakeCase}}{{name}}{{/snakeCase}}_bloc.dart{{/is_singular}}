@@ -114,7 +114,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
     final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.create();
 
     if (result.isError) {
-      emitError(emit, _Error(result.error.message));
+      emitError(emit, _Error(result.error));
       return;
     }
 
@@ -127,7 +127,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
     final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.delete(event.id);
 
     if (result.isError) {
-      emitError(emit, _Error(result.error.message));
+      emitError(emit, _Error(result.error));
       return;
     }
 
@@ -142,7 +142,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
     final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.byId(_{{#camelCase}}{{{name}}}{{/camelCase}}Id);
 
     if (result.isError) {
-      emitError(emit, _Error(result.error.message));
+      emitError(emit, _Error(result.error));
       return;
     }
 
@@ -178,7 +178,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
     final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.update(event.{{#camelCase}}{{{name}}}{{/camelCase}});
 
     if (result.isError) {
-      emitError(emit, _Error(result.error.message));
+      emitError(emit, _Error(result.error));
       return;
     }
 

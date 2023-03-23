@@ -154,7 +154,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sBloc
     final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.all();
 
     if (result.isError) {
-      emitError(emit, _Error(result.error.message));
+      emitError(emit, _Error(result.error));
       return;
     }
 
