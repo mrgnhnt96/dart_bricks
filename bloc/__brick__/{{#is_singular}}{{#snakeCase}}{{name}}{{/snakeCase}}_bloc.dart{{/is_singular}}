@@ -125,9 +125,9 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
   }
 
   FutureOr<void> _delete(_Delete event, _Emitter emit) async {
-    await _{{#camelCase}}{{{name}}}{{/camelCase}}sCache.delete(event.id);
+    await _{{#camelCase}}{{{name}}}{{/camelCase}}sCache.delete(_{{#camelCase}}{{{name}}}{{/camelCase}}Id);
 
-    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.delete(event.id);
+    final result = await _{{#camelCase}}{{{name}}}{{/camelCase}}sSource.delete(_{{#camelCase}}{{{name}}}{{/camelCase}}Id);
 
     if (result.isError) {
       emitError(emit, _Error(result.error));

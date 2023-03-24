@@ -125,9 +125,9 @@ class _NAME_PASCALBloc
   }
 
   FutureOr<void> _delete(_Delete event, _Emitter emit) async {
-    await __NAME_CAMELsCache.delete(event.id);
+    await __NAME_CAMELsCache.delete(__NAME_CAMELId);
 
-    final result = await __NAME_CAMELsSource.delete(event.id);
+    final result = await __NAME_CAMELsSource.delete(__NAME_CAMELId);
 
     if (result.isError) {
       emitError(emit, _Error(result.error));
@@ -154,7 +154,7 @@ class _NAME_PASCALBloc
     await _listenToSourceChanges();
   }
 
-  Future<void> _init(_Fetch event, _Emitter emit) async {
+  Future<void> _init(_Init event, _Emitter emit) async {
     __NAME_CAMELId = event.id;
 
     await hydrate(emit);

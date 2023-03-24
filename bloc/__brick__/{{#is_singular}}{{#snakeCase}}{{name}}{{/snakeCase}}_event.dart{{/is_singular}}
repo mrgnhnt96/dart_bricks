@@ -73,8 +73,8 @@ class _Events {
     _bloc.add(const _Create());
   }
 
-  void delete(String id) {
-    _bloc.add(_Delete(id));
+  void delete() {
+    _bloc.add(const _Delete());
   }
 
   void fetch() {
