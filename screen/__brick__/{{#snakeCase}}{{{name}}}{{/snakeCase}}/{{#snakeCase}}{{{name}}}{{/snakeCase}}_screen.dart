@@ -7,11 +7,6 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('{{#titleCase}}{{{name}}}{{/titleCase}}'),
-      ),
-      body: const {{#pascalCase}}{{{name}}}{{/pascalCase}}View(),
-    );
+    return const {{#pascalCase}}{{{name}}}{{/pascalCase}}View();
   }
 }

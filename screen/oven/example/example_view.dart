@@ -8,20 +8,25 @@ class _NAME_pascalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        const SizedBox(height: 16),
-        const _Description(),
-        const SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: () {
-            if (context.canPop()) {
-              context.pop();
-            }
-          },
-          child: const Text('Go Back'),
-        ),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('_NAME_title'),
+      ),
+      body: Column(
+        children: <Widget>[
+          const SizedBox(height: 16),
+          const _Description(),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              if (context.canPop()) {
+                context.pop();
+              }
+            },
+            child: const Text('Go Back'),
+          ),
+        ],
+      ),
     );
   }
 }

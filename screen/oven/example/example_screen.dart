@@ -7,11 +7,6 @@ class _NAME_pascalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('_NAME_title'),
-      ),
-      body: const _NAME_pascalView(),
-    );
+    return const _NAME_pascalView();
   }
 }
