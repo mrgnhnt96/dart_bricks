@@ -154,7 +154,7 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc
     await _listenToSourceChanges();
   }
 
-  Future<void> _init(_Fetch event, _Emitter emit) async {
+  Future<void> _init(_Init event, _Emitter emit) async {
     _{{#camelCase}}{{{name}}}{{/camelCase}}Id = event.id;
 
     await hydrate(emit);
