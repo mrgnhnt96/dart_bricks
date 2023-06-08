@@ -6,3 +6,4 @@ environment:
 
 dependencies:
   mason: ^0.1.0-dev.46
+  pubspec_parse: ^1.2.3
