@@ -1,5 +1,6 @@
 import 'package:mason/mason.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
+import 'package:shared_hook_methods/symbols.dart';
 
 List<bool> checkForDependencies(
   Pubspec? pubspec,
@@ -23,13 +24,11 @@ List<bool> checkForDependencies(
 
   if (prompt && containsDeps.every((e) => e == containsDeps.first)) {
     final choice = logger.chooseOne(
-      'With which dependency would you like to use?',
+      '$question With which dependency would you like to use?',
       choices: deps.toList(),
       display: (e) => e.titleCase,
       defaultValue: deps.first,
     );
-
-    logger.info('You chose $choice');
 
     final index = deps.toList().indexOf(choice);
 
