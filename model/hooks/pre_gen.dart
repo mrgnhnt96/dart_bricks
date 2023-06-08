@@ -1,64 +1,49 @@
 import 'package:mason/mason.dart';
+import 'package:shared_hook_methods/check_for_dependencies.dart';
+import 'package:shared_hook_methods/directory_name_contains.dart';
+import 'package:shared_hook_methods/fetch_pubspec.dart';
+import 'package:shared_hook_methods/get_project_name.dart';
+
+part 'utils/__update_name_to_plural.dart';
+part 'utils/__use_copy_with.dart';
 
 void run(HookContext context) {
-  final isObject = context.vars['type'] == 'Object';
-  final isRepository = context.vars['type'] == 'Repository';
+  context.vars['name'] =
+      updateNameToPlural(context.vars['name']!, context.logger);
 
-  // replace the `name` variable with the singular form of the `name` variable
-  // e.g. `users` -> `user`
+  final pubspec = fetchPubspec();
 
-  final name = context.vars['name'] as String?;
+  final hasCopyWithDep = checkForDependencies(
+    pubspec,
+    context.logger,
+    {'copy_with_extension'},
+    prompt: false,
+  ).first;
 
-  assert(name != null, 'name is null');
-  context.vars = {
-    ...context.vars,
-    'name': name!.replaceAll(RegExp(r's$'), ''),
-  };
+  //
 
-  context.vars = {
-    ...context.vars,
-    if (isObject) 'is_object': true,
-    if (isRepository) 'is_repository': true,
-  };
-
-  // prompt for copyWith is Object
-  if (isObject) {
-    _handleCpWith(context);
-    return;
+  if (hasCopyWithDep && useCopyWith(context.logger)) {
+    context.vars['copy_with'] = true;
   }
 
-  // prompt for whether to use Dio or Firebase
-  if (isRepository) {
-    _handleDioOrFirebase(context);
-    return;
+  final isRepo = directoryNameContains('repo');
+
+  if (isRepo) {
+    context.vars['is_repository'] = true;
+
+    final deps = checkForDependencies(
+      pubspec,
+      context.logger,
+      {'cloud_firestore', 'Dio'},
+    );
+
+    context.vars.addAll({
+      'is_firebase': deps[0],
+      'is_dio': deps[1],
+    });
+  } else {
+    context.vars['is_object'] = true;
   }
-}
 
-void _handleCpWith(HookContext context) {
-  final copyWith = context.logger.confirm('Use copyWith?', defaultValue: true);
-
-  context.vars = {
-    ...context.vars,
-    if (copyWith) 'copy_with': true,
-  };
-}
-
-void _handleDioOrFirebase(HookContext context) {
-  final dioOrFirebase = context.logger.chooseOne(
-    'Use Dio or Firebase?',
-    choices: [
-      'Firebase',
-      'Dio',
-    ],
-    defaultValue: 'Firebase',
-  );
-
-  final isDio = dioOrFirebase == 'Dio';
-  final isFirebase = dioOrFirebase == 'Firebase';
-
-  context.vars = {
-    ...context.vars,
-    if (isDio) 'is_dio': true,
-    if (isFirebase) 'is_firebase': true,
-  };
+  context.vars['project'] = getProjectName(pubspec);
 }
