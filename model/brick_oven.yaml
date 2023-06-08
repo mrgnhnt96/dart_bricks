@@ -49,10 +49,10 @@ files:
       name: _NAME_
       project: _PROJECT_
       all: _ALL_
+      watch_by_id: _WATCH_BY_ID_
       by_id: _BY_ID_
       create: _CREATE_
       delete: _DELETE_
-      update: _UPDATE_
       update_many: _UPDATE_MANY_
+      update: _UPDATE_
       watch_all: _WATCH_ALL_
-      watch_by_id: _WATCH_BY_ID_

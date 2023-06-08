@@ -18,13 +18,13 @@ abstract class I{{#pascalCase}}{{{name}}}{{/pascalCase}}sSource {
 {{#update}}
   Future<RequestResult<void>> update({{#pascalCase}}{{{name}}}{{/pascalCase}} {{#camelCase}}{{{name}}}{{/camelCase}});
 {{/update}}
-{{#update}}
+{{#update_many}}
   Future<RequestResult<void>> updateMany(List<{{#pascalCase}}{{{name}}}{{/pascalCase}}> {{#camelCase}}{{{name}}}{{/camelCase}}s);
-{{/update}}
+{{/update_many}}
 {{#all}}
   Future<Stream<List<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>>> watchAll();
 {{/all}}
-{{#by_id}}
+{{#watch_by_id}}
   Future<Stream<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> watchById(String id);
-{{/by_id}}
+{{/watch_by_id}}
 }
