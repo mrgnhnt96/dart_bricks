@@ -1,0 +1,10 @@
+name: bloc_hooks
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  mason: ^0.1.0-dev.46
+  shared_hook_methods:
+    path: ../../shared_hook_methods

@@ -13,6 +13,7 @@ files:
       suffix: _screen
     vars:
       name: _NAME_
+      project: _PROJECT_
   example/components/__description.dart:
     vars:
       name: _NAME_

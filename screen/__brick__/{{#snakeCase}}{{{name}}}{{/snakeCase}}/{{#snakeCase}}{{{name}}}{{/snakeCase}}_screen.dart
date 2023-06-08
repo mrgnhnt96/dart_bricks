@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '{{#snakeCase}}{{{name}}}{{/snakeCase}}_view.dart';
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_ui/screens/{{#snakeCase}}{{{name}}}{{/snakeCase}}/{{#snakeCase}}{{{name}}}{{/snakeCase}}_view.dart';
 
 class {{#pascalCase}}{{{name}}}{{/pascalCase}}Screen extends StatelessWidget {
   const {{#pascalCase}}{{{name}}}{{/pascalCase}}Screen({super.key});
