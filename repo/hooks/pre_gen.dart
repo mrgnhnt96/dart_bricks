@@ -7,17 +7,7 @@ void run(HookContext context) {
   final pubspec = fetchPubspec();
   final data = checkForDependencies(pubspec, context.logger);
 
-  var project = 'internal';
-  if (pubspec != null) {
-    final projectName = pubspec.name;
-
-    if (projectName.endsWith('data')) {
-      final parts = projectName.split('_');
-      parts.removeLast();
-
-      project = parts.join('_');
-    }
-  }
+  final project = getProjectName(pubspec);
 
   context.vars = {
     ...context.vars,
@@ -25,6 +15,22 @@ void run(HookContext context) {
     'is_dio': data.dio,
     'is_firebase': data.firebase,
   };
+}
+
+String getProjectName(Pubspec? pubspec) {
+  var project = 'internal';
+
+  if (pubspec == null) {
+    return project;
+  }
+
+  if (pubspec.name.endsWith('data')) {
+    final parts = pubspec.name.split('_')..removeLast();
+
+    project = parts.join('_');
+  }
+
+  return project;
 }
 
 Pubspec? fetchPubspec() {
