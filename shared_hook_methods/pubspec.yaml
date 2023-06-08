@@ -1,10 +1,12 @@
-name: bloc_hooks
+name: shared_hook_methods
 publish_to: none
+version: 0.0.1
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   mason: ^0.1.0-dev.46
-  shared_hook_methods:
-    path: ../../shared_hook_methods
+  pubspec_parse: ^1.2.3
+
+scripts: ../derry.yaml
