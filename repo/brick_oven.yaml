@@ -13,13 +13,13 @@ files:
       suffix: s_cache
     vars:
       name: _NAME_
+      project: _PROJECT_
   name/name.dart:
     name:
       format: snake
       suffix: s
     vars:
-      name:
-        _NAME_
+      name: _NAME_
 
   # DIO
   name/dio_source.dart:
@@ -30,6 +30,7 @@ files:
       suffix: s_source
     vars:
       name: _NAME_
+      project: _PROJECT_
 
   # FIREBASE
   name/firebase_source.dart:
@@ -40,3 +41,4 @@ files:
       suffix: s_source
     vars:
       name: _NAME_
+      project: _PROJECT_

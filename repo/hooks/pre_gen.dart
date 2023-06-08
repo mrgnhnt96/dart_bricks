@@ -4,9 +4,30 @@ import 'package:mason/mason.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
 void run(HookContext context) {
-  var isDio = false;
-  var isFirebase = false;
+  final pubspec = fetchPubspec();
+  final data = checkForDependencies(pubspec, context.logger);
 
+  var project = 'internal';
+  if (pubspec != null) {
+    final projectName = pubspec.name;
+
+    if (projectName.endsWith('data')) {
+      final parts = projectName.split('_');
+      parts.removeLast();
+
+      project = parts.join('_');
+    }
+  }
+
+  context.vars = {
+    ...context.vars,
+    'project': project,
+    'is_dio': data.dio,
+    'is_firebase': data.firebase,
+  };
+}
+
+Pubspec? fetchPubspec() {
   var currentDir = Directory.current;
 
   // search up to 5 levels up for pubspec.yaml
@@ -20,41 +41,44 @@ void run(HookContext context) {
 
     // check for dio dependency
     final pubspec = Pubspec.parse(pubspecFile.readAsStringSync());
-    final dioDependency = pubspec.dependencies['dio'];
 
-    if (dioDependency != null) {
-      isDio = true;
-    }
+    return pubspec;
+  }
+  return null;
+}
 
-    // check for firestore dependency
-    final firebaseDependency = pubspec.dependencies['cloud_firestore'];
+({bool firebase, bool dio}) checkForDependencies(
+  Pubspec? pubspec,
+  Logger logger,
+) {
+  var isDio = false;
+  var isFirebase = false;
 
-    if (firebaseDependency != null) {
-      isFirebase = true;
-    }
-    break;
+  final dioDependency = pubspec?.dependencies['dio'];
+
+  if (dioDependency != null) {
+    isDio = true;
   }
 
-  if (isDio != isFirebase) {
-    context.vars = {
-      ...context.vars,
-      'is_dio': isDio,
-      'is_firebase': isFirebase,
-    };
+  // check for firestore dependency
+  final firebaseDependency = pubspec?.dependencies['cloud_firestore'];
+
+  if (firebaseDependency != null) {
+    isFirebase = true;
   }
 
-  final choice = context.logger.chooseOne(
-    'With which dependency would you like to use for this repo?',
-    choices: ['firebase', 'dio'],
-    defaultValue: 'firebase',
-  );
+  if (isDio == isFirebase) {
+    final choice = logger.chooseOne(
+      'With which dependency would you like to use for this repo?',
+      choices: ['Firebase', 'Dio'],
+      defaultValue: 'Firebase',
+    );
 
-  context.logger.info('You chose $choice');
+    logger.info('You chose $choice');
 
-  context.vars = {
-    ...context.vars,
-    'is_dio': choice == 'dio',
-    'is_firebase': choice == 'firebase',
-  };
-  return;
+    isDio = choice == 'Dio';
+    isFirebase = choice == 'Firebase';
+  }
+
+  return (dio: isDio, firebase: isFirebase);
 }

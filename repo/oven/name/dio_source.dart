@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:internal_domain/domain.dart';
+import 'package:_PROJECT_SNAKE_domain/domain.dart';
 
 import 'package:data/util/util.dart';
 

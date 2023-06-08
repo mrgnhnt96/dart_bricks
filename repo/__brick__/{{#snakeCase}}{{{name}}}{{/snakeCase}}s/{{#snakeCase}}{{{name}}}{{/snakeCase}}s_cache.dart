@@ -1,7 +1,7 @@
-import 'package:internal_domain/domain.dart';
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_domain/domain.dart';
 
-import 'package:internal_data/utils/database.dart';
-import 'package:internal_data/utils/hive_cache.dart';
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_data/utils/database.dart';
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_data/utils/hive_cache.dart';
 
 // ignore: strict_raw_type
 class {{#pascalCase}}{{{name}}}{{/pascalCase}}sCache extends HiveCache implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}sCache {

@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:internal_domain/domain.dart';
+import 'package:_PROJECT_SNAKE_domain/domain.dart';
 
-import 'package:internal_data/utils/firestore.dart';
+import 'package:_PROJECT_SNAKE_data/utils/firestore.dart';
 
 class _NAME_PASCALsSource extends Firestore implements I_NAME_PASCALsSource {
   const _NAME_PASCALsSource() : super('_NAME_SNAKEs');
