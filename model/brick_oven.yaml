@@ -2,14 +2,14 @@ source: oven
 brick_config: brick.yaml
 dirs:
   repo:
-    include_if: is_repository
+    include_if: is_interface
     name:
       value: name
       format: snake
       suffix: s
 files:
   object.dart:
-    include_if: is_object
+    include_if_not: is_interface
     name:
       value: name
       format: snake
@@ -24,7 +24,11 @@ files:
       suffix: s
     vars:
       name: _NAME_
+      cache: _CACHE_
+      source: _SOURCE_
+
   repo/cache.dart:
+    include_if: cache
     name:
       value: name
       prefix: i_
@@ -32,9 +36,10 @@ files:
       format: snake
     vars:
       name: _NAME_
+      project: _PROJECT_
 
-  repo/dio_source.dart:
-    include_if: is_dio
+  repo/source.dart:
+    include_if: source
     name:
       value: name
       prefix: i_
@@ -42,13 +47,12 @@ files:
       format: snake
     vars:
       name: _NAME_
-
-  repo/firebase_source.dart:
-    include_if: is_firebase
-    name:
-      value: name
-      prefix: i_
-      suffix: s_source
-      format: snake
-    vars:
-      name: _NAME_
+      project: _PROJECT_
+      all: _ALL_
+      by_id: _BY_ID_
+      create: _CREATE_
+      delete: _DELETE_
+      update: _UPDATE_
+      update_many: _UPDATE_MANY_
+      watch_all: _WATCH_ALL_
+      watch_by_id: _WATCH_BY_ID_

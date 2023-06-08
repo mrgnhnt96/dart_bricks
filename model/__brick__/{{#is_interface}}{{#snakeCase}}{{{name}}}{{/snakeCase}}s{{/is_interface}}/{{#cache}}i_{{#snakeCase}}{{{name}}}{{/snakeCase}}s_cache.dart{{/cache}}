@@ -1,5 +1,5 @@
-import 'package:_PROJECT_SNAKE_domain/models/{{#snakeCase}}{{{name}}}{{/snakeCase}}.dart';
-import 'package:_PROJECT_SNAKE_domain/models/request_result.dart';
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_domain/models/{{#snakeCase}}{{{name}}}{{/snakeCase}}.dart';
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_domain/models/request_result.dart';
 
 abstract class I{{#pascalCase}}{{{name}}}{{/pascalCase}}sCache {
   const I{{#pascalCase}}{{{name}}}{{/pascalCase}}sCache();
