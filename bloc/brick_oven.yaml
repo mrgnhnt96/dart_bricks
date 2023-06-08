@@ -40,6 +40,7 @@ files:
       suffix: _bloc
     vars:
       name: _NAME_
+      project: _PROJECT_
   singular_event.dart:
     include_if: is_singular
     name:
@@ -69,6 +70,7 @@ files:
       suffix: s_bloc
     vars:
       name: _NAME_
+      project: _PROJECT_
   plural_event.dart:
     include_if: is_plural
     name:

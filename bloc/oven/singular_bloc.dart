@@ -4,10 +4,10 @@ import 'package:autoequal/autoequal.dart';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as con;
 import 'package:equatable/equatable.dart';
-import 'package:internal_application/utils/bloc_extensions.dart';
-import 'package:internal_domain/domain.dart';
+import 'package:_PROJECT_SNAKE_application/utils/bloc_extensions.dart';
+import 'package:_PROJECT_SNAKE_domain/domain.dart';
 
-import 'package:internal_application/utils/persist_bloc.dart';
+import 'package:_PROJECT_SNAKE_application/utils/persist_bloc.dart';
 
 part '_NAME_snake_bloc.g.dart';
 part '_NAME_snake_event.dart';

@@ -1,4 +1,6 @@
 import 'package:mason/mason.dart';
+import 'package:shared_hook_methods/fetch_pubspec.dart';
+import 'package:shared_hook_methods/get_project_name.dart';
 
 void run(HookContext context) {
   final isPlural = context.vars['type'] == 'Plural';
@@ -11,4 +13,8 @@ void run(HookContext context) {
     if (isSingular) 'is_singular': true,
     if (isBasic) 'is_basic': true,
   };
+
+  final pubspec = fetchPubspec();
+
+  context.vars['project'] = getProjectName(pubspec, 'application');
 }
