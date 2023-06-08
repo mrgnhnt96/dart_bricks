@@ -1,14 +1,17 @@
 import 'package:pubspec_parse/pubspec_parse.dart';
 
-String getProjectName(Pubspec? pubspec) {
+String getProjectName(Pubspec? pubspec, String package) {
   var project = 'internal';
 
   if (pubspec == null) {
     return project;
   }
 
-  if (pubspec.name.endsWith('data')) {
-    final parts = pubspec.name.split('_')..removeLast();
+  if (pubspec.name.endsWith(package)) {
+    final parts = pubspec.name.split('_');
+    parts.removeLast();
+
+    print('parts: $parts');
 
     project = parts.join('_');
   }
