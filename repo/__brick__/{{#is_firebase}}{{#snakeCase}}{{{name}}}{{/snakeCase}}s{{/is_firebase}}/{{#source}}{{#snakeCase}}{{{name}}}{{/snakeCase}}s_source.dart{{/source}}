@@ -7,6 +7,7 @@ import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_data/utils/firestore.d
 class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource extends Firestore implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}sSource {
   const {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource() : super('{{#snakeCase}}{{{name}}}{{/snakeCase}}s');
 
+{{#all}}
   @override
   Future<RequestResult<List<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> all() async {
     final {{#camelCase}}{{{name}}}{{/camelCase}}s = <{{#pascalCase}}{{{name}}}{{/pascalCase}}>[];
@@ -35,6 +36,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource extends Firestore implemen
     return RequestResult.success({{#camelCase}}{{{name}}}{{/camelCase}}s);
   }
 
+{{/all}}
+{{#by_id}}
   @override
   Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> byId(String id) async {
     final snapshot = await collection.doc(id).get();
@@ -59,6 +62,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource extends Firestore implemen
     }
   }
 
+{{/by_id}}
+{{#create}}
   @override
   Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> create() async {
     final new{{#pascalCase}}{{{name}}}{{/pascalCase}} = {{#pascalCase}}{{{name}}}{{/pascalCase}}.create();
@@ -78,6 +83,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource extends Firestore implemen
     }
   }
 
+{{/create}}
+{{#delete}}
   @override
   Future<RequestResult<void>> delete(String id) async {
     try {
@@ -89,6 +96,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource extends Firestore implemen
     return const RequestResult.success(null);
   }
 
+{{/delete}}
+{{#update}}
   @override
   Future<RequestResult<void>> update({{#pascalCase}}{{{name}}}{{/pascalCase}} {{#camelCase}}{{{name}}}{{/camelCase}}) async {
     try {
@@ -100,6 +109,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource extends Firestore implemen
     return const RequestResult.success(null);
   }
 
+{{/update}}
+{{#update_many}}
   @override
   Future<RequestResult<void>> updateMany(
     List<{{#pascalCase}}{{{name}}}{{/pascalCase}}> {{#camelCase}}{{{name}}}{{/camelCase}}s,
@@ -130,6 +141,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource extends Firestore implemen
     return const RequestResult.success(null);
   }
 
+{{/update_many}}
+{{#watch_all}}
   @override
   Future<Stream<List<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>>> watchAll() async {
     try {
@@ -170,6 +183,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource extends Firestore implemen
     }
   }
 
+{{/watch_all}}
+{{#watch_by_id}}
   @override
   Future<Stream<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> watchById(String id) async {
     try {
@@ -199,4 +214,5 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource extends Firestore implemen
       return Stream.value(StreamResult.failure(e.toString()));
     }
   }
+{{/watch_by_id}}
 }

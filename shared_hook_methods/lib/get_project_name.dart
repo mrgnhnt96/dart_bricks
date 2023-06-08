@@ -11,8 +11,6 @@ String getProjectName(Pubspec? pubspec, String package) {
     final parts = pubspec.name.split('_');
     parts.removeLast();
 
-    print('parts: $parts');
-
     project = parts.join('_');
   }
 

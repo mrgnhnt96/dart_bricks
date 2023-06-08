@@ -7,6 +7,7 @@ import 'package:_PROJECT_SNAKE_data/utils/firestore.dart';
 class _NAME_PASCALsSource extends Firestore implements I_NAME_PASCALsSource {
   const _NAME_PASCALsSource() : super('_NAME_SNAKEs');
 
+  // section_ALL_
   @override
   Future<RequestResult<List<_NAME_PASCAL>>> all() async {
     final _NAME_CAMELs = <_NAME_PASCAL>[];
@@ -35,6 +36,8 @@ class _NAME_PASCALsSource extends Firestore implements I_NAME_PASCALsSource {
     return RequestResult.success(_NAME_CAMELs);
   }
 
+  // endSection_ALL_
+  // section_BY_ID_
   @override
   Future<RequestResult<_NAME_PASCAL>> byId(String id) async {
     final snapshot = await collection.doc(id).get();
@@ -59,6 +62,8 @@ class _NAME_PASCALsSource extends Firestore implements I_NAME_PASCALsSource {
     }
   }
 
+  // endSection_BY_ID_
+  // section_CREATE_
   @override
   Future<RequestResult<_NAME_PASCAL>> create() async {
     final new_NAME_PASCAL = _NAME_PASCAL.create();
@@ -78,6 +83,8 @@ class _NAME_PASCALsSource extends Firestore implements I_NAME_PASCALsSource {
     }
   }
 
+  // endSection_CREATE_
+  // section_DELETE_
   @override
   Future<RequestResult<void>> delete(String id) async {
     try {
@@ -89,6 +96,8 @@ class _NAME_PASCALsSource extends Firestore implements I_NAME_PASCALsSource {
     return const RequestResult.success(null);
   }
 
+  // endSection_DELETE_
+  // section_UPDATE_
   @override
   Future<RequestResult<void>> update(_NAME_PASCAL _NAME_CAMEL) async {
     try {
@@ -100,6 +109,8 @@ class _NAME_PASCALsSource extends Firestore implements I_NAME_PASCALsSource {
     return const RequestResult.success(null);
   }
 
+  // endSection_UPDATE_
+  // section_UPDATE_MANY_
   @override
   Future<RequestResult<void>> updateMany(
     List<_NAME_PASCAL> _NAME_CAMELs,
@@ -130,6 +141,8 @@ class _NAME_PASCALsSource extends Firestore implements I_NAME_PASCALsSource {
     return const RequestResult.success(null);
   }
 
+  // endSection_UPDATE_MANY_
+  // section_WATCH_ALL_
   @override
   Future<Stream<List<StreamResult<_NAME_PASCAL>>>> watchAll() async {
     try {
@@ -170,6 +183,8 @@ class _NAME_PASCALsSource extends Firestore implements I_NAME_PASCALsSource {
     }
   }
 
+  // endSection_WATCH_ALL_
+  // section_WATCH_BY_ID_
   @override
   Future<Stream<StreamResult<_NAME_PASCAL>>> watchById(String id) async {
     try {
@@ -199,4 +214,5 @@ class _NAME_PASCALsSource extends Firestore implements I_NAME_PASCALsSource {
       return Stream.value(StreamResult.failure(e.toString()));
     }
   }
+  // endSection_WATCH_BY_ID_
 }

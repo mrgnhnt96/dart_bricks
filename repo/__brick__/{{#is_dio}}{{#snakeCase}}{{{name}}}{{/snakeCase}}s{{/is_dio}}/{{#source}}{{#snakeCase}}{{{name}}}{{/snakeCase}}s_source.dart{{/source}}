@@ -6,7 +6,7 @@ import 'package:data/util/util.dart';
 
 class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}sSource {
   const {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource();
-
+{{#all}}
   @override
   Future<RequestResult<List<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> all() async {
     try {
@@ -40,6 +40,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource implements I{{#pascalCase}
     }
   }
 
+{{/all}}
+{{#by_id}}
   @override
   Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> byId(String id) async {
     try {
@@ -61,6 +63,34 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource implements I{{#pascalCase}
     }
   }
 
+{{/by_id}}
+{{#create}}
+  @override
+  Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> create() async {
+    try {
+      final result = await dio.post<Map>(
+        '${dio.url}/NOT_IMPLEMENTED',
+        data: {},
+      );
+
+      final data = result.data;
+
+      if (data == null) {
+        return RequestResult.failure('No data');
+      }
+
+      final {{#camelCase}}{{{name}}}{{/camelCase}}Json = Map<String, dynamic>.from(data);
+
+      return RequestResult.success(
+        {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson({{#camelCase}}{{{name}}}{{/camelCase}}Json),
+      );
+    } catch (e) {
+      return RequestResult.failure(e.toString());
+    }
+  }
+
+{{/create}}
+{{#delete}}
   @override
   Future<RequestResult<void>> delete(String id) async {
     try {
@@ -74,6 +104,8 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource implements I{{#pascalCase}
     }
   }
 
+{{/delete}}
+{{#update}}
   @override
   Future<RequestResult<void>> update({{#pascalCase}}{{{name}}}{{/pascalCase}} {{#camelCase}}{{{name}}}{{/camelCase}}) async {
     try {
@@ -89,4 +121,22 @@ class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource implements I{{#pascalCase}
 
     return const RequestResult.success(null);
   }
+
+{{/update}}
+{{#update_many}}
+  @override
+  Future<RequestResult<void>> updateMany(
+      List<{{#pascalCase}}{{{name}}}{{/pascalCase}}> {{#camelCase}}{{{name}}}{{/camelCase}}s) async {
+    try {
+      await dio.put<Map>(
+        '${dio.url}/NOT_IMPLEMENTED',
+        data: {{#camelCase}}{{{name}}}{{/camelCase}}s.toJson(),
+      );
+    } catch (e) {
+      return RequestResult.failure(e.toString());
+    }
+
+    return const RequestResult.success(null);
+  }
+{{/update_many}}
 }

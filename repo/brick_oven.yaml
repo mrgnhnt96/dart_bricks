@@ -5,8 +5,21 @@ dirs:
     name:
       format: snake
       suffix: s
+  firebase:
+    include_if: is_firebase
+    name:
+      value: name
+      format: snake
+      suffix: s
+  dio:
+    include_if: is_dio
+    name:
+      value: name
+      format: snake
+      suffix: s
 files:
   name/cache.dart:
+    include_if: cache
     name:
       value: name
       format: snake
@@ -22,8 +35,8 @@ files:
       name: _NAME_
 
   # DIO
-  name/dio_source.dart:
-    include_if: is_dio
+  dio/source.dart:
+    include_if: source
     name:
       value: name
       format: snake
@@ -31,10 +44,16 @@ files:
     vars:
       name: _NAME_
       project: _PROJECT_
+      all: _ALL_
+      by_id: _BY_ID_
+      create: _CREATE_
+      delete: _DELETE_
+      update_many: _UPDATE_MANY_
+      update: _UPDATE_
 
   # FIREBASE
-  name/firebase_source.dart:
-    include_if: is_firebase
+  firebase/source.dart:
+    include_if: source
     name:
       value: name
       format: snake
@@ -42,3 +61,11 @@ files:
     vars:
       name: _NAME_
       project: _PROJECT_
+      watch_all: _WATCH_ALL_
+      all: _ALL_
+      watch_by_id: _WATCH_BY_ID_
+      by_id: _BY_ID_
+      create: _CREATE_
+      delete: _DELETE_
+      update_many: _UPDATE_MANY_
+      update: _UPDATE_
