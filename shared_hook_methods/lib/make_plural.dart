@@ -1,5 +1,8 @@
 String makePlural(String word) {
-  final pluralPattern = RegExp(r'\b\w+(?<!s|es|\w*[^aeiou]ies)\b');
+  final pluralPattern = RegExp(
+    r'\b\w+(?<![^s]s|es|\w*[^aeiou]ies)\b',
+    caseSensitive: false,
+  );
 
   final pluralForm = word.replaceAllMapped(pluralPattern, (match) {
     final matchedWord = match.group(0)!;
