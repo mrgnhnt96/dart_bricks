@@ -37,6 +37,7 @@ class {{#pascalCase}}{{{singular}}}{{/pascalCase}}Bloc
   final I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Source _{{#camelCase}}{{{interface}}}{{/camelCase}}Source;
 
   late String _{{#camelCase}}{{{singular}}}{{/camelCase}}Id;
+  bool _isCreating = false;
 
   StreamSubscription<StreamResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>? _listener;
 
@@ -83,7 +84,7 @@ class {{#pascalCase}}{{{singular}}}{{/pascalCase}}Bloc
 
   @override
   Future<void> persist({{#pascalCase}}{{{singular}}}{{/pascalCase}}State state) async {
-    if (!state.isReady) {
+    if (!state.isReady || _isCreating) {
       return;
     }
 
@@ -113,6 +114,7 @@ class {{#pascalCase}}{{{singular}}}{{/pascalCase}}Bloc
   }
 
   FutureOr<void> _create(_Create event, _Emitter emit) async {
+    _isCreating = true;
     final result = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Source.create();
 
     if (result.isError) {
@@ -126,6 +128,8 @@ class {{#pascalCase}}{{{singular}}}{{/pascalCase}}Bloc
   }
 
   FutureOr<void> _delete(_Delete event, _Emitter emit) async {
+    emit(const _Saving());
+
     await _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache.delete(_{{#camelCase}}{{{singular}}}{{/camelCase}}Id);
 
     final result = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Source.delete(_{{#camelCase}}{{{singular}}}{{/camelCase}}Id);
@@ -191,6 +195,10 @@ class {{#pascalCase}}{{{singular}}}{{/pascalCase}}Bloc
   }
 
   FutureOr<void> _save(_Save event, _Emitter emit) async {
+    _isCreating = false;
+
+    emit(const _Saving());
+
     final result = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Source.update(event.{{#camelCase}}{{{singular}}}{{/camelCase}});
 
     if (result.isError) {

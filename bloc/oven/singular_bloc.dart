@@ -37,6 +37,7 @@ class _SINGULAR_PASCALBloc
   final I_INTERFACE_PASCALSource __INTERFACE_CAMELSource;
 
   late String __SINGULAR_CAMELId;
+  bool _isCreating = false;
 
   StreamSubscription<StreamResult<_SINGULAR_PASCAL>>? _listener;
 
@@ -83,7 +84,7 @@ class _SINGULAR_PASCALBloc
 
   @override
   Future<void> persist(_SINGULAR_PASCALState state) async {
-    if (!state.isReady) {
+    if (!state.isReady || _isCreating) {
       return;
     }
 
@@ -113,6 +114,7 @@ class _SINGULAR_PASCALBloc
   }
 
   FutureOr<void> _create(_Create event, _Emitter emit) async {
+    _isCreating = true;
     final result = await __INTERFACE_CAMELSource.create();
 
     if (result.isError) {
@@ -126,6 +128,8 @@ class _SINGULAR_PASCALBloc
   }
 
   FutureOr<void> _delete(_Delete event, _Emitter emit) async {
+    emit(const _Saving());
+
     await __INTERFACE_CAMELCache.delete(__SINGULAR_CAMELId);
 
     final result = await __INTERFACE_CAMELSource.delete(__SINGULAR_CAMELId);
@@ -191,6 +195,10 @@ class _SINGULAR_PASCALBloc
   }
 
   FutureOr<void> _save(_Save event, _Emitter emit) async {
+    _isCreating = false;
+
+    emit(const _Saving());
+
     final result = await __INTERFACE_CAMELSource.update(event._SINGULAR_CAMEL);
 
     if (result.isError) {

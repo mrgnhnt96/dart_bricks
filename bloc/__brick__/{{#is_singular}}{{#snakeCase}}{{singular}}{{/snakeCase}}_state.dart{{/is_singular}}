@@ -28,6 +28,10 @@ class _Ready extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}State {
   List<Object?> get props => _$props;
 }
 
+class _Saving extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}State {
+  const _Saving();
+}
+
 class _Loading extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}State {
   const _Loading();
 }

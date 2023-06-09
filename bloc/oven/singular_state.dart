@@ -28,6 +28,10 @@ class _Ready extends _SINGULAR_PASCALState {
   List<Object?> get props => _$props;
 }
 
+class _Saving extends _SINGULAR_PASCALState {
+  const _Saving();
+}
+
 class _Loading extends _SINGULAR_PASCALState {
   const _Loading();
 }
