@@ -19,7 +19,7 @@ String makePlural(String word) {
       return matchedWord + 'es';
     }
 
-    if (matchedWord.endsWith('o')) {
+    if (matchedWord.endsWith('o') && !matchedWord.endsWith('eo')) {
       return matchedWord + 'es';
     }
 
