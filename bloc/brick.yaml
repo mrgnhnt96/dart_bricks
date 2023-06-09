@@ -19,11 +19,6 @@ environment:
 #  * an optional default value
 #  * an optional prompt phrase used when asking for the variable.
 vars:
-  name:
-    type: string
-    description: Bloc's name/model
-    default: Model
-    prompt: What is the name/model of the bloc?
   type:
     type: enum
     values:

@@ -1,27 +1,21 @@
-part of '_NAME_snake_bloc.dart';
+part of '_SINGULAR_snake_bloc.dart';
 
-abstract class _NAME_pascalEvent extends Equatable {
-  const _NAME_pascalEvent();
+abstract class _SINGULAR_pascalEvent extends Equatable {
+  const _SINGULAR_pascalEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class _Init extends _NAME_pascalEvent {
+class _Init extends _SINGULAR_pascalEvent {
   const _Init();
 }
 
-@autoequal
-class _Fetch extends _NAME_pascalEvent {
-  const _Fetch([this.id]);
-
-  final String? id;
-
-  @override
-  List<Object?> get props => _$props;
+class _Fetch extends _SINGULAR_pascalEvent {
+  const _Fetch();
 }
 
-extension _NAME_pascalBlocX on _NAME_pascalBloc {
+extension _SINGULAR_pascalBlocX on _SINGULAR_pascalBloc {
   // ignore: library_private_types_in_public_api
   _Events get events => _Events(this);
 }
@@ -29,9 +23,9 @@ extension _NAME_pascalBlocX on _NAME_pascalBloc {
 class _Events {
   const _Events(this._bloc);
 
-  final _NAME_pascalBloc _bloc;
+  final _SINGULAR_pascalBloc _bloc;
 
-  void fetch([String? id]) {
-    _bloc.add(_Fetch(id));
+  void fetch() {
+    _bloc.add(const _Fetch());
   }
 }

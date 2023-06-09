@@ -1,9 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api
 
-part of '_NAME_snake_bloc.dart';
+part of '_SINGULAR_snake_bloc.dart';
 
-abstract class _NAME_PASCALState extends Equatable {
-  const _NAME_PASCALState();
+abstract class _SINGULAR_PASCALState extends Equatable {
+  const _SINGULAR_PASCALState();
 
   _Error get asError => this as _Error;
   _Loading get asLoading => this as _Loading;
@@ -19,25 +19,25 @@ abstract class _NAME_PASCALState extends Equatable {
 }
 
 @autoequal
-class _Ready extends _NAME_PASCALState {
-  const _Ready(this._NAME_CAMEL);
+class _Ready extends _SINGULAR_PASCALState {
+  const _Ready(this._SINGULAR_CAMEL);
 
-  final _NAME_PASCAL _NAME_CAMEL;
+  final _SINGULAR_PASCAL _SINGULAR_CAMEL;
 
   @override
   List<Object?> get props => _$props;
 }
 
-class _Loading extends _NAME_PASCALState {
+class _Loading extends _SINGULAR_PASCALState {
   const _Loading();
 }
 
-class _Deleted extends _NAME_PASCALState {
+class _Deleted extends _SINGULAR_PASCALState {
   const _Deleted();
 }
 
 @autoequal
-class _Error extends _NAME_PASCALState {
+class _Error extends _SINGULAR_PASCALState {
   const _Error(this.message);
 
   final String message;

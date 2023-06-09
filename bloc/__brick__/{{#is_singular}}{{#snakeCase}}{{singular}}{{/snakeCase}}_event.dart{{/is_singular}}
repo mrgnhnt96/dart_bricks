@@ -1,0 +1,91 @@
+part of '{{#snakeCase}}{{{singular}}}{{/snakeCase}}_bloc.dart';
+
+abstract class {{#pascalCase}}{{{singular}}}{{/pascalCase}}Event extends Equatable {
+  const {{#pascalCase}}{{{singular}}}{{/pascalCase}}Event();
+
+  @override
+  List<Object?> get props => [];
+}
+
+@autoequal
+class _Init extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}Event {
+  const _Init(this.id);
+
+  final String id;
+
+  @override
+  List<Object?> get props => _$props;
+}
+
+class _Fetch extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}Event {
+  const _Fetch();
+}
+
+class _Create extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}Event {
+  const _Create();
+}
+
+@autoequal
+class _Save extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}Event {
+  const _Save(this.{{#camelCase}}{{{singular}}}{{/camelCase}});
+
+  final {{#pascalCase}}{{{singular}}}{{/pascalCase}} {{#camelCase}}{{{singular}}}{{/camelCase}};
+
+  @override
+  List<Object?> get props => _$props;
+}
+
+class _Delete extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}Event {
+  const _Delete();
+}
+
+@autoequal
+class _CacheChanged extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}Event {
+  const _CacheChanged(this.state);
+
+  final _Ready state;
+
+  @override
+  List<Object?> get props => _$props;
+}
+
+@autoequal
+class _SourceChanged extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}Event {
+  const _SourceChanged(this.state);
+
+  final {{#pascalCase}}{{{singular}}}{{/pascalCase}}State state;
+
+  @override
+  List<Object?> get props => _$props;
+}
+
+extension {{#pascalCase}}{{{singular}}}{{/pascalCase}}BlocX on {{#pascalCase}}{{{singular}}}{{/pascalCase}}Bloc {
+  // ignore: library_private_types_in_public_api
+  _Events get events => _Events(this);
+}
+
+class _Events {
+  const _Events(this._bloc);
+
+  final {{#pascalCase}}{{{singular}}}{{/pascalCase}}Bloc _bloc;
+
+  void create() {
+    _bloc.add(const _Create());
+  }
+
+  void delete() {
+    _bloc.add(const _Delete());
+  }
+
+  void fetch() {
+    _bloc.add(const _Fetch());
+  }
+
+  void init(String id) {
+    _bloc.add(_Init(id));
+  }
+
+  void save({{#pascalCase}}{{{singular}}}{{/pascalCase}} {{#camelCase}}{{{singular}}}{{/camelCase}}) {
+    _bloc.add(_Save({{#camelCase}}{{{singular}}}{{/camelCase}}));
+  }
+}

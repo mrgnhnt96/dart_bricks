@@ -1,0 +1,209 @@
+import 'dart:async';
+
+import 'package:autoequal/autoequal.dart';
+import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart' as con;
+import 'package:equatable/equatable.dart';
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_application/utils/bloc_extensions.dart';
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_domain/domain.dart';
+
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_application/utils/persist_bloc.dart';
+
+part '{{#snakeCase}}{{{singular}}}{{/snakeCase}}_bloc.g.dart';
+part '{{#snakeCase}}{{{singular}}}{{/snakeCase}}_event.dart';
+part '{{#snakeCase}}{{{singular}}}{{/snakeCase}}_state.dart';
+
+// ignore: avoid_private_typedef_functions
+typedef _Emitter = Emitter<{{#pascalCase}}{{{singular}}}{{/pascalCase}}State>;
+
+class {{#pascalCase}}{{{singular}}}{{/pascalCase}}Bloc
+    extends PersistBloc<{{#pascalCase}}{{{singular}}}{{/pascalCase}}Event, {{#pascalCase}}{{{singular}}}{{/pascalCase}}State> {
+  {{#pascalCase}}{{{singular}}}{{/pascalCase}}Bloc({
+    required I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Cache {{#camelCase}}{{{interface}}}{{/camelCase}}Cache,
+    required I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Source {{#camelCase}}{{{interface}}}{{/camelCase}}Source,
+  })  : _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache = {{#camelCase}}{{{interface}}}{{/camelCase}}Cache,
+        _{{#camelCase}}{{{interface}}}{{/camelCase}}Source = {{#camelCase}}{{{interface}}}{{/camelCase}}Source,
+        super(const _Loading()) {
+    on<_Init>(_init, transformer: con.droppable());
+    on<_Fetch>(_fetch, transformer: con.droppable());
+    on<_Create>(_create, transformer: con.droppable());
+    on<_Save>(_save, transformer: con.droppable());
+    on<_Delete>(_delete, transformer: con.droppable());
+    on<_CacheChanged>(_cacheChanged);
+    on<_SourceChanged>(_sourceChanged);
+  }
+
+  final I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Cache _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache;
+  final I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Source _{{#camelCase}}{{{interface}}}{{/camelCase}}Source;
+
+  late String _{{#camelCase}}{{{singular}}}{{/camelCase}}Id;
+
+  StreamSubscription<StreamResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>? _listener;
+
+  @override
+  Future<void> close() async {
+    await _listener?.cancel();
+
+    await super.close();
+  }
+
+  @override
+  Future<Stream<{{#pascalCase}}{{{singular}}}{{/pascalCase}}State?>> listenForStorageChanges() async {
+    final result = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache.watchById(_{{#camelCase}}{{{singular}}}{{/camelCase}}Id);
+
+    return result.asyncMap((event) {
+      if (!state.isReady) {
+        return null;
+      }
+
+      if (event.isFailure) {
+        return null;
+      }
+
+      if (event.wasDeleted) {
+        return null;
+      }
+
+      final {{#camelCase}}{{{singular}}}{{/camelCase}} = event.value;
+
+      if ({{#camelCase}}{{{singular}}}{{/camelCase}} == null) {
+        return null;
+      }
+
+      return _Ready({{#camelCase}}{{{singular}}}{{/camelCase}});
+    });
+  }
+
+  @override
+  void onStorageChanged({{#pascalCase}}{{{singular}}}{{/pascalCase}}State state) {
+    if (state.isReady) {
+      add(_CacheChanged(state.asReady));
+    }
+  }
+
+  @override
+  Future<void> persist({{#pascalCase}}{{{singular}}}{{/pascalCase}}State state) async {
+    if (!state.isReady) {
+      return;
+    }
+
+    final result =
+        await _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache.byId(state.asReady.{{#camelCase}}{{{singular}}}{{/camelCase}}.id);
+
+    if (result.isSuccess && result.value == state.asReady.{{#camelCase}}{{{singular}}}{{/camelCase}}) {
+      return;
+    }
+
+    await _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache.save(state.asReady.{{#camelCase}}{{{singular}}}{{/camelCase}});
+  }
+
+  @override
+  Future<{{#pascalCase}}{{{singular}}}{{/pascalCase}}State?> retrieve() async {
+    final result = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache.byId(_{{#camelCase}}{{{singular}}}{{/camelCase}}Id);
+
+    if (result.isError) {
+      return null;
+    }
+
+    return _Ready(result.value);
+  }
+
+  FutureOr<void> _cacheChanged(_CacheChanged event, _Emitter emit) async {
+    emitNoCache(emit, event.state);
+  }
+
+  FutureOr<void> _create(_Create event, _Emitter emit) async {
+    final result = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Source.create();
+
+    if (result.isError) {
+      emitError(emit, _Error(result.error));
+      return;
+    }
+
+    _{{#camelCase}}{{{singular}}}{{/camelCase}}Id = result.value.id;
+
+    emit(_Ready(result.value));
+  }
+
+  FutureOr<void> _delete(_Delete event, _Emitter emit) async {
+    await _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache.delete(_{{#camelCase}}{{{singular}}}{{/camelCase}}Id);
+
+    final result = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Source.delete(_{{#camelCase}}{{{singular}}}{{/camelCase}}Id);
+
+    if (result.isError) {
+      emitError(emit, _Error(result.error));
+      return;
+    }
+
+    emit(const _Deleted());
+  }
+
+  Future<void> _fetch(_Fetch event, _Emitter emit) async {
+    await _getData(emit);
+  }
+
+  Future<void> _getData(_Emitter emit) async {
+    final result = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Source.byId(_{{#camelCase}}{{{singular}}}{{/camelCase}}Id);
+
+    if (result.isError) {
+      emitError(emit, _Error(result.error));
+      return;
+    }
+
+    emit(_Ready(result.value));
+
+    await _listenToSourceChanges();
+  }
+
+  Future<void> _init(_Init event, _Emitter emit) async {
+    _{{#camelCase}}{{{singular}}}{{/camelCase}}Id = event.id;
+
+    await hydrate(emit);
+
+    await _getData(emit);
+  }
+
+  Future<void> _listenToSourceChanges() async {
+    final stream = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Source.watchById(_{{#camelCase}}{{{singular}}}{{/camelCase}}Id);
+
+    await _listener?.cancel();
+
+    _listener = stream.listen((event) {
+      if (event.wasDeleted) {
+        add(const _SourceChanged(_Error('_NAME_SENTENCE was deleted')));
+        return;
+      }
+
+      final {{#camelCase}}{{{singular}}}{{/camelCase}} = event.value;
+
+      if ({{#camelCase}}{{{singular}}}{{/camelCase}} == null) {
+        return;
+      }
+
+      final newState = _Ready({{#camelCase}}{{{singular}}}{{/camelCase}});
+
+      if (newState == state) {
+        return;
+      }
+
+      add(_SourceChanged(newState));
+    });
+  }
+
+  FutureOr<void> _save(_Save event, _Emitter emit) async {
+    final result = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Source.update(event.{{#camelCase}}{{{singular}}}{{/camelCase}});
+
+    if (result.isError) {
+      emitError(emit, _Error(result.error));
+      return;
+    }
+
+    emit(_Ready(event.{{#camelCase}}{{{singular}}}{{/camelCase}}));
+  }
+
+  FutureOr<void> _sourceChanged(_SourceChanged event, _Emitter emit) async {
+    await stopListeningToChanges();
+
+    emit(event.state);
+  }
+}

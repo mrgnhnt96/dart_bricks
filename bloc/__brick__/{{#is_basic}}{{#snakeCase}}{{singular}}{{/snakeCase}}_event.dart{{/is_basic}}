@@ -1,0 +1,31 @@
+part of '{{#snakeCase}}{{{singular}}}{{/snakeCase}}_bloc.dart';
+
+abstract class {{#pascalCase}}{{{singular}}}{{/pascalCase}}Event extends Equatable {
+  const {{#pascalCase}}{{{singular}}}{{/pascalCase}}Event();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class _Init extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}Event {
+  const _Init();
+}
+
+class _Fetch extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}Event {
+  const _Fetch();
+}
+
+extension {{#pascalCase}}{{{singular}}}{{/pascalCase}}BlocX on {{#pascalCase}}{{{singular}}}{{/pascalCase}}Bloc {
+  // ignore: library_private_types_in_public_api
+  _Events get events => _Events(this);
+}
+
+class _Events {
+  const _Events(this._bloc);
+
+  final {{#pascalCase}}{{{singular}}}{{/pascalCase}}Bloc _bloc;
+
+  void fetch() {
+    _bloc.add(const _Fetch());
+  }
+}

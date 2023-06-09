@@ -1,0 +1,205 @@
+import 'dart:async';
+
+import 'package:autoequal/autoequal.dart';
+import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart' as con;
+import 'package:equatable/equatable.dart';
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_application/utils/bloc_extensions.dart';
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_domain/domain.dart';
+
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_application/utils/persist_bloc.dart';
+
+part '{{#snakeCase}}{{{plural}}}{{/snakeCase}}_bloc.g.dart';
+part '{{#snakeCase}}{{{plural}}}{{/snakeCase}}_event.dart';
+part '{{#snakeCase}}{{{plural}}}{{/snakeCase}}_state.dart';
+
+// ignore: avoid_private_typedef_functions
+typedef _Emitter = Emitter<{{#pascalCase}}{{{plural}}}{{/pascalCase}}State>;
+
+class {{#pascalCase}}{{{plural}}}{{/pascalCase}}Bloc
+    extends PersistBloc<{{#pascalCase}}{{{plural}}}{{/pascalCase}}Event, {{#pascalCase}}{{{plural}}}{{/pascalCase}}State> {
+  {{#pascalCase}}{{{plural}}}{{/pascalCase}}Bloc({
+    required I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Cache {{#camelCase}}{{{interface}}}{{/camelCase}}Cache,
+    required I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Source {{#camelCase}}{{{interface}}}{{/camelCase}}Source,
+  })  : _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache = {{#camelCase}}{{{interface}}}{{/camelCase}}Cache,
+        _{{#camelCase}}{{{interface}}}{{/camelCase}}Source = {{#camelCase}}{{{interface}}}{{/camelCase}}Source,
+        super(const _Loading()) {
+    on<_Init>(_init);
+    on<_Fetch>(_fetch, transformer: con.droppable());
+    on<_CacheChanged>(_cacheChanged);
+    on<_SourceChanged>(_sourceChanged);
+
+    add(const _Init());
+  }
+
+  final I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Cache _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache;
+  final I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Source _{{#camelCase}}{{{interface}}}{{/camelCase}}Source;
+
+  StreamSubscription<List<StreamResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>>? _sourceListener;
+
+  @override
+  Future<void> close() {
+    _sourceListener?.cancel();
+    return super.close();
+  }
+
+  @override
+  Future<Stream<{{#pascalCase}}{{{plural}}}{{/pascalCase}}State?>> listenForStorageChanges() async {
+    final result = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache.watchAll();
+
+    return result.asyncMap((event) {
+      if (!state.isReady) {
+        return null;
+      }
+
+      if (event.isFailure) {
+        return null;
+      }
+
+      final {{#camelCase}}{{{plural}}}{{/camelCase}} = [...state.asReady.{{#camelCase}}{{{plural}}}{{/camelCase}}];
+
+      if (event.wasDeleted) {
+        {{#camelCase}}{{{plural}}}{{/camelCase}}.removeWhere((e) => e.id == event.key);
+      } else {
+        final value = event.value;
+
+        if (value == null) {
+          return null;
+        }
+
+        final index = {{#camelCase}}{{{plural}}}{{/camelCase}}.indexWhere((e) => e.id == event.key);
+
+        if (index == -1) {
+          {{#camelCase}}{{{plural}}}{{/camelCase}}.add(value);
+        } else {
+          {{#camelCase}}{{{plural}}}{{/camelCase}}[index] = value;
+        }
+      }
+
+      return _Ready({{#camelCase}}{{{plural}}}{{/camelCase}});
+    });
+  }
+
+  @override
+  void onStorageChanged({{#pascalCase}}{{{plural}}}{{/pascalCase}}State state) {
+    if (state.isReady) {
+      add(_CacheChanged(state.asReady));
+    }
+  }
+
+  @override
+  Future<void> persist({{#pascalCase}}{{{plural}}}{{/pascalCase}}State state) async {
+    if (!state.isReady) {
+      return;
+    }
+
+    final result = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache.all();
+
+    if (result.isError) {
+      return;
+    }
+
+    final all = result.value;
+
+    final ids = state.asReady.{{#camelCase}}{{{plural}}}{{/camelCase}}.map((e) => e.id).toSet();
+
+    final toDelete = all.fold(<String>{}, (previous, e) {
+      if (!ids.contains(e.id)) {
+        previous.add(e.id);
+      }
+
+      return previous;
+    });
+
+    if (toDelete.isNotEmpty) {
+      await _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache.deleteAll(toDelete);
+    }
+
+    final toUpdate = <{{#pascalCase}}{{{singular}}}{{/pascalCase}}>[];
+
+    // check if any all have changed from state.asReady.all
+    for (final e in state.asReady.{{#camelCase}}{{{plural}}}{{/camelCase}}) {
+      if (!all.contains(e)) {
+        toUpdate.add(e);
+      }
+    }
+
+    if (toUpdate.isNotEmpty) {
+      await _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache.saveAll(toUpdate);
+    }
+  }
+
+  @override
+  Future<{{#pascalCase}}{{{plural}}}{{/pascalCase}}State?> retrieve() async {
+    final result = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Cache.all();
+
+    if (result.isError) {
+      return null;
+    }
+
+    return _Ready(result.value);
+  }
+
+  FutureOr<void> _cacheChanged(_CacheChanged event, _Emitter emit) async {
+    emitNoCache(emit, event.state);
+  }
+
+  Future<void> _fetch(_Fetch event, _Emitter emit) async {
+    emit(const _Loading());
+
+    await _get{{#pascalCase}}{{{plural}}}{{/pascalCase}}(emit);
+  }
+
+  Future<void> _get{{#pascalCase}}{{{plural}}}{{/pascalCase}}(_Emitter emit) async {
+    final result = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Source.all();
+
+    if (result.isError) {
+      emitError(emit, _Error(result.error));
+      return;
+    }
+
+    emit(_Ready(result.value));
+  }
+
+  Future<void> _init(_Init event, _Emitter emit) async {
+    await hydrate(emit);
+
+    await _get{{#pascalCase}}{{{plural}}}{{/pascalCase}}(emit);
+
+    final stream = await _{{#camelCase}}{{{interface}}}{{/camelCase}}Source.watchAll();
+
+    _sourceListener = stream.listen((changes) {
+      if (!state.isReady) {
+        return;
+      }
+
+      if (isClosed) {
+        return;
+      }
+
+      final {{#camelCase}}{{{plural}}}{{/camelCase}}ById = state.asReady.{{#camelCase}}{{{plural}}}{{/camelCase}}
+          .asMap()
+          .map((_, value) => MapEntry(value.id, value));
+
+      for (final change in changes) {
+        if (change.wasDeleted) {
+          {{#camelCase}}{{{plural}}}{{/camelCase}}ById.remove(change.key);
+        } else {
+          {{#camelCase}}{{{plural}}}{{/camelCase}}ById[change.key] = change.value!;
+        }
+      }
+
+      final newState = _Ready({{#camelCase}}{{{plural}}}{{/camelCase}}ById.values.toList());
+
+      if (state == newState) {
+        return;
+      }
+
+      add(_SourceChanged(newState));
+    });
+  }
+
+  FutureOr<void> _sourceChanged(_SourceChanged event, _Emitter emit) async {
+    emit(event.state);
+  }
+}

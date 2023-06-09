@@ -3,15 +3,16 @@ import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as con;
 import 'package:equatable/equatable.dart';
 
-part '{{#snakeCase}}{{{name}}}{{/snakeCase}}_bloc.g.dart';
-part '{{#snakeCase}}{{{name}}}{{/snakeCase}}_event.dart';
-part '{{#snakeCase}}{{{name}}}{{/snakeCase}}_state.dart';
+part '{{#snakeCase}}{{{singular}}}{{/snakeCase}}_bloc.g.dart';
+part '{{#snakeCase}}{{{singular}}}{{/snakeCase}}_event.dart';
+part '{{#snakeCase}}{{{singular}}}{{/snakeCase}}_state.dart';
 
 // ignore: avoid_private_typedef_functions
-typedef _Emitter = Emitter<{{#pascalCase}}{{{name}}}{{/pascalCase}}State>;
+typedef _Emitter = Emitter<{{#pascalCase}}{{{singular}}}{{/pascalCase}}State>;
 
-class {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc extends Bloc<{{#pascalCase}}{{{name}}}{{/pascalCase}}Event, {{#pascalCase}}{{{name}}}{{/pascalCase}}State> {
-  {{#pascalCase}}{{{name}}}{{/pascalCase}}Bloc() : super(const _Loading()) {
+class {{#pascalCase}}{{{singular}}}{{/pascalCase}}Bloc
+    extends Bloc<{{#pascalCase}}{{{singular}}}{{/pascalCase}}Event, {{#pascalCase}}{{{singular}}}{{/pascalCase}}State> {
+  {{#pascalCase}}{{{singular}}}{{/pascalCase}}Bloc() : super(const _Loading()) {
     on<_Init>(_init);
     on<_Fetch>(_fetch, transformer: con.droppable());
 

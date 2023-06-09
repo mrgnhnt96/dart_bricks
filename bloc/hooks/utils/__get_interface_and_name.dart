@@ -4,9 +4,19 @@ part of '../pre_gen.dart';
   String? interface,
   String singular,
   String plural,
-}) getInterfaceAndName(Logger logger) {
+}) getInterfaceAndName(Types type, Logger logger) {
   String name;
   String? interface;
+
+  if (type.isBasic) {
+    name = logger.prompt('$question Enter the name of the bloc:');
+
+    return (
+      interface: interface,
+      singular: name,
+      plural: makePlural(name),
+    );
+  }
 
   final result = logger.prompt('$question Enter the name of the model:');
 
@@ -20,7 +30,7 @@ part of '../pre_gen.dart';
   final proposedInterface = makePlural(name);
 
   final interfaceResult = logger.prompt(
-    '$question Enter the name of the interface:',
+    '$question Enter the name of the repo:',
     defaultValue: proposedInterface,
   );
 

@@ -1,9 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api
 
-part of '{{#snakeCase}}{{{name}}}{{/snakeCase}}_bloc.dart';
+part of '{{#snakeCase}}{{{singular}}}{{/snakeCase}}_bloc.dart';
 
-abstract class {{#pascalCase}}{{{name}}}{{/pascalCase}}State extends Equatable {
-  const {{#pascalCase}}{{{name}}}{{/pascalCase}}State();
+abstract class {{#pascalCase}}{{{singular}}}{{/pascalCase}}State extends Equatable {
+  const {{#pascalCase}}{{{singular}}}{{/pascalCase}}State();
 
   bool get isReady => this is _Ready;
   bool get isLoading => this is _Loading;
@@ -18,19 +18,19 @@ abstract class {{#pascalCase}}{{{name}}}{{/pascalCase}}State extends Equatable {
 }
 
 @autoequal
-class _Ready extends {{#pascalCase}}{{{name}}}{{/pascalCase}}State {
+class _Ready extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}State {
   const _Ready();
 
   @override
   List<Object?> get props => _$props;
 }
 
-class _Loading extends {{#pascalCase}}{{{name}}}{{/pascalCase}}State {
+class _Loading extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}State {
   const _Loading();
 }
 
 @autoequal
-class _Error extends {{#pascalCase}}{{{name}}}{{/pascalCase}}State {
+class _Error extends {{#pascalCase}}{{{singular}}}{{/pascalCase}}State {
   const _Error(this.message);
 
   final String message;

@@ -1,0 +1,55 @@
+part of '{{#snakeCase}}{{{plural}}}{{/snakeCase}}_bloc.dart';
+
+abstract class {{#pascalCase}}{{{plural}}}{{/pascalCase}}Event extends Equatable {
+  const {{#pascalCase}}{{{plural}}}{{/pascalCase}}Event();
+
+  @override
+  List<Object?> get props => [];
+}
+
+@autoequal
+class _Init extends {{#pascalCase}}{{{plural}}}{{/pascalCase}}Event {
+  const _Init();
+
+  @override
+  List<Object?> get props => _$props;
+}
+
+class _Fetch extends {{#pascalCase}}{{{plural}}}{{/pascalCase}}Event {
+  const _Fetch();
+}
+
+@autoequal
+class _CacheChanged extends {{#pascalCase}}{{{plural}}}{{/pascalCase}}Event {
+  const _CacheChanged(this.state);
+
+  final _Ready state;
+
+  @override
+  List<Object?> get props => _$props;
+}
+
+@autoequal
+class _SourceChanged extends {{#pascalCase}}{{{plural}}}{{/pascalCase}}Event {
+  const _SourceChanged(this.state);
+
+  final _Ready state;
+
+  @override
+  List<Object?> get props => _$props;
+}
+
+extension {{#pascalCase}}{{{plural}}}{{/pascalCase}}BlocX on {{#pascalCase}}{{{plural}}}{{/pascalCase}}Bloc {
+  // ignore: library_private_types_in_public_api
+  _Events get events => _Events(this);
+}
+
+class _Events {
+  const _Events(this._bloc);
+
+  final {{#pascalCase}}{{{plural}}}{{/pascalCase}}Bloc _bloc;
+
+  void fetch() {
+    _bloc.add(const _Fetch());
+  }
+}

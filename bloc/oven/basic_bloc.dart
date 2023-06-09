@@ -3,15 +3,16 @@ import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as con;
 import 'package:equatable/equatable.dart';
 
-part '_NAME_snake_bloc.g.dart';
-part '_NAME_snake_event.dart';
-part '_NAME_snake_state.dart';
+part '_SINGULAR_snake_bloc.g.dart';
+part '_SINGULAR_snake_event.dart';
+part '_SINGULAR_snake_state.dart';
 
 // ignore: avoid_private_typedef_functions
-typedef _Emitter = Emitter<_NAME_pascalState>;
+typedef _Emitter = Emitter<_SINGULAR_pascalState>;
 
-class _NAME_pascalBloc extends Bloc<_NAME_pascalEvent, _NAME_pascalState> {
-  _NAME_pascalBloc() : super(const _Loading()) {
+class _SINGULAR_pascalBloc
+    extends Bloc<_SINGULAR_pascalEvent, _SINGULAR_pascalState> {
+  _SINGULAR_pascalBloc() : super(const _Loading()) {
     on<_Init>(_init);
     on<_Fetch>(_fetch, transformer: con.droppable());
 
