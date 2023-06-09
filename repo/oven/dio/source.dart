@@ -4,8 +4,8 @@ import 'package:_PROJECT_SNAKE_domain/domain.dart';
 
 import 'package:data/util/util.dart';
 
-class _NAME_pascalsSource implements I_NAME_pascalsSource {
-  const _NAME_pascalsSource();
+class _INTERFACE_pascalsSource implements I_INTERFACE_pascalsSource {
+  const _INTERFACE_pascalsSource();
 // section_ALL_
   @override
   Future<RequestResult<List<_NAME_pascal>>> all() async {

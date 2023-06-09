@@ -4,8 +4,8 @@ import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_domain/domain.dart';
 
 import 'package:data/util/util.dart';
 
-class {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}sSource {
-  const {{#pascalCase}}{{{name}}}{{/pascalCase}}sSource();
+class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource implements I{{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource {
+  const {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource();
 {{#all}}
   @override
   Future<RequestResult<List<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> all() async {

@@ -4,8 +4,9 @@ import 'package:_PROJECT_SNAKE_data/utils/database.dart';
 import 'package:_PROJECT_SNAKE_data/utils/hive_cache.dart';
 
 // ignore: strict_raw_type
-class _NAME_PASCALsCache extends HiveCache implements I_NAME_PASCALsCache {
-  _NAME_PASCALsCache() : super(Database._NAME_CAMELs);
+class _INTERFACE_PASCALsCache extends HiveCache
+    implements I_INTERFACE_PASCALsCache {
+  _INTERFACE_PASCALsCache() : super(Database._INTERFACE_CAMELs);
 
   @override
   Future<RequestResult<List<_NAME_PASCAL>>> all() async {

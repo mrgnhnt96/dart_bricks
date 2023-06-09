@@ -4,8 +4,9 @@ import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_data/utils/database.da
 import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_data/utils/hive_cache.dart';
 
 // ignore: strict_raw_type
-class {{#pascalCase}}{{{name}}}{{/pascalCase}}sCache extends HiveCache implements I{{#pascalCase}}{{{name}}}{{/pascalCase}}sCache {
-  {{#pascalCase}}{{{name}}}{{/pascalCase}}sCache() : super(Database.{{#camelCase}}{{{name}}}{{/camelCase}}s);
+class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sCache extends HiveCache
+    implements I{{#pascalCase}}{{{interface}}}{{/pascalCase}}sCache {
+  {{#pascalCase}}{{{interface}}}{{/pascalCase}}sCache() : super(Database.{{#camelCase}}{{{interface}}}{{/camelCase}}s);
 
   @override
   Future<RequestResult<List<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> all() async {
