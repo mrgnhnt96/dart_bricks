@@ -1,0 +1,22 @@
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_domain/models/{{#snakeCase}}{{{singular}}}{{/snakeCase}}.dart';
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_domain/models/request_result.dart';
+
+abstract class I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Cache {
+  const I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Cache();
+
+  Future<RequestResult<List<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>> all();
+
+  Future<RequestResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>> byId(String id);
+
+  Future<RequestResult<void>> delete(String id);
+
+  Future<RequestResult<void>> deleteAll([Set<String>? ids]);
+
+  Future<RequestResult<void>> save({{#pascalCase}}{{{singular}}}{{/pascalCase}} {{#camelCase}}{{{singular}}}{{/camelCase}});
+
+  Future<RequestResult<void>> saveAll(List<{{#pascalCase}}{{{singular}}}{{/pascalCase}}> {{#camelCase}}{{{plural}}}{{/camelCase}});
+
+  Future<Stream<StreamResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>> watchAll();
+
+  Future<Stream<StreamResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>> watchById(String id);
+}

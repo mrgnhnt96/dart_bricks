@@ -4,9 +4,8 @@ dirs:
   repo:
     include_if: is_interface
     name:
-      value: name
+      value: interface
       format: snake
-      suffix: s
 files:
   object.dart:
     include_if_not: is_interface
@@ -19,34 +18,37 @@ files:
 
   repo/repo.dart:
     name:
-      value: name
+      value: interface
       format: snake
-      suffix: s
     vars:
-      name: _NAME_
+      interface: _INTERFACE_
       cache: _CACHE_
       source: _SOURCE_
 
   repo/cache.dart:
     include_if: cache
     name:
-      value: name
+      value: interface
       prefix: i_
-      suffix: s_cache
+      suffix: _cache
       format: snake
     vars:
-      name: _NAME_
+      singular: _SINGULAR_
+      plural: _PLURAL_
+      interface: _INTERFACE_
       project: _PROJECT_
 
   repo/source.dart:
     include_if: source
     name:
-      value: name
+      value: interface
       prefix: i_
-      suffix: s_source
+      suffix: _source
       format: snake
     vars:
-      name: _NAME_
+      singular: _SINGULAR_
+      plural: _PLURAL_
+      interface: _INTERFACE_
       project: _PROJECT_
       all: _ALL_
       watch_by_id: _WATCH_BY_ID_

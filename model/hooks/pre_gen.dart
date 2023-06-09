@@ -17,7 +17,8 @@ void run(HookContext context) {
 
   final data = getInterfaceAndName(context.logger, isInterface: isInterface);
 
-  context.vars['name'] = data.name;
+  context.vars['singular'] = data.singular;
+  context.vars['plural'] = data.plural;
   context.vars['interface'] = data.interface;
 
   final pubspec = fetchPubspec();

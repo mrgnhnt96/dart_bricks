@@ -1,0 +1,30 @@
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_domain/models/{{#snakeCase}}{{{singular}}}{{/snakeCase}}.dart';
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_domain/models/request_result.dart';
+
+abstract class I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Source {
+  const I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Source();
+{{#all}}
+  Future<RequestResult<List<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>> all();
+{{/all}}
+{{#by_id}}
+  Future<RequestResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>> byId(String id);
+{{/by_id}}
+{{#create}}
+  Future<RequestResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>> create();
+{{/create}}
+{{#delete}}
+  Future<RequestResult<void>> delete(String id);
+{{/delete}}
+{{#update}}
+  Future<RequestResult<void>> update({{#pascalCase}}{{{singular}}}{{/pascalCase}} {{#camelCase}}{{{singular}}}{{/camelCase}});
+{{/update}}
+{{#update_many}}
+  Future<RequestResult<void>> updateMany(List<{{#pascalCase}}{{{singular}}}{{/pascalCase}}> {{#camelCase}}{{{plural}}}{{/camelCase}});
+{{/update_many}}
+{{#all}}
+  Future<Stream<List<StreamResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>>> watchAll();
+{{/all}}
+{{#watch_by_id}}
+  Future<Stream<StreamResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>> watchById(String id);
+{{/watch_by_id}}
+}
