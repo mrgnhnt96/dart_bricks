@@ -1,6 +1,7 @@
 part of '../pre_gen.dart';
 
-({String? interface, String name}) getInterfaceAndName(Logger logger) {
+({String? interface, String singular, String plural}) getInterfaceAndName(
+    Logger logger) {
   String name;
   String? interface;
 
@@ -27,5 +28,5 @@ part of '../pre_gen.dart';
     logger: logger,
   );
 
-  return (interface: interface, name: name);
+  return (interface: interface, singular: name, plural: makePlural(name));
 }

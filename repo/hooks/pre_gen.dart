@@ -17,7 +17,8 @@ void run(HookContext context) {
   final data = getInterfaceAndName(context.logger);
 
   context.vars['interface'] = data.interface;
-  context.vars['name'] = data.name;
+  context.vars['singular'] = data.singular;
+  context.vars['plural'] = data.plural;
 
   final deps = checkForDependencies(
     pubspec,

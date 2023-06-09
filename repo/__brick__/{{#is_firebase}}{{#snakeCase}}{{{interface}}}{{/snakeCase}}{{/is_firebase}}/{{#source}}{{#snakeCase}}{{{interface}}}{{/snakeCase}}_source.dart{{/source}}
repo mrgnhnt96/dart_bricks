@@ -4,14 +4,14 @@ import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_domain/domain.dart';
 
 import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_data/utils/firestore.dart';
 
-class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource extends Firestore
-    implements I{{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource {
-  const {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource() : super('{{#snakeCase}}{{{name}}}{{/snakeCase}}s');
+class {{#pascalCase}}{{{interface}}}{{/pascalCase}}Source extends Firestore
+    implements I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Source {
+  const {{#pascalCase}}{{{interface}}}{{/pascalCase}}Source() : super('{{#snakeCase}}{{{interface}}}{{/snakeCase}}');
 
 {{#all}}
   @override
-  Future<RequestResult<List<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> all() async {
-    final {{#camelCase}}{{{name}}}{{/camelCase}}s = <{{#pascalCase}}{{{name}}}{{/pascalCase}}>[];
+  Future<RequestResult<List<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>> all() async {
+    final {{#camelCase}}{{{plural}}}{{/camelCase}} = <{{#pascalCase}}{{{singular}}}{{/pascalCase}}>[];
 
     final snapshot = await collection.get();
 
@@ -25,60 +25,60 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource extends Firestore
       json['id'] = doc.id;
 
       try {
-        final {{#camelCase}}{{{name}}}{{/camelCase}} =
-            {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(Map<String, dynamic>.from(json));
+        final {{#camelCase}}{{{singular}}}{{/camelCase}} =
+            {{#pascalCase}}{{{singular}}}{{/pascalCase}}.fromJson(Map<String, dynamic>.from(json));
 
-        {{#camelCase}}{{{name}}}{{/camelCase}}s.add({{#camelCase}}{{{name}}}{{/camelCase}});
+        {{#camelCase}}{{{plural}}}{{/camelCase}}.add({{#camelCase}}{{{singular}}}{{/camelCase}});
       } catch (e) {
         log('$e');
       }
     }
 
-    return RequestResult.success({{#camelCase}}{{{name}}}{{/camelCase}}s);
+    return RequestResult.success({{#camelCase}}{{{plural}}}{{/camelCase}});
   }
 
 {{/all}}
 {{#by_id}}
   @override
-  Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> byId(String id) async {
+  Future<RequestResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>> byId(String id) async {
     final snapshot = await collection.doc(id).get();
 
     final json = snapshot.data() as Map?;
 
     if (json == null) {
-      return const RequestResult.failure('{{#sentenceCase}}{{{name}}}{{/sentenceCase}} not found');
+      return const RequestResult.failure('_NAME_SENTENCE not found');
     }
 
     json['id'] = snapshot.id;
 
     try {
-      final {{#camelCase}}{{{name}}}{{/camelCase}} =
-          {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(Map<String, dynamic>.from(json));
+      final {{#camelCase}}{{{singular}}}{{/camelCase}} =
+          {{#pascalCase}}{{{singular}}}{{/pascalCase}}.fromJson(Map<String, dynamic>.from(json));
 
-      return RequestResult.success({{#camelCase}}{{{name}}}{{/camelCase}});
+      return RequestResult.success({{#camelCase}}{{{singular}}}{{/camelCase}});
     } catch (e) {
       log('$e');
 
-      return const RequestResult.failure('{{#sentenceCase}}{{{name}}}{{/sentenceCase}} not found');
+      return const RequestResult.failure('_NAME_SENTENCE not found');
     }
   }
 
 {{/by_id}}
 {{#create}}
   @override
-  Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> create() async {
-    final new{{#pascalCase}}{{{name}}}{{/pascalCase}} = {{#pascalCase}}{{{name}}}{{/pascalCase}}.create();
+  Future<RequestResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>> create() async {
+    final new{{#pascalCase}}{{{singular}}}{{/pascalCase}} = {{#pascalCase}}{{{singular}}}{{/pascalCase}}.create();
 
     try {
       final doc = collection.doc();
 
-      final json = new{{#pascalCase}}{{{name}}}{{/pascalCase}}.toJson();
+      final json = new{{#pascalCase}}{{{singular}}}{{/pascalCase}}.toJson();
 
       json['id'] = doc.id;
 
       await doc.set(json);
 
-      return RequestResult.success({{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(json));
+      return RequestResult.success({{#pascalCase}}{{{singular}}}{{/pascalCase}}.fromJson(json));
     } catch (e) {
       return RequestResult.failure(e.toString());
     }
@@ -100,9 +100,9 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource extends Firestore
 {{/delete}}
 {{#update}}
   @override
-  Future<RequestResult<void>> update({{#pascalCase}}{{{name}}}{{/pascalCase}} {{#camelCase}}{{{name}}}{{/camelCase}}) async {
+  Future<RequestResult<void>> update({{#pascalCase}}{{{singular}}}{{/pascalCase}} {{#camelCase}}{{{singular}}}{{/camelCase}}) async {
     try {
-      await collection.doc({{#camelCase}}{{{name}}}{{/camelCase}}.id).set({{#camelCase}}{{{name}}}{{/camelCase}}.toJson());
+      await collection.doc({{#camelCase}}{{{singular}}}{{/camelCase}}.id).set({{#camelCase}}{{{singular}}}{{/camelCase}}.toJson());
     } catch (e) {
       return RequestResult.failure(e.toString());
     }
@@ -114,14 +114,14 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource extends Firestore
 {{#update_many}}
   @override
   Future<RequestResult<void>> updateMany(
-    List<{{#pascalCase}}{{{name}}}{{/pascalCase}}> {{#camelCase}}{{{name}}}{{/camelCase}}s,
+    List<{{#pascalCase}}{{{singular}}}{{/pascalCase}}> {{#camelCase}}{{{plural}}}{{/camelCase}},
   ) async {
     try {
       var batch = newBatch();
 
       var count = 0;
-      for (final {{#camelCase}}{{{name}}}{{/camelCase}} in {{#camelCase}}{{{name}}}{{/camelCase}}s) {
-        batch.set(collection.doc({{#camelCase}}{{{name}}}{{/camelCase}}.id), {{#camelCase}}{{{name}}}{{/camelCase}}.toJson());
+      for (final {{#camelCase}}{{{singular}}}{{/camelCase}} in {{#camelCase}}{{{plural}}}{{/camelCase}}) {
+        batch.set(collection.doc({{#camelCase}}{{{singular}}}{{/camelCase}}.id), {{#camelCase}}{{{singular}}}{{/camelCase}}.toJson());
 
         count++;
 
@@ -145,12 +145,12 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource extends Firestore
 {{/update_many}}
 {{#watch_all}}
   @override
-  Future<Stream<List<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>>> watchAll() async {
+  Future<Stream<List<StreamResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>>> watchAll() async {
     try {
       final stream = collection.snapshots();
 
       return stream.map((snapshot) {
-        final changes = <StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>[];
+        final changes = <StreamResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>[];
 
         for (final change in snapshot.docChanges) {
           if (change.type.isRemoved) {
@@ -168,10 +168,10 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource extends Firestore
           json['id'] = doc.id;
 
           try {
-            final {{#camelCase}}{{{name}}}{{/camelCase}} =
-                {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(Map<String, dynamic>.from(json));
+            final {{#camelCase}}{{{singular}}}{{/camelCase}} =
+                {{#pascalCase}}{{{singular}}}{{/pascalCase}}.fromJson(Map<String, dynamic>.from(json));
 
-            changes.add(StreamResult({{#camelCase}}{{{name}}}{{/camelCase}}, key: {{#camelCase}}{{{name}}}{{/camelCase}}.id));
+            changes.add(StreamResult({{#camelCase}}{{{singular}}}{{/camelCase}}, key: {{#camelCase}}{{{singular}}}{{/camelCase}}.id));
           } catch (e) {
             log('$e');
           }
@@ -187,7 +187,7 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource extends Firestore
 {{/watch_all}}
 {{#watch_by_id}}
   @override
-  Future<Stream<StreamResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> watchById(String id) async {
+  Future<Stream<StreamResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>> watchById(String id) async {
     try {
       final stream = collection.doc(id).snapshots();
 
@@ -195,20 +195,20 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource extends Firestore
         final json = snapshot.data() as Map?;
 
         if (json == null) {
-          return const StreamResult.failure('{{#sentenceCase}}{{{name}}}{{/sentenceCase}} not found');
+          return const StreamResult.failure('_NAME_SENTENCE not found');
         }
 
         json['id'] = snapshot.id;
 
         try {
-          final {{#camelCase}}{{{name}}}{{/camelCase}} =
-              {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(Map<String, dynamic>.from(json));
+          final {{#camelCase}}{{{singular}}}{{/camelCase}} =
+              {{#pascalCase}}{{{singular}}}{{/pascalCase}}.fromJson(Map<String, dynamic>.from(json));
 
-          return StreamResult({{#camelCase}}{{{name}}}{{/camelCase}}, key: {{#camelCase}}{{{name}}}{{/camelCase}}.id);
+          return StreamResult({{#camelCase}}{{{singular}}}{{/camelCase}}, key: {{#camelCase}}{{{singular}}}{{/camelCase}}.id);
         } catch (e) {
           log('$e');
 
-          return const StreamResult.failure('{{#sentenceCase}}{{{name}}}{{/sentenceCase}} not found');
+          return const StreamResult.failure('_NAME_SENTENCE not found');
         }
       });
     } catch (e) {

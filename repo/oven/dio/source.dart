@@ -4,13 +4,13 @@ import 'package:_PROJECT_SNAKE_domain/domain.dart';
 
 import 'package:data/util/util.dart';
 
-class _INTERFACE_pascalsSource implements I_INTERFACE_pascalsSource {
-  const _INTERFACE_pascalsSource();
+class _INTERFACE_pascalSource implements I_INTERFACE_pascalSource {
+  const _INTERFACE_pascalSource();
 // section_ALL_
   @override
-  Future<RequestResult<List<_NAME_pascal>>> all() async {
+  Future<RequestResult<List<_SINGULAR_pascal>>> all() async {
     try {
-      final _NAME_camels = <_NAME_pascal>[];
+      final _PLURAL_camel = <_SINGULAR_pascal>[];
 
       final result = await dio.get<Map>('${dio.url}/NOT_IMPLEMENTED');
 
@@ -20,21 +20,21 @@ class _INTERFACE_pascalsSource implements I_INTERFACE_pascalsSource {
         return RequestResult.failure('No data');
       }
 
-      final _NAME_camelsJson = List<Map>.from(data as List);
+      final _PLURAL_camelJson = List<Map>.from(data as List);
 
-      for (final _NAME_camelJson in _NAME_camelsJson) {
+      for (final _SINGULAR_camelJson in _PLURAL_camelJson) {
         try {
-          _NAME_camels.add(
-            _NAME_pascal.fromJson(
-              Map<String, dynamic>.from(_NAME_camelJson),
+          _PLURAL_camel.add(
+            _SINGULAR_pascal.fromJson(
+              Map<String, dynamic>.from(_SINGULAR_camelJson),
             ),
           );
         } catch (e) {
-          log('Error parsing _NAME_camel, $e | $_NAME_camelJson');
+          log('Error parsing _SINGULAR_camel, $e | $_SINGULAR_camelJson');
         }
       }
 
-      return RequestResult.success(_NAME_camels);
+      return RequestResult.success(_PLURAL_camel);
     } catch (e) {
       return RequestResult.failure(e.toString());
     }
@@ -43,7 +43,7 @@ class _INTERFACE_pascalsSource implements I_INTERFACE_pascalsSource {
   // endSection_ALL_
   // section_BY_ID_
   @override
-  Future<RequestResult<_NAME_pascal>> byId(String id) async {
+  Future<RequestResult<_SINGULAR_pascal>> byId(String id) async {
     try {
       final result = await dio.get<Map>('${dio.url}/NOT_IMPLEMENTED/$id');
 
@@ -53,10 +53,10 @@ class _INTERFACE_pascalsSource implements I_INTERFACE_pascalsSource {
         return RequestResult.failure('No data');
       }
 
-      final _NAME_camelJson = Map<String, dynamic>.from(data);
+      final _SINGULAR_camelJson = Map<String, dynamic>.from(data);
 
       return RequestResult.success(
-        _NAME_pascal.fromJson(_NAME_camelJson),
+        _SINGULAR_pascal.fromJson(_SINGULAR_camelJson),
       );
     } catch (e) {
       return RequestResult.failure(e.toString());
@@ -66,7 +66,7 @@ class _INTERFACE_pascalsSource implements I_INTERFACE_pascalsSource {
   // endSection_BY_ID_
   // section_CREATE_
   @override
-  Future<RequestResult<_NAME_pascal>> create() async {
+  Future<RequestResult<_SINGULAR_pascal>> create() async {
     try {
       final result = await dio.post<Map>(
         '${dio.url}/NOT_IMPLEMENTED',
@@ -79,10 +79,10 @@ class _INTERFACE_pascalsSource implements I_INTERFACE_pascalsSource {
         return RequestResult.failure('No data');
       }
 
-      final _NAME_camelJson = Map<String, dynamic>.from(data);
+      final _SINGULAR_camelJson = Map<String, dynamic>.from(data);
 
       return RequestResult.success(
-        _NAME_pascal.fromJson(_NAME_camelJson),
+        _SINGULAR_pascal.fromJson(_SINGULAR_camelJson),
       );
     } catch (e) {
       return RequestResult.failure(e.toString());
@@ -107,13 +107,13 @@ class _INTERFACE_pascalsSource implements I_INTERFACE_pascalsSource {
   // endSection_DELETE_
   // section_UPDATE_
   @override
-  Future<RequestResult<void>> update(_NAME_pascal _NAME_camel) async {
+  Future<RequestResult<void>> update(_SINGULAR_pascal _SINGULAR_camel) async {
     try {
-      final id = _NAME_camel.id;
+      final id = _SINGULAR_camel.id;
 
       await dio.put<Map>(
         '${dio.url}/NOT_IMPLEMENTED/$id',
-        data: _NAME_camel.toJson(),
+        data: _SINGULAR_camel.toJson(),
       );
     } catch (e) {
       return RequestResult.failure(e.toString());
@@ -126,11 +126,11 @@ class _INTERFACE_pascalsSource implements I_INTERFACE_pascalsSource {
   // section_UPDATE_MANY_
   @override
   Future<RequestResult<void>> updateMany(
-      List<_NAME_pascal> _NAME_camels) async {
+      List<_SINGULAR_pascal> _PLURAL_camel) async {
     try {
       await dio.put<Map>(
         '${dio.url}/NOT_IMPLEMENTED',
-        data: _NAME_camels.toJson(),
+        data: _PLURAL_camel.toJson(),
       );
     } catch (e) {
       return RequestResult.failure(e.toString());

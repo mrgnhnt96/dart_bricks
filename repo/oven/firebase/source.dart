@@ -4,14 +4,14 @@ import 'package:_PROJECT_SNAKE_domain/domain.dart';
 
 import 'package:_PROJECT_SNAKE_data/utils/firestore.dart';
 
-class _INTERFACE_PASCALsSource extends Firestore
-    implements I_INTERFACE_PASCALsSource {
-  const _INTERFACE_PASCALsSource() : super('_NAME_SNAKEs');
+class _INTERFACE_PASCALSource extends Firestore
+    implements I_INTERFACE_PASCALSource {
+  const _INTERFACE_PASCALSource() : super('_INTERFACE_SNAKE');
 
   // section_ALL_
   @override
-  Future<RequestResult<List<_NAME_PASCAL>>> all() async {
-    final _NAME_CAMELs = <_NAME_PASCAL>[];
+  Future<RequestResult<List<_SINGULAR_PASCAL>>> all() async {
+    final _PLURAL_CAMEL = <_SINGULAR_PASCAL>[];
 
     final snapshot = await collection.get();
 
@@ -25,22 +25,22 @@ class _INTERFACE_PASCALsSource extends Firestore
       json['id'] = doc.id;
 
       try {
-        final _NAME_CAMEL =
-            _NAME_PASCAL.fromJson(Map<String, dynamic>.from(json));
+        final _SINGULAR_CAMEL =
+            _SINGULAR_PASCAL.fromJson(Map<String, dynamic>.from(json));
 
-        _NAME_CAMELs.add(_NAME_CAMEL);
+        _PLURAL_CAMEL.add(_SINGULAR_CAMEL);
       } catch (e) {
         log('$e');
       }
     }
 
-    return RequestResult.success(_NAME_CAMELs);
+    return RequestResult.success(_PLURAL_CAMEL);
   }
 
   // endSection_ALL_
   // section_BY_ID_
   @override
-  Future<RequestResult<_NAME_PASCAL>> byId(String id) async {
+  Future<RequestResult<_SINGULAR_PASCAL>> byId(String id) async {
     final snapshot = await collection.doc(id).get();
 
     final json = snapshot.data() as Map?;
@@ -52,10 +52,10 @@ class _INTERFACE_PASCALsSource extends Firestore
     json['id'] = snapshot.id;
 
     try {
-      final _NAME_CAMEL =
-          _NAME_PASCAL.fromJson(Map<String, dynamic>.from(json));
+      final _SINGULAR_CAMEL =
+          _SINGULAR_PASCAL.fromJson(Map<String, dynamic>.from(json));
 
-      return RequestResult.success(_NAME_CAMEL);
+      return RequestResult.success(_SINGULAR_CAMEL);
     } catch (e) {
       log('$e');
 
@@ -66,19 +66,19 @@ class _INTERFACE_PASCALsSource extends Firestore
   // endSection_BY_ID_
   // section_CREATE_
   @override
-  Future<RequestResult<_NAME_PASCAL>> create() async {
-    final new_NAME_PASCAL = _NAME_PASCAL.create();
+  Future<RequestResult<_SINGULAR_PASCAL>> create() async {
+    final new_SINGULAR_PASCAL = _SINGULAR_PASCAL.create();
 
     try {
       final doc = collection.doc();
 
-      final json = new_NAME_PASCAL.toJson();
+      final json = new_SINGULAR_PASCAL.toJson();
 
       json['id'] = doc.id;
 
       await doc.set(json);
 
-      return RequestResult.success(_NAME_PASCAL.fromJson(json));
+      return RequestResult.success(_SINGULAR_PASCAL.fromJson(json));
     } catch (e) {
       return RequestResult.failure(e.toString());
     }
@@ -100,9 +100,9 @@ class _INTERFACE_PASCALsSource extends Firestore
   // endSection_DELETE_
   // section_UPDATE_
   @override
-  Future<RequestResult<void>> update(_NAME_PASCAL _NAME_CAMEL) async {
+  Future<RequestResult<void>> update(_SINGULAR_PASCAL _SINGULAR_CAMEL) async {
     try {
-      await collection.doc(_NAME_CAMEL.id).set(_NAME_CAMEL.toJson());
+      await collection.doc(_SINGULAR_CAMEL.id).set(_SINGULAR_CAMEL.toJson());
     } catch (e) {
       return RequestResult.failure(e.toString());
     }
@@ -114,14 +114,14 @@ class _INTERFACE_PASCALsSource extends Firestore
   // section_UPDATE_MANY_
   @override
   Future<RequestResult<void>> updateMany(
-    List<_NAME_PASCAL> _NAME_CAMELs,
+    List<_SINGULAR_PASCAL> _PLURAL_CAMEL,
   ) async {
     try {
       var batch = newBatch();
 
       var count = 0;
-      for (final _NAME_CAMEL in _NAME_CAMELs) {
-        batch.set(collection.doc(_NAME_CAMEL.id), _NAME_CAMEL.toJson());
+      for (final _SINGULAR_CAMEL in _PLURAL_CAMEL) {
+        batch.set(collection.doc(_SINGULAR_CAMEL.id), _SINGULAR_CAMEL.toJson());
 
         count++;
 
@@ -145,12 +145,12 @@ class _INTERFACE_PASCALsSource extends Firestore
   // endSection_UPDATE_MANY_
   // section_WATCH_ALL_
   @override
-  Future<Stream<List<StreamResult<_NAME_PASCAL>>>> watchAll() async {
+  Future<Stream<List<StreamResult<_SINGULAR_PASCAL>>>> watchAll() async {
     try {
       final stream = collection.snapshots();
 
       return stream.map((snapshot) {
-        final changes = <StreamResult<_NAME_PASCAL>>[];
+        final changes = <StreamResult<_SINGULAR_PASCAL>>[];
 
         for (final change in snapshot.docChanges) {
           if (change.type.isRemoved) {
@@ -168,10 +168,10 @@ class _INTERFACE_PASCALsSource extends Firestore
           json['id'] = doc.id;
 
           try {
-            final _NAME_CAMEL =
-                _NAME_PASCAL.fromJson(Map<String, dynamic>.from(json));
+            final _SINGULAR_CAMEL =
+                _SINGULAR_PASCAL.fromJson(Map<String, dynamic>.from(json));
 
-            changes.add(StreamResult(_NAME_CAMEL, key: _NAME_CAMEL.id));
+            changes.add(StreamResult(_SINGULAR_CAMEL, key: _SINGULAR_CAMEL.id));
           } catch (e) {
             log('$e');
           }
@@ -187,7 +187,7 @@ class _INTERFACE_PASCALsSource extends Firestore
   // endSection_WATCH_ALL_
   // section_WATCH_BY_ID_
   @override
-  Future<Stream<StreamResult<_NAME_PASCAL>>> watchById(String id) async {
+  Future<Stream<StreamResult<_SINGULAR_PASCAL>>> watchById(String id) async {
     try {
       final stream = collection.doc(id).snapshots();
 
@@ -201,10 +201,10 @@ class _INTERFACE_PASCALsSource extends Firestore
         json['id'] = snapshot.id;
 
         try {
-          final _NAME_CAMEL =
-              _NAME_PASCAL.fromJson(Map<String, dynamic>.from(json));
+          final _SINGULAR_CAMEL =
+              _SINGULAR_PASCAL.fromJson(Map<String, dynamic>.from(json));
 
-          return StreamResult(_NAME_CAMEL, key: _NAME_CAMEL.id);
+          return StreamResult(_SINGULAR_CAMEL, key: _SINGULAR_CAMEL.id);
         } catch (e) {
           log('$e');
 

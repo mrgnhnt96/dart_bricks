@@ -4,13 +4,13 @@ import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_domain/domain.dart';
 
 import 'package:data/util/util.dart';
 
-class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource implements I{{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource {
-  const {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource();
+class {{#pascalCase}}{{{interface}}}{{/pascalCase}}Source implements I{{#pascalCase}}{{{interface}}}{{/pascalCase}}Source {
+  const {{#pascalCase}}{{{interface}}}{{/pascalCase}}Source();
 {{#all}}
   @override
-  Future<RequestResult<List<{{#pascalCase}}{{{name}}}{{/pascalCase}}>>> all() async {
+  Future<RequestResult<List<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>>> all() async {
     try {
-      final {{#camelCase}}{{{name}}}{{/camelCase}}s = <{{#pascalCase}}{{{name}}}{{/pascalCase}}>[];
+      final {{#camelCase}}{{{plural}}}{{/camelCase}} = <{{#pascalCase}}{{{singular}}}{{/pascalCase}}>[];
 
       final result = await dio.get<Map>('${dio.url}/NOT_IMPLEMENTED');
 
@@ -20,21 +20,21 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource implements I{{#pascal
         return RequestResult.failure('No data');
       }
 
-      final {{#camelCase}}{{{name}}}{{/camelCase}}sJson = List<Map>.from(data as List);
+      final {{#camelCase}}{{{plural}}}{{/camelCase}}Json = List<Map>.from(data as List);
 
-      for (final {{#camelCase}}{{{name}}}{{/camelCase}}Json in {{#camelCase}}{{{name}}}{{/camelCase}}sJson) {
+      for (final {{#camelCase}}{{{singular}}}{{/camelCase}}Json in {{#camelCase}}{{{plural}}}{{/camelCase}}Json) {
         try {
-          {{#camelCase}}{{{name}}}{{/camelCase}}s.add(
-            {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson(
-              Map<String, dynamic>.from({{#camelCase}}{{{name}}}{{/camelCase}}Json),
+          {{#camelCase}}{{{plural}}}{{/camelCase}}.add(
+            {{#pascalCase}}{{{singular}}}{{/pascalCase}}.fromJson(
+              Map<String, dynamic>.from({{#camelCase}}{{{singular}}}{{/camelCase}}Json),
             ),
           );
         } catch (e) {
-          log('Error parsing {{#camelCase}}{{{name}}}{{/camelCase}}, $e | ${{#camelCase}}{{{name}}}{{/camelCase}}Json');
+          log('Error parsing {{#camelCase}}{{{singular}}}{{/camelCase}}, $e | ${{#camelCase}}{{{singular}}}{{/camelCase}}Json');
         }
       }
 
-      return RequestResult.success({{#camelCase}}{{{name}}}{{/camelCase}}s);
+      return RequestResult.success({{#camelCase}}{{{plural}}}{{/camelCase}});
     } catch (e) {
       return RequestResult.failure(e.toString());
     }
@@ -43,7 +43,7 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource implements I{{#pascal
 {{/all}}
 {{#by_id}}
   @override
-  Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> byId(String id) async {
+  Future<RequestResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>> byId(String id) async {
     try {
       final result = await dio.get<Map>('${dio.url}/NOT_IMPLEMENTED/$id');
 
@@ -53,10 +53,10 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource implements I{{#pascal
         return RequestResult.failure('No data');
       }
 
-      final {{#camelCase}}{{{name}}}{{/camelCase}}Json = Map<String, dynamic>.from(data);
+      final {{#camelCase}}{{{singular}}}{{/camelCase}}Json = Map<String, dynamic>.from(data);
 
       return RequestResult.success(
-        {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson({{#camelCase}}{{{name}}}{{/camelCase}}Json),
+        {{#pascalCase}}{{{singular}}}{{/pascalCase}}.fromJson({{#camelCase}}{{{singular}}}{{/camelCase}}Json),
       );
     } catch (e) {
       return RequestResult.failure(e.toString());
@@ -66,7 +66,7 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource implements I{{#pascal
 {{/by_id}}
 {{#create}}
   @override
-  Future<RequestResult<{{#pascalCase}}{{{name}}}{{/pascalCase}}>> create() async {
+  Future<RequestResult<{{#pascalCase}}{{{singular}}}{{/pascalCase}}>> create() async {
     try {
       final result = await dio.post<Map>(
         '${dio.url}/NOT_IMPLEMENTED',
@@ -79,10 +79,10 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource implements I{{#pascal
         return RequestResult.failure('No data');
       }
 
-      final {{#camelCase}}{{{name}}}{{/camelCase}}Json = Map<String, dynamic>.from(data);
+      final {{#camelCase}}{{{singular}}}{{/camelCase}}Json = Map<String, dynamic>.from(data);
 
       return RequestResult.success(
-        {{#pascalCase}}{{{name}}}{{/pascalCase}}.fromJson({{#camelCase}}{{{name}}}{{/camelCase}}Json),
+        {{#pascalCase}}{{{singular}}}{{/pascalCase}}.fromJson({{#camelCase}}{{{singular}}}{{/camelCase}}Json),
       );
     } catch (e) {
       return RequestResult.failure(e.toString());
@@ -107,13 +107,13 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource implements I{{#pascal
 {{/delete}}
 {{#update}}
   @override
-  Future<RequestResult<void>> update({{#pascalCase}}{{{name}}}{{/pascalCase}} {{#camelCase}}{{{name}}}{{/camelCase}}) async {
+  Future<RequestResult<void>> update({{#pascalCase}}{{{singular}}}{{/pascalCase}} {{#camelCase}}{{{singular}}}{{/camelCase}}) async {
     try {
-      final id = {{#camelCase}}{{{name}}}{{/camelCase}}.id;
+      final id = {{#camelCase}}{{{singular}}}{{/camelCase}}.id;
 
       await dio.put<Map>(
         '${dio.url}/NOT_IMPLEMENTED/$id',
-        data: {{#camelCase}}{{{name}}}{{/camelCase}}.toJson(),
+        data: {{#camelCase}}{{{singular}}}{{/camelCase}}.toJson(),
       );
     } catch (e) {
       return RequestResult.failure(e.toString());
@@ -126,11 +126,11 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}sSource implements I{{#pascal
 {{#update_many}}
   @override
   Future<RequestResult<void>> updateMany(
-      List<{{#pascalCase}}{{{name}}}{{/pascalCase}}> {{#camelCase}}{{{name}}}{{/camelCase}}s) async {
+      List<{{#pascalCase}}{{{singular}}}{{/pascalCase}}> {{#camelCase}}{{{plural}}}{{/camelCase}}) async {
     try {
       await dio.put<Map>(
         '${dio.url}/NOT_IMPLEMENTED',
-        data: {{#camelCase}}{{{name}}}{{/camelCase}}s.toJson(),
+        data: {{#camelCase}}{{{plural}}}{{/camelCase}}.toJson(),
       );
     } catch (e) {
       return RequestResult.failure(e.toString());

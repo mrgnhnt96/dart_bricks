@@ -14,6 +14,7 @@ dirs:
     name:
       value: interface
       format: snake
+
 files:
   interface/cache.dart:
     include_if: cache
@@ -22,7 +23,8 @@ files:
       format: snake
       suffix: _cache
     vars:
-      name: _NAME_
+      singular: _SINGULAR_
+      plural: _PLURAL_
       interface: _INTERFACE_
       project: _PROJECT_
   interface/interface.dart:
@@ -30,7 +32,6 @@ files:
       value: interface
       format: snake
     vars:
-      name: _NAME_
       interface: _INTERFACE_
 
   # DIO
@@ -41,7 +42,8 @@ files:
       format: snake
       suffix: _source
     vars:
-      name: _NAME_
+      singular: _SINGULAR_
+      plural: _PLURAL_
       interface: _INTERFACE_
       project: _PROJECT_
       all: _ALL_
@@ -59,7 +61,8 @@ files:
       format: snake
       suffix: _source
     vars:
-      name: _NAME_
+      singular: _SINGULAR_
+      plural: _PLURAL_
       interface: _INTERFACE_
       project: _PROJECT_
       watch_all: _WATCH_ALL_
