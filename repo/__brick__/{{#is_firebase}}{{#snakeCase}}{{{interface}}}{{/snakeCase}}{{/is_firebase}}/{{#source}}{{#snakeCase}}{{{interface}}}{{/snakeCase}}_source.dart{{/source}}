@@ -46,7 +46,7 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}Source extends Firestore
     final json = snapshot.data() as Map?;
 
     if (json == null) {
-      return const RequestResult.failure('_NAME_SENTENCE not found');
+      return const RequestResult.failure('{{#sentenceCase}}{{{singular}}}{{/sentenceCase}} not found');
     }
 
     json['id'] = snapshot.id;
@@ -59,7 +59,7 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}Source extends Firestore
     } catch (e) {
       log('$e');
 
-      return const RequestResult.failure('_NAME_SENTENCE not found');
+      return const RequestResult.failure('{{#sentenceCase}}{{{singular}}}{{/sentenceCase}} not found');
     }
   }
 
@@ -195,7 +195,7 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}Source extends Firestore
         final json = snapshot.data() as Map?;
 
         if (json == null) {
-          return const StreamResult.failure('_NAME_SENTENCE not found');
+          return const StreamResult.failure('{{#sentenceCase}}{{{singular}}}{{/sentenceCase}} not found');
         }
 
         json['id'] = snapshot.id;
@@ -208,7 +208,7 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}Source extends Firestore
         } catch (e) {
           log('$e');
 
-          return const StreamResult.failure('_NAME_SENTENCE not found');
+          return const StreamResult.failure('{{#sentenceCase}}{{{singular}}}{{/sentenceCase}} not found');
         }
       });
     } catch (e) {
