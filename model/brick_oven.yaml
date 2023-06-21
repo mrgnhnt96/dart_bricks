@@ -10,10 +10,10 @@ files:
   object.dart:
     include_if_not: is_interface
     name:
-      value: name
+      value: singular
       format: snake
     vars:
-      name: _NAME_
+      singular: _SINGULAR_
       copy_with: _COPY_WITH_
 
   repo/repo.dart:

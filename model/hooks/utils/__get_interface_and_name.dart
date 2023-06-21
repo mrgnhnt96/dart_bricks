@@ -5,32 +5,25 @@ part of '../pre_gen.dart';
   required bool isInterface,
 }) {
   String name;
+  String? plural;
   String? interface;
 
-  final result = logger.prompt('$question Enter the name of the model:');
-
-  name = verifyChanges(
-    one: result,
-    two: makeSingular(result),
-    purpose: 'to be singular',
-    logger: logger,
-  );
+  name = logger.prompt(
+      '$question Enter the name of the model${isInterface ? ' (Singular)' : ''}:');
 
   if (isInterface) {
-    final proposedInterface = makePlural(name);
+    plural = makePlural(name);
 
-    final result = logger.prompt(
-      '$question Enter the name of the interface:',
-      defaultValue: proposedInterface,
+    plural = logger.prompt(
+      '$question Enter the name of the model (Plural):',
+      defaultValue: plural,
     );
 
-    interface = verifyChanges(
-      one: result,
-      two: makePlural(result),
-      purpose: 'to be plural',
-      logger: logger,
+    interface = logger.prompt(
+      '$question Enter the name of the interface:',
+      defaultValue: plural,
     );
   }
 
-  return (interface: interface, singular: name, plural: makePlural(name));
+  return (interface: interface, singular: name, plural: plural ?? name);
 }

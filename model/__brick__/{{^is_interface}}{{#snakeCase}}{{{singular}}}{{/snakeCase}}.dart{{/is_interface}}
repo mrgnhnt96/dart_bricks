@@ -1,0 +1,31 @@
+import 'package:autoequal/autoequal.dart';
+{{#copy_with}}
+import 'package:copy_with_extension/copy_with_extension.dart';
+{{/copy_with}}
+import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part '{{#snakeCase}}{{{singular}}}{{/snakeCase}}.g.dart';
+
+@autoequal
+{{#copy_with}}
+@CopyWith()
+{{/copy_with}}
+@JsonSerializable()
+class {{#pascalCase}}{{{singular}}}{{/pascalCase}} extends Equatable {
+  const {{#pascalCase}}{{{singular}}}{{/pascalCase}}({
+    required this.id,
+  });
+
+  const {{#pascalCase}}{{{singular}}}{{/pascalCase}}.create() : id = 'NEW';
+
+  // ignore: strict_raw_type
+  factory {{#pascalCase}}{{{singular}}}{{/pascalCase}}.fromJson(Map json) => _${{#pascalCase}}{{{singular}}}{{/pascalCase}}FromJson(json);
+
+  final String id;
+
+  Map<String, dynamic> toJson() => _${{#pascalCase}}{{{singular}}}{{/pascalCase}}ToJson(this);
+
+  @override
+  List<Object?> get props => _$props;
+}
