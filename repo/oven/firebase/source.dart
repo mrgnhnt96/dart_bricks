@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:_PROJECT_SNAKE_data/utils/parsers.dart';
 import 'package:_PROJECT_SNAKE_domain/domain.dart';
 
 import 'package:_PROJECT_SNAKE_data/utils/firestore.dart';
@@ -25,6 +26,7 @@ class _INTERFACE_PASCALSource extends Firestore
       json['id'] = doc.id;
 
       try {
+        parseTimestamp(json);
         final _SINGULAR_CAMEL =
             _SINGULAR_PASCAL.fromJson(Map<String, dynamic>.from(json));
 
@@ -52,6 +54,7 @@ class _INTERFACE_PASCALSource extends Firestore
     json['id'] = snapshot.id;
 
     try {
+      parseTimestamp(json);
       final _SINGULAR_CAMEL =
           _SINGULAR_PASCAL.fromJson(Map<String, dynamic>.from(json));
 
@@ -168,6 +171,7 @@ class _INTERFACE_PASCALSource extends Firestore
           json['id'] = doc.id;
 
           try {
+            parseTimestamp(json);
             final _SINGULAR_CAMEL =
                 _SINGULAR_PASCAL.fromJson(Map<String, dynamic>.from(json));
 
@@ -201,6 +205,7 @@ class _INTERFACE_PASCALSource extends Firestore
         json['id'] = snapshot.id;
 
         try {
+          parseTimestamp(json);
           final _SINGULAR_CAMEL =
               _SINGULAR_PASCAL.fromJson(Map<String, dynamic>.from(json));
 

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_data/utils/parsers.dart';
 import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_domain/domain.dart';
 
 import 'package:{{#snakeCase}}{{{project}}}{{/snakeCase}}_data/utils/firestore.dart';
@@ -25,6 +26,7 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}Source extends Firestore
       json['id'] = doc.id;
 
       try {
+        parseTimestamp(json);
         final {{#camelCase}}{{{singular}}}{{/camelCase}} =
             {{#pascalCase}}{{{singular}}}{{/pascalCase}}.fromJson(Map<String, dynamic>.from(json));
 
@@ -52,6 +54,7 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}Source extends Firestore
     json['id'] = snapshot.id;
 
     try {
+      parseTimestamp(json);
       final {{#camelCase}}{{{singular}}}{{/camelCase}} =
           {{#pascalCase}}{{{singular}}}{{/pascalCase}}.fromJson(Map<String, dynamic>.from(json));
 
@@ -168,6 +171,7 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}Source extends Firestore
           json['id'] = doc.id;
 
           try {
+            parseTimestamp(json);
             final {{#camelCase}}{{{singular}}}{{/camelCase}} =
                 {{#pascalCase}}{{{singular}}}{{/pascalCase}}.fromJson(Map<String, dynamic>.from(json));
 
@@ -201,6 +205,7 @@ class {{#pascalCase}}{{{interface}}}{{/pascalCase}}Source extends Firestore
         json['id'] = snapshot.id;
 
         try {
+          parseTimestamp(json);
           final {{#camelCase}}{{{singular}}}{{/camelCase}} =
               {{#pascalCase}}{{{singular}}}{{/pascalCase}}.fromJson(Map<String, dynamic>.from(json));
 
