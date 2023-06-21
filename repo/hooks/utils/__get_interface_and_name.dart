@@ -6,34 +6,26 @@ part of '../pre_gen.dart';
   String plural,
 }) getInterfaceAndName(Logger logger) {
   String name;
+  String plural;
   String? interface;
 
-  final result = logger.prompt('$question Enter the name of the model:');
+  name = logger.prompt('$question Enter the name of the model (Singular):');
 
-  name = verifyChanges(
-    one: result,
-    two: makeSingular(result),
-    purpose: 'to be singular',
-    logger: logger,
+  plural = makePlural(name);
+
+  plural = logger.prompt(
+    '$question Enter the name of the model (Plural):',
+    defaultValue: plural,
   );
 
-  final proposedInterface = makePlural(name);
-
-  final interfaceResult = logger.prompt(
+  interface = logger.prompt(
     '$question Enter the name of the interface:',
-    defaultValue: proposedInterface,
-  );
-
-  interface = verifyChanges(
-    one: interfaceResult,
-    two: makePlural(interfaceResult),
-    purpose: 'to be plural',
-    logger: logger,
+    defaultValue: plural,
   );
 
   return (
     interface: interface,
     singular: name,
-    plural: makePlural(name),
+    plural: plural,
   );
 }
